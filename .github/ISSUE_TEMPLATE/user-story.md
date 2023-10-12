@@ -8,3 +8,6 @@ assignees: ''
 ---
 
 As a <role> I want this <action> so that I can get this <values>
+
+Acceptance Criteria:
+[ ] ...
