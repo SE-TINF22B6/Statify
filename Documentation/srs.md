@@ -31,6 +31,7 @@
 > - Postconditions. *A postcondition of a use case is a list of possible states the system can be in immediately after a use case has finished.*
 > - **Estimated efforts (high, medium, low)**
 
+![UML Use Cases](UML_Use_Cases.svg)
 
 #### 2.3 Name of Feature 2 / Use Case 2
 ... ...
