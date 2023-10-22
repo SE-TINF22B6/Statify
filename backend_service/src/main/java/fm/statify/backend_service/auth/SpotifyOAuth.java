@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SpotifyOAuth {
-    private static final String CLIENT_ID = null;
-    private static final String CLIENT_SECRET = null;
+    private static final String CLIENT_ID = null; //KEEP NULL WHEN COMMITTING AS LONG ITS HARDCODED!
+    private static final String CLIENT_SECRET = null; //KEEP NULL WHEN COMMITTING AS LONG ITS HARDCODED!
     private static final String REDIRECT_URI = "http://localhost:8080/callback";
     private static final String AUTH_URL = "https://accounts.spotify.com/authorize";
     private static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
