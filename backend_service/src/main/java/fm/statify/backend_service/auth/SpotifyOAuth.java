@@ -90,12 +90,4 @@ public class SpotifyOAuth {
         scanner.useDelimiter("\\A");
         return scanner.hasNext() ? scanner.next() : "";
     }
-
-    /*
-    public static void main(String[] args) throws Exception {
-        SpotifyOAuth oauth = new SpotifyOAuth();
-        String tokenResponse = oauth.getAccessToken();
-        System.out.println(tokenResponse);
-    }
-    */
 }

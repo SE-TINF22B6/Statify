@@ -32,8 +32,6 @@ public class SpotifyController {
 
     @GetMapping("/callback")
     public String callback(@RequestParam String code) {
-        // Here, you'll handle the callback and extract the authorization code
-        // For now, let's just print the code and redirect the user to the homepage
         System.out.println("Received code: " + code);
         return "redirect:/";
     }
@@ -41,12 +39,10 @@ public class SpotifyController {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String exceptionHandler(Exception ex, Model model) {
-        // Log the exception for debugging purposes
         ex.printStackTrace();
 
-        // Send the error message to the frontend
         model.addAttribute("errorMessage", ex.getMessage());
-        return "error";  // This will use an error.html template
+        return "error";
     }
 }
 
