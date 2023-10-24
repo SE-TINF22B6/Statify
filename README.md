@@ -11,9 +11,10 @@ The Spotify Web API allows developers to access and interact with Spotify's vast
 ### Prerequisite
 [Node.js.](https://nodejs.org/de)  
 [Visual Studio Code](https://code.visualstudio.com/download) or another IDE of your choice.  
-### To be used:
-Java  
-React  
-PostgreSQL  
 Spotify Web API  
+Java  
+Spring Boot  
+MySQL  
+### To be used:
+React  
 ...to be continued...  
