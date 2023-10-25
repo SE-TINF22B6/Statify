@@ -7,13 +7,13 @@
 #### 1.2 Scope
 > This SRS document covers the complete system of Statify. Its goal is to give a detailed explanation of the system's structure, functionalities, and constraints. However, it is possible that we may separate it in the future.
 #### 1.3 Definitions, Acronyms and Abbreviations
-> **SRS** - Software Requirements Specification
-> **API** - Application Programming Interface
-> **React** - a JavaScript library.
-> **Java** - a multi-platform, object-oriented, and network-centric language.
-> **Spring** - an application framework and inversion of control container for the Java platform..
-> **Spotify Web API** - an interface that programs can use to retrieve and manage Spotify data over the internet.
-> **TMetric** - a time tracking tool.
+> **SRS** - Software Requirements Specification.  
+> **API** - Application Programming Interface.  
+> **React** - a JavaScript library.  
+> **Java** - a multi-platform, object-oriented, and network-centric language.  
+> **Spring** - an application framework and inversion of control container for the Java platform.  
+> **Spotify Web API** - an interface that programs can use to retrieve and manage Spotify data over the internet.  
+> **TMetric** - a time tracking tool.  
 
 #### 1.4 References
 > Currently, our SRS does not include any external documents.
@@ -26,22 +26,22 @@
 > You can insert links to your UML diagrams and user stories, or labels of user stories into this document.
 
 #### 2.1 Overview 
-> The web application allows the connection to a user's Spotify account to access their listening history. It is used to provide statistics about their listening habits, such as most-listened-to genres, artists, and time of day, etc..
+> The web application allows the connection to a user's Spotify account to access their listening history. It is used to provide statistics about their listening habits, such as most-listened-to genres, artists, and time of day, etc..  
 > **Our UML Use Case:** 
 > ![UML Use Cases](UML_Use_Cases.svg)
 
 > 
 
 #### 2.2 Account Management 
-> - **Relevant user stories:** #11, #17
+> - **Relevant user stories:** [#11](https://github.com/SE-TINF22B6/Statify/issues/11), [#17](https://github.com/SE-TINF22B6/Statify/issues/17).
 > - **UI mockups:** see the register, login and profile pages in [our UI mockup](https://www.figma.com/file/JuoCjSig1km8syVQRFGuFX/Statify?type=design&node-id=0%3A1&mode=design&t=BU8bocMhP7VTCSb1-1).
 > - **UML behavior diagrams:** and necessary text specification 
 > - **Preconditions:** the user has to have an active Spotify account.
 > - **Postconditions:** the user can now have his or her statistics generated.
 > - **Estimated efforts:** high.
 
-#### 2.3 Generation of Statistics
-> - **Relevant user stories:** #12
+#### 2.3 Generation and Depiction of Statistics
+> - **Relevant user stories:** [#12](https://github.com/SE-TINF22B6/Statify/issues/12).
 > - **UI mockups:** see the statistics and track pages in [our UI mockup](https://www.figma.com/file/JuoCjSig1km8syVQRFGuFX/Statify?type=design&node-id=0%3A1&mode=design&t=BU8bocMhP7VTCSb1-1).
 > - **UML behavior diagrams:** and necessary text specification 
 > - **Preconditions:** the user has to be regestered and logged in. 
