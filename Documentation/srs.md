@@ -1,15 +1,22 @@
-# Project Name
+# Statify
 ## Software Requirements Specification
 > This template is a simplified version based on the documentation templates from IBM Rational Unified Process (RUP).
 ### 1. Introduction
 #### 1.1 Overview
-> What are the selling points of your application?
+> Statify is a web application that utilizes the Spotify Web API to perform various Spotify-based analytics.
 #### 1.2 Scope
-> What is covered (not covered) in this document? Is it for your whole system or a subsystem? Does it cover both functional and nonfunctional requirements? (Will you seperate some of requirements into another document?)
+> This SRS document covers the complete system of Statify. Its goal is to give a detailed explanation of the system's structure, functionalities, and constraints. However, it is possible that we may separate it in the future.
 #### 1.3 Definitions, Acronyms and Abbreviations
-> Definitions of all terms, acronyms, and abbreviations required to properly interpret this document.
+> **SRS** - Software Requirements Specification
+> **API** - Application Programming Interface
+> **React** - a JavaScript library.
+> **Java** - a multi-platform, object-oriented, and network-centric language.
+> **Spring** - an application framework and inversion of control container for the Java platform..
+> **Spotify Web API** - an interface that programs can use to retrieve and manage Spotify data over the internet.
+> **TMetric** - a time tracking tool.
+
 #### 1.4 References
-> A complete list of all documents referenced. Each document should be identified by title, date, and publishing organization. You can also insert hyperlinks, in order to open the references conviniently.
+> Currently, our SRS does not include any external documents.
 
 ### 2. Functional requirements
 >  This section contains all the software requirements to a level of detail sufficient to enable designers to design a system to satisfy those requirements and testers to test that the system satisfies those requirements.  
@@ -19,22 +26,27 @@
 > You can insert links to your UML diagrams and user stories, or labels of user stories into this document.
 
 #### 2.1 Overview 
-> A brief description of the functionality of your application.  
-> Include one or more **UML use case** diagram(s) and necessary description to specify the major use cases of your application.
+> The web application allows the connection to a user's Spotify account to access their listening history. It is used to provide statistics about their listening habits, such as most-listened-to genres, artists, and time of day, etc..
+> **Our UML Use Case:** 
+> ![UML Use Cases](UML_Use_Cases.svg)
 
-#### 2.2 Name of Feature 1 / Use Case 1
-> Specify this feature / use case by:
-> - Relevant **user stories (their links or labels)**
-> - **UI mockups**
-> - **UML behavior diagrams** and necessary text specification
-> - **Preconditions**. *A precondition of a use case is the state of the system that must be present prior to a use case being performed.*
-> - Postconditions. *A postcondition of a use case is a list of possible states the system can be in immediately after a use case has finished.*
-> - **Estimated efforts (high, medium, low)**
+> 
 
-![UML Use Cases](UML_Use_Cases.svg)
+#### 2.2 Account Management 
+> - **Relevant user stories:** #11, #17
+> - **UI mockups:** see the register, login and profile pages in [our UI mockup](https://www.figma.com/file/JuoCjSig1km8syVQRFGuFX/Statify?type=design&node-id=0%3A1&mode=design&t=BU8bocMhP7VTCSb1-1).
+> - **UML behavior diagrams:** and necessary text specification 
+> - **Preconditions:** the user has to have an active Spotify account.
+> - **Postconditions:** the user can now have his or her statistics generated.
+> - **Estimated efforts:** high.
 
-#### 2.3 Name of Feature 2 / Use Case 2
-... ...
+#### 2.3 Generation of Statistics
+> - **Relevant user stories:** #12
+> - **UI mockups:** see the statistics and track pages in [our UI mockup](https://www.figma.com/file/JuoCjSig1km8syVQRFGuFX/Statify?type=design&node-id=0%3A1&mode=design&t=BU8bocMhP7VTCSb1-1).
+> - **UML behavior diagrams:** and necessary text specification 
+> - **Preconditions:** the user has to be regestered and logged in. 
+> - **Postconditions:** the user can now generate and see detailed analytics about his or her listening behaviour, such as: top 5 most listened to songs and artists, playlists statistics including the amount of tracks of each represented genre and the top genre of the playlist. The user can also see the features of a track.  
+> - **Estimated efforts:** high.
 
 ### 3. Nonfunctional requirements
 
