@@ -28,7 +28,12 @@
 #### 2.1 Overview 
 > The web application allows the connection to a user's Spotify account to access their listening history. It is used to provide statistics about their listening habits, such as most-listened-to genres, artists, and time of day, etc..  
 > **Our UML Use Case:** 
-> ![UML Use Cases](UML_Use_Cases.svg)
+> ![UML Use Cases](UML_Use_Cases.svg)  
+> <br>
+> **Our Activity Diagrams:**   
+> ![Log in](Login_Activity_Diagram.svg)
+> ![Generate](Generate_Activity_Diagram.svg)
+> ![Edit_Profile](Edit_Profile_Activity_Diagram.svg)  
 
 > 
 
