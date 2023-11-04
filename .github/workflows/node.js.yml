@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: 'web_app'
+        working-directory: './web_app'
     strategy:
       matrix:
         node-version: [14.x, 16.x, 18.x]
