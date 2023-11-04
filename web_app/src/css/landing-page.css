@@ -1,0 +1,80 @@
+@import "styleguide.css";
+
+.action-bar{
+    background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) 100%), radial-gradient(50% 50% at 0 100px,  rgb(20.5, 20.5, 20.5) 20.35%, rgb(5.2, 20.4,10.49) 100%);
+}
+
+.landing-page{
+    background-image: radial-gradient(50% 50% at 0 100px,  rgb(20.5, 20.5, 20.5) 20.35%, rgb(5.2, 20.4,10.49) 100%);
+    background-attachment: fixed;
+}
+
+.landing-page .content{
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.landing-page .logo{
+    height: auto;
+    width: 20%;
+    max-height: 250px;
+    max-width: fit-content;
+    position: fixed;
+    right: 8vw;
+    top: 160px
+}
+
+.landing-page .content .vertical{
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 10vh 10vw;
+    box-sizing: border-box;
+    color: white;
+    text-align: center;
+    line-height: 42px;
+    font-family: "Montserrat-Medium", Helvetica, sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.landing-page .content .vertical svg{
+    all: unset;
+    width: 300px;
+}
+
+.landing-page .content .vertical .github{
+    display: flex;
+    flex-direction: row;
+    margin: 35px;
+}
+.landing-page .content .vertical .github img{
+    height: 50px;
+}
+
+.landing-page circle{
+    fill: var(--collection-1-spotify);
+    opacity: 0.06;
+}
+
+.landing-page svg{
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.action-bar .buttons{
+    display: flex;
+    flex-direction: row;
+}
+
+.action-bar .buttons .button{
+    margin: 0 10px;
+}

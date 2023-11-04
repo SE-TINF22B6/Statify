@@ -1,0 +1,32 @@
+.action-bar {
+    background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) 100%);
+    height: var(--collection-1-actionbar-height);
+    position: fixed;
+    top:0;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 38px;
+    box-sizing: border-box;
+
+}
+
+.action-bar .logo {
+    height: 65px;
+    width: auto;
+}
+
+.action-bar .vector {
+    height: 40px;
+    width: auto;
+    position: relative;
+    top: 5px;
+    margin: 0 38px;
+}
+
+.action-bar .left{
+    display: inherit;
+    align-items: inherit;
+}

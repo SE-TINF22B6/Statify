@@ -1,0 +1,11 @@
+:root {
+    --collection-1-orange: rgba(237, 107, 37, 1);
+    --collection-1-orange-04: rgba(237, 107, 37, 0.4);
+    --collection-1-purple: rgba(104, 36, 229, 1);
+    --collection-1-purple-04: rgba(104, 36, 229, 0.4);
+    --collection-1-spotify: rgba(29, 185, 84, 1);
+    --collection-1-spotify-04: rgba(29, 185, 84, 0.4);
+    --collection-1-grey-04: rgba(134, 134, 134, 0.4);
+
+    --collection-1-actionbar-height: 100px;
+}
