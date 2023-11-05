@@ -28,7 +28,7 @@
 #### 2.1 Overview 
 > The web application allows the connection to a user's Spotify account to access their listening history. It is used to provide statistics about their listening habits, such as most-listened-to genres, artists, and time of day, etc..  
 > **Our UML Use Case:** 
-> ![UML Use Cases](UML_Use_Cases.svg)  
+> ![UML Use Cases](diagrams/UML_Use_Cases.svg)  
 
 #### 2.2 Account Management 
 > - **Relevant user stories:** [#11](https://github.com/SE-TINF22B6/Statify/issues/11), [#17](https://github.com/SE-TINF22B6/Statify/issues/17).
@@ -38,8 +38,8 @@
 > - **Postconditions:** the user can now have his or her statistics generated.
 > - **Estimated efforts:** high.  
 
-![Log in](Login_Activity_Diagram.svg)  
-![Edit_Profile](Edit_Profile_Activity_Diagram.svg)  
+![Log in](diagrams/Login_Activity_Diagram.svg)  
+![Edit_Profile](diagrams/Edit_Profile_Activity_Diagram.svg)  
 
 #### 2.3 Generation and Depiction of Statistics
 > - **Relevant user stories:** [#12](https://github.com/SE-TINF22B6/Statify/issues/12).
@@ -49,7 +49,7 @@
 > - **Postconditions:** the user can now generate and see detailed analytics about his or her listening behaviour, such as: top 5 most listened to songs and artists, playlists statistics including the amount of tracks of each represented genre and the top genre of the playlist. The user can also see the features of a track.  
 > - **Estimated efforts:** high.  
 
-![Generate](Generate_Activity_Diagram.svg)
+![Generate](diagrams/Generate_Activity_Diagram.svg)
 
 ### 3. Nonfunctional requirements
 
