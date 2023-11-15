@@ -16,6 +16,7 @@ import com.sun.net.httpserver.HttpServer;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 import org.springframework.stereotype.Service;
+import org.json.JSONObject;
 
 @Service
 public class SpotifyOAuth {
@@ -89,5 +90,17 @@ public class SpotifyOAuth {
         Scanner scanner = new Scanner(con.getInputStream(), "UTF-8");
         scanner.useDelimiter("\\A");
         return scanner.hasNext() ? scanner.next() : "";
+    }
+
+    public Map<String, String> parseResponse(String response) {
+        Map<String, String> tokenData = new HashMap<>();
+        JSONObject jsonObject = new JSONObject(response);
+
+        tokenData.put("access_token", jsonObject.getString("access_token"));
+        tokenData.put("token_type", jsonObject.getString("token_type"));
+        tokenData.put("expires_in", String.valueOf(jsonObject.getInt("expires_in")));
+        tokenData.put("refresh_token", jsonObject.optString("refresh_token")); // optString to handle if it's not there
+
+        return tokenData;
     }
 }
