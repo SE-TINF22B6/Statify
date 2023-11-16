@@ -2,51 +2,49 @@ package fm.statify.backend_service.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseManager {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/mysql";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
+    private String url;
+    private String username;
+    private String password;
 
-    private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(DB_URL, USER, PASSWORD);
+    public DatabaseManager(String url, String username, String password) {
+        this.url = url;
+        this.username = username;
+        this.password = password;
     }
 
-    public void initDatabase() throws SQLException {
-        try (Connection conn = getConnection()) {
-            String dropTables = "DROP TABLE IF EXISTS user_listening_history, songs, albums, artists, users;";
+    public void init() {
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             Statement stmt = conn.createStatement()) {
 
-            String createUsers = "CREATE TABLE users ("
-                    + "user_id INT AUTO_INCREMENT PRIMARY KEY,"
-                    + "user_name VARCHAR(255) NOT NULL,"
-                    + "user_email VARCHAR(255) UNIQUE NOT NULL"
-                    + ");";
+            // Drop table if it exists
+            String sqlDrop = "DROP TABLE IF EXISTS StreamingStats";
+            stmt.executeUpdate(sqlDrop);
 
-            conn.createStatement().execute(dropTables);
-            conn.createStatement().execute(createUsers);
+            // Create table
+            String sqlCreate = "CREATE TABLE StreamingStats (" +
+                    "UserID INT, " +
+                    "TrackID INT, " +
+                    "LastStreamedUnixTime BIGINT)";
+            stmt.executeUpdate(sqlCreate);
+
+            // Insert example data
+            String sqlInsert = "INSERT INTO StreamingStats VALUES " +
+                    "(1, 101, 1620000000), " + // Example data
+                    "(2, 102, 1620000100)";
+            stmt.executeUpdate(sqlInsert);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    public void addUser(String name, String email) throws SQLException {
-        String sql = "INSERT INTO users (user_name, user_email) VALUES (?, ?)";
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setString(2, email);
-            pstmt.executeUpdate();
-        }
+    public static void main(String[] args) {
+        DatabaseManager databaseManager = new DatabaseManager("jdbc:mysql://localhost:3306/mysql","root","root");
+        databaseManager.init();
     }
 
-    public void removeUser(int userId) throws SQLException {
-        String sql = "DELETE FROM users WHERE user_id = ?";
-        try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            pstmt.executeUpdate();
-        }
-    }
-
-    //...
 }

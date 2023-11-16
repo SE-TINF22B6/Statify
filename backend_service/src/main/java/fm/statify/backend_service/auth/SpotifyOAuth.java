@@ -24,7 +24,7 @@ public class SpotifyOAuth {
 
     @Value("${app.clientSecret}")
     private String clientSecret;
-    private static final String REDIRECT_URI = "http://localhost:8080/callback";
+    private static final String REDIRECT_URI = "http://localhost:8081/callback";
     private static final String AUTH_URL = "https://accounts.spotify.com/authorize";
     private static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
 
@@ -72,7 +72,7 @@ public class SpotifyOAuth {
         return params;
     }
 
-    private String requestAccessToken(String code) throws IOException, InterruptedException {
+    public String requestAccessToken(String code) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
         String auth = clientId + ":" + clientSecret;

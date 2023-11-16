@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -33,6 +34,16 @@ public class SpotifyController {
     @GetMapping("/callback")
     public String callback(@RequestParam String code) {
         System.out.println("Received code: " + code);
+
+        try {
+            String response = spotifyOAuth.requestAccessToken(code);
+            Map<String, String> tokenData = spotifyOAuth.parseResponse(response);
+            System.out.println("Token Data: " + tokenData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+
         return "redirect:/";
     }
 
