@@ -26,7 +26,7 @@ public class SpotifyController {
     }
 
     @GetMapping("/authorize")
-    public String authorize() throws Exception {
+    public String authorize(){
         return "redirect:" + spotifyOAuth.getAuthUrl();
     }
 
