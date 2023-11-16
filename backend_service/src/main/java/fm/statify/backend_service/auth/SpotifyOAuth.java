@@ -35,7 +35,7 @@ public class SpotifyOAuth {
         return AUTH_URL + "?client_id=" + clientId
                 + "&response_type=code"
                 + "&redirect_uri=" + URLEncoder.encode(REDIRECT_URI, StandardCharsets.UTF_8)
-                + "&scope=" + allScopes; // No need to encode again
+                + "&scope=" + allScopes;
     }
 
     public String getAccessToken() throws IOException, InterruptedException {
