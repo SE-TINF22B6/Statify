@@ -40,7 +40,6 @@ public class SpotifyOAuth {
 
     public String getAccessToken() throws IOException, InterruptedException {
         BlockingQueue<String> queue = new ArrayBlockingQueue<>(1);
-
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
         server.createContext("/callback", exchange -> {
             String query = exchange.getRequestURI().getQuery();
@@ -53,10 +52,7 @@ public class SpotifyOAuth {
             queue.add(query);
         });
         server.start();
-
-        System.out.println("Visit the following URL to authorize:");
         System.out.println(getAuthUrl());
-
         String query = queue.take();
         Map<String, String> params = parseQuery(query);
         String code = params.get("code");
