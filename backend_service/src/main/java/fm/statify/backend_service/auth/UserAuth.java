@@ -3,16 +3,17 @@ package fm.statify.backend_service.auth;
 import fm.statify.backend_service.entities.User;
 import fm.statify.backend_service.util.DatabaseManager;
 import org.json.JSONObject;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.net.http.HttpResponse.BodyHandlers;
 
 public class UserAuth {
     private static final Logger LOGGER = Logger.getLogger(UserAuth.class.getName());
-
     private final DatabaseManager databaseManager;
     private final SpotifyOAuth spotifyOAuth;
 
@@ -21,7 +22,7 @@ public class UserAuth {
         this.spotifyOAuth = spotifyOAuth;
     }
 
-    public void authenticateAndAddUser(String code) {
+    public void authenticateUser(String code) {
         try {
             String response = spotifyOAuth.requestAccessToken(code);
             Map<String, String> tokenData = spotifyOAuth.parseResponse(response);
@@ -34,14 +35,16 @@ public class UserAuth {
     }
 
     private User fetchSpotifyUser(String accessToken) throws Exception {
-        URL url = new URL("https://api.spotify.com/v1/me");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-        Scanner scanner = new Scanner(conn.getInputStream());
-        String response = scanner.useDelimiter("\\A").next();
-        scanner.close();
-        JSONObject json = new JSONObject(response);
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.spotify.com/v1/me"))
+                .header("Authorization", "Bearer " + accessToken)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+        JSONObject json = new JSONObject(response.body());
+
         String id = json.getString("id");
         String displayName = json.getString("display_name");
         String email = json.getString("email");
@@ -53,8 +56,11 @@ public class UserAuth {
         return new User(id, displayName, email, userURL, profilePictureURL, product);
     }
 
-
     private void addUserToDatabaseIfNotExists(User user) {
-        // ...
+        if (!databaseManager.userExists(user.getId())) {
+            databaseManager.addUser(user);
+        } else {
+            databaseManager.updateUser(user);
+        }
     }
 }
