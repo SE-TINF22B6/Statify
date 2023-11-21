@@ -1,0 +1,19 @@
+.text-input{
+    color: white;
+    width: inherit;
+    margin: 10px;
+}
+
+.text-input .name{
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.text-input input{
+    all: unset;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px 15px;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
