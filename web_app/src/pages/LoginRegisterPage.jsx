@@ -3,11 +3,15 @@ import ToggleButton from "../components/toggleButton";
 import TextInput from "../components/textInput";
 import {useState} from "react";
 import Button from "../components/button";
+import logo from "../images/StatifyLogo.png";
+import {useNavigate} from "react-router-dom";
 export default function LoginRegisterPage({initialState}) {
     const [state, setState] = useState(initialState)
+    const navigate = useNavigate();
 
     return(
         <div className="login-register-page">
+            <img className={"logo"} src={logo} alt={"Statify Logo"} onClick={() => navigate("/")}/>
             <div className="content">
                 <ToggleButton choices={["Register", "Log in"]} color={"purple"} selected={state} setSelected={setState} buttonWidth={350} textSize={24}/>
                 <div className="inputs">

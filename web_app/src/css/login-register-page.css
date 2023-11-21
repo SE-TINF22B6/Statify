@@ -30,3 +30,14 @@
 .login-register-page .content .inputs .text-input{
     margin: 30px;
 }
+
+.login-register-page .logo{
+    height: auto;
+    width: 10%;
+    max-height: 250px;
+    max-width: fit-content;
+    position: fixed;
+    left: 10vw;
+    top: 10vh;
+    cursor: pointer;
+}
