@@ -29,12 +29,14 @@ Button.propTypes={
     scale: PropTypes.number,
     color: PropTypes.oneOf(["orange", "green", "purple", "grey"]),
     className: PropTypes.string,
-    widthOffset: PropTypes.number
+    widthOffset: PropTypes.number,
+    onClick: PropTypes.func
 }
 
 Button.defaultProps={
     className:"",
-    scale:1
+    scale:1,
+    onClick: () => {}
 }
 
 
