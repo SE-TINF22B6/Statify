@@ -1,0 +1,23 @@
+import "../css/login-register-page.css"
+import ToggleButton from "../components/toggleButton";
+import TextInput from "../components/textInput";
+import {useState} from "react";
+import Button from "../components/button";
+export default function LoginRegisterPage({initialState}) {
+    const [state, setState] = useState(initialState)
+
+    return(
+        <div className="login-register-page">
+            <div className="content">
+                <ToggleButton choices={["Register", "Log in"]} color={"purple"} selected={state} setSelected={setState} buttonWidth={350} textSize={24}/>
+                <div className="inputs">
+                    <TextInput name="Email" type="email"/>
+                    {state === 0 && <TextInput name="Username" type="text"/>}
+                    <TextInput name="Password" type="password"/>
+                </div>
+                <Button color="purple" scale={0.8}>{state === 0 ? "Sign In" : "Log In"}</Button>
+            </div>
+
+        </div>
+    )
+}
