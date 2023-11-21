@@ -6,6 +6,7 @@
     box-sizing: border-box;
     display: block;
     border-radius: 100px;
+    cursor: pointer;
 }
 
 .button .text-wrapper {
@@ -15,4 +16,5 @@
     letter-spacing: 0;
     line-height: normal;
     text-align: center;
+    text-transform: uppercase;
 }

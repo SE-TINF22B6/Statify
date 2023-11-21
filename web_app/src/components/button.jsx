@@ -1,13 +1,14 @@
 import React from "react";
 import "../css/button.css";
 import PropTypes from "prop-types";
+import {decodeColors04} from "../util/decodeColors";
 
-export default function Button ({className, scale, color, children, widthOffset}) {
+export default function Button ({className, scale, color, children, widthOffset, onClick}) {
     let textSize = Math.round(32 * scale);
     let buttonWidth = Math.round(340 * scale) + (widthOffset ? widthOffset : 0);
     let buttonHeight = Math.round(80 * scale);
-    let bgColor = decodeColors[color];
-    bgColor = bgColor? bgColor : decodeColors["orange"];
+    let bgColor = decodeColors04[color];
+    bgColor = bgColor? bgColor : decodeColors04["orange"];
 
     let buttonStyle = {
         fontSize:textSize + "px",
@@ -17,7 +18,8 @@ export default function Button ({className, scale, color, children, widthOffset}
     }
     return (
         <button className={`button ${className}`}
-        style={buttonStyle}>
+        style={buttonStyle}
+        onClick={() => onClick()}>
             <div className="text-wrapper">{children}</div>
         </button>
     );
@@ -35,9 +37,4 @@ Button.defaultProps={
     scale:1
 }
 
-const decodeColors = {
-    "orange": "var(--collection-1-orange-04)",
-    "green": "var(--collection-1-spotify-04)",
-    "purple": "var(--collection-1-purple-04)",
-    "grey": "var(--collection-1-grey-04)"
-}
+
