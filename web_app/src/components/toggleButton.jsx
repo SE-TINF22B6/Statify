@@ -1,4 +1,3 @@
-import React, {useState} from "react";
 import "../css/toggle-button.css";
 import {decodeColors} from "../util/decodeColors";
 import PropTypes from "prop-types";
