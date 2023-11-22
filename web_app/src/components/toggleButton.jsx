@@ -45,14 +45,16 @@ const arrayOfLength = (expectedLength, props, propName, componentName) => {
     }
 }
 
-Button.propTypes={
+ToggleButton.propTypes={
     color: PropTypes.oneOf(["orange", "green", "purple"]),
     className: PropTypes.string,
-    selected: PropTypes.oneOf([0, 1]).isRequired,
-    choices: arrayOfLength.bind(null, 2).isRequired
+    selected: PropTypes.oneOf([0, 1]),
+    choices: arrayOfLength.bind(null, 2)
 }
 
-Button.defaultProps={
+ToggleButton.defaultProps={
     className:"",
+    selected:0,
+    choices:["1", "2"]
 }
 

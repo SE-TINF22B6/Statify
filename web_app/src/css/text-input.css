@@ -1,7 +1,7 @@
 .text-input{
     color: white;
-    width: inherit;
     margin: 10px;
+    width: 100%;
 }
 
 .text-input .name{
