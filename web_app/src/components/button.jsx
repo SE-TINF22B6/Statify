@@ -8,7 +8,6 @@ export default function Button ({className, scale, color, children, widthOffset,
     let buttonWidth = Math.round(340 * scale) + (widthOffset ? widthOffset : 0);
     let buttonHeight = Math.round(80 * scale);
     let bgColor = decodeColors04[color];
-    bgColor = bgColor? bgColor : decodeColors04["orange"];
 
     let buttonStyle = {
         fontSize:textSize + "px",
@@ -19,7 +18,7 @@ export default function Button ({className, scale, color, children, widthOffset,
     return (
         <button className={`button ${className}`}
         style={buttonStyle}
-        onClick={() => onClick()}>
+        onClick={onClick}>
             <div className="text-wrapper">{children}</div>
         </button>
     );
@@ -36,7 +35,9 @@ Button.propTypes={
 Button.defaultProps={
     className:"",
     scale:1,
-    onClick: () => {}
+    onClick: () => void(0),
+    color: "orange",
+    widthOffset: 0
 }
 
 
