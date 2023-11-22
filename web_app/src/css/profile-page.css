@@ -1,0 +1,70 @@
+.action-bar{
+    background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) 100%), radial-gradient(circle at 0px 0px, rgba(104, 36, 229, 0.1), rgba(0, 0, 0, 0) 90%), radial-gradient(circle at 100% 0px, rgba(21, 21, 21, 1) 15%, rgba(5, 20, 10, 1) 90%);
+}
+
+.profile-page{
+    background-image: radial-gradient(circle at 0px 0px, rgba(104, 36, 229, 0.1), rgba(0, 0, 0, 0) 90%), radial-gradient(circle at 100% 0px, rgba(21, 21, 21, 1) 15%, rgba(5, 20, 10, 1) 90%);
+    background-attachment: fixed;
+}
+
+.icon{
+    height: 55px;
+    width: auto;
+    cursor: pointer;
+}
+
+.profile-page .content{
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    height: 100%;
+}
+
+.profile-page .content .profile{
+    width: 50%;
+}
+
+.profile-page .content .profile .text-input{
+    padding: 4vh 0;
+}
+
+.profile-page .content .actions{
+    width: 20%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-page .content .actions .action{
+    margin: 5px 0;
+
+}
+
+.profile-page .content .actions p{
+    opacity: 70%;
+    font-weight: lighter;
+}
+
+.profile-page .content .actions .header{
+    font-size: 20px;
+    opacity: 100%;
+    font-weight: initial;
+    cursor: pointer;
+}
+.profile-page .content .actions .red{
+    color: red;
+}
+
+.profile-page .content .row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 40px;
+}
+
+.profile-page .content .column{
+    align-self: center;
+    padding: 20px 60px;
+}

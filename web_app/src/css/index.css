@@ -17,5 +17,6 @@ code {
   padding-top: var(--collection-1-actionbar-height);
   min-height: 100vh;
   width: 100vw;
+  display: grid;
 }
 

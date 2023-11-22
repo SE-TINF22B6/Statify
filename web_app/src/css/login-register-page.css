@@ -19,7 +19,7 @@
 }
 
 .login-register-page .content .inputs{
-    width: 50%;
+    width: 30%;
     height: 50%;
     display: flex;
     flex-direction: column;
@@ -28,7 +28,7 @@
 }
 
 .login-register-page .content .inputs .text-input{
-    margin: 30px;
+    padding: 4vh 0;
 }
 
 .login-register-page .logo{

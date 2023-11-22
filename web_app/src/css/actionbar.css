@@ -10,7 +10,7 @@
     justify-content: space-between;
     padding: 0 38px;
     box-sizing: border-box;
-
+    z-index: 10;
 }
 
 .action-bar .logo {

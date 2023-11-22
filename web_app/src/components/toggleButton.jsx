@@ -1,7 +1,6 @@
 import "../css/toggle-button.css";
 import {decodeColors} from "../util/decodeColors";
 import PropTypes from "prop-types";
-import Button from "./button";
 
 export default function ToggleButton({className, color, selected, setSelected, buttonWidth, textSize, choices}){
 

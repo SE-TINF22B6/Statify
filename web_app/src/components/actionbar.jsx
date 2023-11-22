@@ -17,3 +17,7 @@ export default function Actionbar({ className, children }) {
         </div>
     );
 };
+
+Actionbar.defaultProps = {
+    className: ""
+}
