@@ -59,6 +59,25 @@
 
 > Categories: Usability, Reliability, Performance, Efficiency, Integrity, Maintainability, Flexibility, Testability, Reusability, Security.  
 
+#### 3.1 Utility tree
+
+| Quality attribute    | Refinement             | Quality attribute scenarios   | Business value | Technical risk  |
+| :---                 | :----                  | :----                         | :----          | :----           | 
+| e.g. Availability    | e.g. data loss         | Scenario 1.1  who/what, Event, Influence, Condition, Action, Measurement                |  e.g. H        | e.g., L         |
+|                      |                        | Scenario 1.2                  |  e.g. M        | e.g., L         |
+|                      | e.g. hardware issue    | Scenario 2.1                  |  e.g. H        | e.g., L         |
+| e.g. Security        | ... ...                |                               |                |                 |
+
+> [!IMPORTANT]
+> When specifying the quality attribute scenarios, cover 6 aspects: who/what, Event, Influence, Condition, Action, Measurement
+
+#### 3.2 Tactics for Top 3 quality attribute scenarios
+
+##### 3.2.1 ...
+
+##### 3.2.2 ...
+
+##### 3.2.3 ...
 
 ### 4. Technical constraints
 > Specify any major constraints, assumptions or dependencies, e.g., any restrictions about which type of server to use, which type of open source license must be complied, etc. 
