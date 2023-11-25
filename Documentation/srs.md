@@ -52,32 +52,36 @@
 ![Generate](diagrams/Generate_Activity_Diagram.svg)
 
 ### 3. Nonfunctional requirements
+#### 3.1 Quality Attribute Scenarios
 
-> [!IMPORTANT]  
-> It is not necessary to cover all of the following categories, but focus on what your project will implement.  
-> If some nonfunctional requirements are described as user stories in your backlog, add their **links** in this section, or any information to guide the reader find them in your backlog, such as a **label** of those relevant user stories.
+| Scenario | Quality Attribute       | Who/What              | Event                     | Influence                | Condition                  | Action                                          | Measurement                                                                 |
+|-----------------------------|-----------------------------|-----------------------|---------------------------|---------------------------|----------------------------|-------------------------------------------------|-----------------------------------------------------------------------------|
+| 1 | Security (Confidentiality)   | User                  | wishes to connect to Spotify account | Data within the system | Normal operation          | successful connection                          | authentication success                                                      |
+| 2 | Usability (Feedback)         | User                  | inputs data               | Data within the system | Normal operation          | gets response if data is valid                  | show error message when data is invalid                                     |
+| 3 | Security (Availability)      | Application           | refreshes the access token | Data within the system | Runtime                   | the application is able to continue accessing Spotify data | every 60 mins                                                                           |
+| 4 | Usability (Compliance)       | Designer/Developer    | designs the UI             | UI                      | Design time               | the UI fulfills Spotify design guidelines      | [Spotify Design Guidelines](https://developer.spotify.com/documentation/design) |
+| 5 | Performance (Latency)        | User                  | creates an account         | System                   | Runtime                   | user can generate statistics    | within 5 mins                                                                           |
+| 6 | Performance (Latency)        | Developer             | develops data processing   | Code                    | Development               | data processing should be efficient            | generated data is available in 1 min                                        |
+| 7 | Modifiability (Loose coupling, high cohesion) | Developer | develops modules and components | Code               | Development               | reduced interdependence of the components     | changes can be made easily                                                  |
+| 8 | Usability (Customizability)  | User                  | wishes to use the application on different devices | UI | Normal operation | the design is responsive                      | all functions are available on any device                                   |
+| 9 | Availability (Spotify API issues) | Spotify API       | is down                    | System                   | Normal operation          | log error message                              | the application responds, but only the functions not related to the Spotify API can be used |
+| 10 | Performance (Latency)        | Frontend              | sends an API request to the backend | System            | Normal operation          | receives response                     | in 2 sec                                                                           |
 
-> Categories: Usability, Reliability, Performance, Efficiency, Integrity, Maintainability, Flexibility, Testability, Reusability, Security.  
-
-#### 3.1 Utility tree
+#### 3.2 Utility tree
 
 | Quality attribute    | Refinement             | Quality attribute scenarios   | Business value | Technical risk  |
 | :---                 | :----                  | :----                         | :----          | :----           | 
-| e.g. Availability    | e.g. data loss         | Scenario 1.1  who/what, Event, Influence, Condition, Action, Measurement                |  e.g. H        | e.g., L         |
-|                      |                        | Scenario 1.2                  |  e.g. M        | e.g., L         |
-|                      | e.g. hardware issue    | Scenario 2.1                  |  e.g. H        | e.g., L         |
-| e.g. Security        | ... ...                |                               |                |                 |
+| Security    | Confidentiality         | Scenario 1  (see the table above)                |  H        | L         |
+|  Performance | Latency | Scenario 6 (see the table above)                  |  H        | H         |
+| Modifiability | loose coupling, high cohesion    | Scenario 7 (see the table above)                 |  M        | H         |
 
-> [!IMPORTANT]
-> When specifying the quality attribute scenarios, cover 6 aspects: who/what, Event, Influence, Condition, Action, Measurement
+#### 3.3 Tactics for Top 3 quality attribute scenarios
 
-#### 3.2 Tactics for Top 3 quality attribute scenarios
+##### 3.3.1 ...
 
-##### 3.2.1 ...
+##### 3.3.2 ...
 
-##### 3.2.2 ...
-
-##### 3.2.3 ...
+##### 3.3.3 ...
 
 ### 4. Technical constraints
 > Specify any major constraints, assumptions or dependencies, e.g., any restrictions about which type of server to use, which type of open source license must be complied, etc. 
