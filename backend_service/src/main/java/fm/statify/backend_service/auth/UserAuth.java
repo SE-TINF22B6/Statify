@@ -17,6 +17,8 @@ public class UserAuth {
     private final DatabaseManager databaseManager;
     private final SpotifyOAuth spotifyOAuth;
 
+
+    // Test Constructor, no usage
     public UserAuth(DatabaseManager databaseManager, SpotifyOAuth spotifyOAuth) {
         this.databaseManager = databaseManager;
         this.spotifyOAuth = spotifyOAuth;
@@ -34,6 +36,7 @@ public class UserAuth {
         }
     }
 
+    // Fetch the user's data from Spotify API and fetch an JSON Object from the response containing the user's data
     private User fetchSpotifyUser(String accessToken) throws Exception {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -56,6 +59,8 @@ public class UserAuth {
         return new User(id, displayName, email, userURL, profilePictureURL, product);
     }
 
+
+    // Test code for Database
     private void addUserToDatabaseIfNotExists(User user) {
         if (!databaseManager.userExists(user.getId())) {
             databaseManager.addUser(user);

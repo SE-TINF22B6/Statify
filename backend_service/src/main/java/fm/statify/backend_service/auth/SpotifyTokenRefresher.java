@@ -20,6 +20,8 @@ public class SpotifyTokenRefresher {
     private String clientSecret;
     private static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
 
+
+    // Refresh the access token using the refresh token
     public String refreshAccessToken(String refreshToken) {
         HttpClient client = HttpClient.newHttpClient();
         String auth = clientId + ":" + clientSecret;

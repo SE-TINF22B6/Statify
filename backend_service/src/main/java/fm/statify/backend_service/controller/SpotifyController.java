@@ -15,6 +15,7 @@ import java.util.Map;
 @RequestMapping("/")
 public class SpotifyController {
 
+    // This Class is responsible for handling the Spotify OAuth flow
     private final SpotifyOAuth spotifyOAuth;
 
     public SpotifyController(SpotifyOAuth spotifyOAuth) {
@@ -26,11 +27,14 @@ public class SpotifyController {
         return "index";
     }
 
+    // Redirect the user to the Spotify login page
     @GetMapping("/authorize")
     public String authorize(){
         return "redirect:" + spotifyOAuth.getAuthUrl();
     }
 
+
+    // Most important part currently - Handle the callback from Spotify after the user has logged in - currently just prints the code
     @GetMapping("/callback")
     public String callback(@RequestParam String code) {
         System.out.println("Received code: " + code);

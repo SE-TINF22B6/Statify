@@ -28,6 +28,8 @@ public class SpotifyOAuth {
     private static final String AUTH_URL = "https://accounts.spotify.com/authorize";
     private static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
 
+
+    // Get the URL to redirect the user to the Spotify login page
     public String getAuthUrl() {
         String allScopes = "ugc-image-upload+user-read-playback-state+user-modify-playback-state+user-read-currently-playing+app-remote-control" +
                 "+streaming+playlist-read-private+playlist-read-collaborative+playlist-modify-private+playlist-modify-public+user-follow-modify+user-follow-read+user-read-playback-position" +
@@ -38,6 +40,7 @@ public class SpotifyOAuth {
                 + "&scope=" + allScopes;
     }
 
+    // Get the access token from the response
     public String getAccessToken() throws IOException, InterruptedException {
         BlockingQueue<String> queue = new ArrayBlockingQueue<>(1);
         HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
@@ -59,6 +62,7 @@ public class SpotifyOAuth {
         return requestAccessToken(code);
     }
 
+    // Parse the query string - used to get the code from the URL
     private Map<String, String> parseQuery(String query) {
         Map<String, String> params = new HashMap<>();
         for (String pair : query.split("&")) {
@@ -68,6 +72,7 @@ public class SpotifyOAuth {
         return params;
     }
 
+    // Request the access token from Spotify
     public String requestAccessToken(String code) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
 
@@ -82,6 +87,7 @@ public class SpotifyOAuth {
                 .uri(URI.create(TOKEN_URL))
                 .header("Authorization", basicAuth)
                 .header("Content-Type", "application/x-www-form-urlencoded")
+                //Here the actual request is made
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
 
@@ -90,6 +96,7 @@ public class SpotifyOAuth {
         return response.body();
     }
 
+    // Parse the response from Spotify to get different token data (for example in Class Main)
     public Map<String, String> parseResponse(String response) {
         Map<String, String> tokenData = new HashMap<>();
         JSONObject jsonObject = new JSONObject(response);
