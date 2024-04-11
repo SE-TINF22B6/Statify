@@ -30,7 +30,7 @@ public class UserAuth {
             Map<String, String> tokenData = spotifyOAuth.parseResponse(response);
             String accessToken = tokenData.get("access_token");
             User user = fetchSpotifyUser(accessToken);
-            addUserToDatabaseIfNotExists(user);
+            addUserToDatabaseIfNotExists(user, accessToken);
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to authenticate user: ", e);
         }
@@ -61,11 +61,11 @@ public class UserAuth {
 
 
     // Test code for Database
-    private void addUserToDatabaseIfNotExists(User user) {
+    private void addUserToDatabaseIfNotExists(User user, String accesstoken) {
         if (!databaseManager.userExists(user.getId())) {
-            databaseManager.addUser(user);
+            databaseManager.addUser(user, accesstoken);
         } else {
-            databaseManager.updateUser(user);
+            databaseManager.updateUser(user, accesstoken);
         }
     }
 }

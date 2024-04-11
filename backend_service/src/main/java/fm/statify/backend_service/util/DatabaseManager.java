@@ -2,10 +2,8 @@ package fm.statify.backend_service.util;
 
 import fm.statify.backend_service.entities.Stream;
 import fm.statify.backend_service.entities.User;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,7 +59,20 @@ public class DatabaseManager {
         }
     }
 
-    public void addUser(User newUser){
+    // Prototyp zum Einfügen eines Users in die Datenbank (Parameter & weiteres kann beliebig erweitert werden)
+    public void addUser(User user, String accesstoken) {
+        String sql = "INSERT INTO Users (UserID, UserEmail, UserName, APIKey) VALUES (?,?,?,?)";
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, user.getId());
+            pstmt.setString(2, user.getEmail());
+            pstmt.setString(3, user.getUserName());
+            pstmt.setString(4, accesstoken);
+            pstmt.executeUpdate();
+            LOGGER.info("User added successfully: " + user);
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Failed to add user: ", e);
+        }
     }
 
     public void addStream(Stream stream){
@@ -70,15 +81,30 @@ public class DatabaseManager {
     public void updateAPIKey(User user, String newAPIKey){
     }
 
+    //Prototyp zum Überprüfen, ob ein User existiert
     public boolean userExists(String id) {
-        return false;
+        String sql = "SELECT COUNT(*) FROM Users WHERE UserID = ?";
+        try (Connection conn = DriverManager.getConnection(url, username, password);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0; // True, wenn der Benutzer existiert, sonst false
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Failed to check if user exists: ", e);
+        }
+        return false; // Rückgabe von false, wenn ein Fehler auftritt oder kein Benutzer gefunden wird
     }
+
 
     public List<User> getAllUsers(){
         return null;
     }
 
-    public void updateUser(User user) {
+    public void updateUser(User user, String accesstoken) {
     }
 
     public static void main(String[] args) {
