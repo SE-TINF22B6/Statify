@@ -3,8 +3,11 @@ package fm.statify.backend_service.util;
 import fm.statify.backend_service.entities.Stream;
 import fm.statify.backend_service.entities.User;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +26,7 @@ public class DatabaseManager {
         this.password = password;
     }
 
-    public void init() {
+/*    public void init() {
         try (Connection conn = DriverManager.getConnection(url, username, password);
              Statement stmt = conn.createStatement()) {
 
@@ -57,6 +60,15 @@ public class DatabaseManager {
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Failed to initialize database: ", e);
         }
+    }*/
+
+    public void init() {
+        try {
+            Connection connection = DriverManager.getConnection(url, username, password);
+            System.out.println("The connection was established successfully.");
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     // Prototyp zum Einfügen eines Users in die Datenbank (Parameter & weiteres kann beliebig erweitert werden)
@@ -75,10 +87,10 @@ public class DatabaseManager {
         }
     }
 
-    public void addStream(Stream stream){
+    public void addStream(Stream stream) {
     }
 
-    public void updateAPIKey(User user, String newAPIKey){
+    public void updateAPIKey(User user, String newAPIKey) {
     }
 
     //Prototyp zum Überprüfen, ob ein User existiert
@@ -100,15 +112,29 @@ public class DatabaseManager {
     }
 
 
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() {
         return null;
     }
 
     public void updateUser(User user, String accesstoken) {
     }
 
-    public static void main(String[] args) {
-        DatabaseManager databaseManager = new DatabaseManager("jdbc:mysql://localhost:3306/mysql", "root", "root");
-        databaseManager.init();
+    public static void main(String[] args) throws IOException {
+        Properties properties = new Properties();
+        String basePath = System.getProperty("user.dir");
+        String filePath = basePath + "\\backend_service\\src\\main\\resources\\application.properties";
+        try {
+            properties.load(new FileInputStream(filePath));
+
+            String url = properties.getProperty("db.url");
+            String username = properties.getProperty("db.username");
+            String password = properties.getProperty("db.password");
+
+            DatabaseManager databaseManager = new DatabaseManager(url, username, password);
+
+            databaseManager.init();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
