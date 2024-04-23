@@ -2,6 +2,7 @@ import "../css/statistics-page.css"
 import StatisticsFrame from "../components/statisticsFrame";
 import Actionbar from "../components/actionbar";
 import StatisticItem from "../components/statisticItem";
+import PlaylistStatisticsItem from "../components/playlistStatisticsItem";
 
 export default function StatisticsPage() {
     return (
@@ -59,6 +60,16 @@ export default function StatisticsPage() {
                                        title={"Taylor Swift"}
                                        number={5}
                                        color={"purple"}/>
+                    </StatisticsFrame>
+                    <StatisticsFrame
+                    header={"Playlist Statistics"}>
+                        <PlaylistStatisticsItem name={"My Playlist"}
+                        minutes={762}
+                        songs={254}
+                        top_artist={"Coldplay"}
+                        top_genre={"Pop"}
+                        top_artist_count={21}
+                        top_genre_count={86}/>
                     </StatisticsFrame>
                 </div>
             </div>

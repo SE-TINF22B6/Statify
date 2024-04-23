@@ -1,0 +1,37 @@
+.number-item{
+    align-items: center;
+}
+
+.number-item .title{
+    font-size: 14pt;
+}
+
+.number-item .subtitle{
+    font-size: 12pt;
+    font-weight: lighter;
+    margin: 0;
+}
+
+.number-item .number{
+    font-size: 42pt;
+    font-weight: bold;
+    margin: 0;
+}
+
+.number-item .unit{
+    font-weight: lighter;
+    font-size: 10pt;
+    margin: 0;
+}
+
+.number-item .number.green{
+    color: var(--collection-1-spotify);
+}
+
+.number-item .number.orange{
+    color: var(--collection-1-orange);
+}
+
+.number-item .number.purple{
+    color: var(--collection-1-purple);
+}

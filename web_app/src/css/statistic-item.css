@@ -6,6 +6,8 @@
 .frame .item .number{
     width: 3.5vw;
     height: 3.5vw;
+    min-height: 25pt;
+    min-width: 25pt;
     border-radius: 10px;
     font-size: 20pt;
     display: flex;
@@ -28,6 +30,8 @@
 .frame .item img{
     width: 3.5vw;
     height: fit-content;
+    min-height: 25pt;
+    min-width: 25pt;
 }
 
 .frame .item .left{

@@ -1,0 +1,20 @@
+.playlist-statistics{
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.playlist-statistics .content{
+    row-gap: 20px;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+}
+
+.playlist-statistics .row{
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.playlist-statistics .playlist-name{
+    font-size: 20pt;
+}
