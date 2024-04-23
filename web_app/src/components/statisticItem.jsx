@@ -10,7 +10,7 @@ export default function StatisticItem({number, title, subtitle, image, color}){
                     {subtitle != null && <p className={"subtitle"}>{subtitle}</p>}
                 </div>
             </div>
-            <img src={image}/>
+            <img src={image} alt=""/>
         </div>
     )
 }
