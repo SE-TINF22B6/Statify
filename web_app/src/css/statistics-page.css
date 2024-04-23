@@ -15,7 +15,7 @@
 }
 
 .statistics-page .content{
-    margin-top: 20px;
+    margin: 20px;
     height: auto;
     display: flex;
     flex-direction: column;
