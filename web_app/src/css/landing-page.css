@@ -1,7 +1,8 @@
 @import "styleguide.css";
 
 .action-bar{
-    background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) 100%), radial-gradient(50% 50% at 0 100px,  rgb(20.5, 20.5, 20.5) 20.35%, rgb(5.2, 20.4,10.49) 100%);
+    background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) var(--collection-1-actionbar-height)),
+    radial-gradient(50% 50% at 0 100px,  rgb(20.5, 20.5, 20.5) 20.35%, rgb(5.2, 20.4,10.49) 100%);
 }
 
 .landing-page{
