@@ -1,16 +1,16 @@
 import "../css/statistics-page.css"
-import StatisticsFrame from "../components/StatisticsFrame";
+import StatisticsFrame from "../components/statisticsFrame";
 import Actionbar from "../components/actionbar";
-import StatisticItem from "../components/StatisticItem";
+import StatisticItem from "../components/statisticItem";
 
 export default function StatisticsPage() {
     return (
         <div>
-            <Actionbar>
+            <Actionbar className={"statistics"}>
 
             </Actionbar>
             <div className={"statistics-page page"}>
-                <div className={"content"}>
+                <div className={"content column"}>
                     <StatisticsFrame header={"Top Tracks"} subheader={"01.04.2024 - 22.04.2024"}>
                         <StatisticItem image={"https://i.scdn.co/image/ab67616d0000b273b7a9a6a2bf311630d3fc6956"}
                                        title={"Faith"}

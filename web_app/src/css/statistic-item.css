@@ -1,6 +1,4 @@
 .frame .item{
-    display: flex;
-    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
@@ -33,8 +31,6 @@
 }
 
 .frame .item .left{
-    flex-direction: row;
-    display: flex;
     align-items: center;
 }
 

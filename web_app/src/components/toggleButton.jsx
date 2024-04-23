@@ -21,7 +21,7 @@ export default function ToggleButton({className, color, selected, setSelected, b
     }
 
     return(
-        <div className="toggle-button" style={style}>
+        <div className="toggle-button row" style={style}>
             <button className={className}
                     style={selected === 0 ? selectedStyle : unselectedStyle}
                     onClick={() => setSelected(0)}

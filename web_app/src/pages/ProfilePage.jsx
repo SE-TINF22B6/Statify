@@ -9,11 +9,11 @@ export default function ProfilePage(){
 
     return(
         <div>
-            <Actionbar>
+            <Actionbar className={"profile"}>
                 <img className="icon" src={profile} alt="Profile Icon"/>
             </Actionbar>
             <div className="profile-page page">
-                <div className="content">
+                <div className="content row">
                     <div className="actions column">
                         <div className="action">
                             <p className="header">Log Out</p>

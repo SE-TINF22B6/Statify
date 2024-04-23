@@ -1,6 +1,6 @@
 @import "styleguide.css";
 
-.action-bar{
+.action-bar.landing{
     background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) var(--collection-1-actionbar-height)),
     radial-gradient(50% 50% at 0 100px,  rgb(20.5, 20.5, 20.5) 20.35%, rgb(5.2, 20.4,10.49) 100%);
 }
@@ -12,8 +12,6 @@
 
 .landing-page .content{
     height: auto;
-    display: flex;
-    flex-direction: row;
 }
 
 .landing-page .logo{
@@ -28,10 +26,8 @@
 
 .landing-page .content .vertical{
     width: 70%;
-    display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: column;
     padding: 10vh 10vw;
     box-sizing: border-box;
     color: white;
@@ -48,8 +44,6 @@
 }
 
 .landing-page .content .vertical .github{
-    display: flex;
-    flex-direction: row;
     margin: 35px;
 }
 .landing-page .content .vertical .github img{
@@ -69,11 +63,6 @@
     top: 0;
     left: 0;
     pointer-events: none;
-}
-
-.action-bar .buttons{
-    display: flex;
-    flex-direction: row;
 }
 
 .action-bar .buttons .button{
