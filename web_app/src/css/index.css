@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -18,5 +18,11 @@ code {
   min-height: 100vh;
   width: 100vw;
   display: grid;
+}
+
+hr{
+  border: none;
+  border-top: 1px inset rgba(255,255,255, 0.2);
+  width: 100%;
 }
 
