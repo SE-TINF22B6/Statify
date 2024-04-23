@@ -1,9 +1,11 @@
+@import "styleguide.css";
+
 .frame{
     border-radius: 10px;
     border: 2px solid rgba(255, 255, 255, 0.2);
-    height: fit-content;
+    height: auto;
     padding: 10px;
-    width: fit-content;
+    width: 30vw;
     box-shadow: 4px 4px 4px rgba(0,0,0,0.3) inset, 4px 4px 4px rgba(0,0,0,0.3);
     display: flex;
     flex-direction: column;
@@ -28,4 +30,7 @@
 
 .frame .frame-content{
     padding: 0 10px;
+    row-gap: 10px;
+    display: flex;
+    flex-direction: column;
 }
