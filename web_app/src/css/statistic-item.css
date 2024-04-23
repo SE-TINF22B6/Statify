@@ -1,0 +1,48 @@
+.frame .item{
+    justify-content: space-between;
+    align-items: center;
+}
+
+.frame .item .number{
+    width: 3.5vw;
+    height: 3.5vw;
+    min-height: 25pt;
+    min-width: 25pt;
+    border-radius: 10px;
+    font-size: 20pt;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.frame .item .number.green{
+    background: var(--collection-1-spotify-04);
+}
+
+.frame .item .number.orange{
+    background: var(--collection-1-orange-04);
+}
+
+.frame .item .number.purple{
+    background: var(--collection-1-purple-04);
+}
+
+.frame .item img{
+    width: 3.5vw;
+    height: fit-content;
+    min-height: 25pt;
+    min-width: 25pt;
+}
+
+.frame .item .left{
+    align-items: center;
+}
+
+.frame .item .title{
+    font-size: 14pt;
+}
+
+.frame .item .subtitle{
+    font-size: 12pt;
+    font-weight: lighter;
+}

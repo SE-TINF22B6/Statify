@@ -1,9 +1,14 @@
-.action-bar{
-    background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) 100%), radial-gradient(circle at 0px 0px, rgba(104, 36, 229, 0.1), rgba(0, 0, 0, 0) 90%), radial-gradient(circle at 100% 0px, rgba(21, 21, 21, 1) 15%, rgba(5, 20, 10, 1) 90%);
+@import "styleguide.css";
+
+.action-bar.profile{
+    background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) var(--collection-1-actionbar-height)),
+    radial-gradient(circle at 0px 0px, rgba(104, 36, 229, 0.1), rgba(0, 0, 0, 0) 90%),
+    radial-gradient(circle at 100% 0px, rgba(21, 21, 21, 1) 15%, rgba(5, 20, 10, 1) 90%);
 }
 
 .profile-page{
-    background-image: radial-gradient(circle at 0px 0px, rgba(104, 36, 229, 0.1), rgba(0, 0, 0, 0) 90%), radial-gradient(circle at 100% 0px, rgba(21, 21, 21, 1) 15%, rgba(5, 20, 10, 1) 90%);
+    background-image: radial-gradient(circle at 0px 0px, rgba(104, 36, 229, 0.1), rgba(0, 0, 0, 0) 90%),
+    radial-gradient(circle at 100% 0px, rgba(21, 21, 21, 1) 15%, rgba(5, 20, 10, 1) 90%);
     background-attachment: fixed;
 }
 
@@ -15,8 +20,6 @@
 
 .profile-page .content{
     box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
     width: 100%;
     justify-content: space-around;
     height: 100%;
@@ -58,8 +61,6 @@
 }
 
 .profile-page .content .row{
-    display: flex;
-    flex-direction: row;
     justify-content: space-around;
     margin: 40px;
 }

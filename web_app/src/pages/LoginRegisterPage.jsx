@@ -12,9 +12,9 @@ export default function LoginRegisterPage({initialState}) {
     return(
         <div className="login-register-page">
             <img className={"logo"} src={logo} alt={"Statify Logo"} onClick={() => navigate("/")}/>
-            <div className="content">
+            <div className="content column">
                 <ToggleButton choices={["Register", "Log in"]} color={"purple"} selected={state} setSelected={setState} buttonWidth={350} textSize={24}/>
-                <div className="inputs">
+                <div className="inputs column">
                     <TextInput name="Email" type="email"/>
                     {state === 0 && <TextInput name="Username" type="text"/>}
                     <TextInput name="Password" type="password"/>
