@@ -62,14 +62,14 @@ export default function StatisticsPage() {
                                        color={"purple"}/>
                     </StatisticsFrame>
                     <StatisticsFrame
-                    header={"Playlist Statistics"}>
+                        header={"Playlist Statistics"}>
                         <PlaylistStatisticsItem name={"My Playlist"}
-                        minutes={762}
-                        songs={254}
-                        top_artist={"Coldplay"}
-                        top_genre={"Pop"}
-                        top_artist_count={21}
-                        top_genre_count={86}/>
+                                                minutes={762}
+                                                songs={254}
+                                                top_artist={"Coldplay"}
+                                                top_genre={"Pop"}
+                                                top_artist_count={21}
+                                                top_genre_count={86}/>
                     </StatisticsFrame>
                 </div>
             </div>

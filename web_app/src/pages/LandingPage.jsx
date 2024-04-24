@@ -49,10 +49,17 @@ export default function LandingPage(){
             .then((res) => {
                 return res.text()
             })
-            .then((link) => {
-                console.log(link)
-                window.location = (link)
+            .catch((err) => {
+                navigate("/callback?error=true")
+                return null
             })
+            .then((link) => {
+                if(link != null) {
+                    console.log(link)
+                    window.location = (link)
+                }
+            })
+
     }
 }
 
