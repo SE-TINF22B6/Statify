@@ -1,4 +1,5 @@
 import "../css/statistics-frame.css"
+import PropTypes from "prop-types";
 
 export default function StatisticsFrame({children, header, subheader}){
     return(
@@ -11,4 +12,12 @@ export default function StatisticsFrame({children, header, subheader}){
             </div>
         </div>
     )
+}
+
+StatisticsFrame.propTypes={
+    header: PropTypes.string.isRequired,
+}
+
+StatisticsFrame.defaultProps={
+    header: "Statistics"
 }

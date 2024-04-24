@@ -1,6 +1,7 @@
 import "../css/playlist-statistics-item.css"
 
 import NumberItem from "./numberItem";
+import PropTypes from "prop-types";
 
 export default function PlaylistStatisticsItem({name, songs, minutes, top_artist, top_genre, top_artist_count, top_genre_count}){
     return (
@@ -18,4 +19,24 @@ export default function PlaylistStatisticsItem({name, songs, minutes, top_artist
             </div>
         </div>
     )
+}
+
+PlaylistStatisticsItem.propTypes={
+    name: PropTypes.string.isRequired,
+    top_artist: PropTypes.string.isRequired,
+    top_genre: PropTypes.string.isRequired,
+    songs: PropTypes.number.isRequired,
+    minutes: PropTypes.number.isRequired,
+    top_artist_count: PropTypes.number.isRequired,
+    top_genre_count: PropTypes.number.isRequired
+}
+
+PlaylistStatisticsItem.defaultProps={
+    name: "Playlist",
+    top_artist: "Top Artist",
+    top_genre: "Top Genre",
+    songs: 0,
+    minutes: 0,
+    top_artist_count: 0,
+    top_genre_count: 0
 }

@@ -1,4 +1,5 @@
 import "../css/number-item.css"
+import PropTypes from "prop-types";
 
 export default function NumberItem({title, subtitle, number, unit, color}){
     return(
@@ -9,4 +10,18 @@ export default function NumberItem({title, subtitle, number, unit, color}){
             <p className={"unit"}>{unit}</p>
         </div>
     )
+}
+
+NumberItem.propTypes={
+    number: PropTypes.number.isRequired,
+    color: PropTypes.oneOf(["orange", "green", "purple"]),
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    unit: PropTypes.string.isRequired,
+}
+
+NumberItem.defaultProps={
+    color: "orange",
+    number: 0,
+    unit: "songs"
 }
