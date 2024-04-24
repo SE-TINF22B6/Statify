@@ -2,13 +2,10 @@ package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
+
 import java.util.Map;
 
 @Controller
@@ -29,8 +26,9 @@ public class SpotifyController {
 
     // Redirect the user to the Spotify login page
     @GetMapping("/authorize")
+    @ResponseBody
     public String authorize(){
-        return "redirect:" + spotifyOAuth.getAuthUrl();
+        return spotifyOAuth.getAuthUrl();
     }
 
 
