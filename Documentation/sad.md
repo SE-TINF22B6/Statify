@@ -4,10 +4,24 @@
 > If necessary, you can add more topics related to the architecture design of your application.
 
 ### 1. Introduction
-#### 1.1 Overview
-> What are the selling points of your architecture design?
+#### 1.1 Overview 
+
+> For our project, we use a layered architecture.   
+> **1. Layer:** Frontend, part of our application that will be visible to the user     
+> **2. Layer:** Backend, contains business logic, provides API for Frontend, connected to our database
+> **3. Layer:** Database, stores data
+
+> For the Frontend to access the stored data, it has to request the Backend, which can get the data from the Database. Therefore our layered architecture is closed, as a request by the Frontend has to pass all layers.
+
 #### 1.2 Constraints
-> Any technical or organizational constraints, conventions (Tips: https://docs.arc42.org/section-2/)
+> Due to the requirements of our stakholders, the following architectural decisions were made:
+> - Usage of a relational database -> implemented as 3. Layer
+> - Stateful application
+> - Graphical user interface -> implemented as 1. Layer
+> - 3rd party service API -> called by 2. Layer
+> - Implememntation as website
+> - Programming languages and frameworks: Java Spring Boot, React
+> - Time limit: 2 semesters
 #### 1.3 Definitions, Acronyms and Abbreviations
 > Definitions of all terms, acronyms, and abbreviations required to properly interpret this document.
 #### 1.4 References
@@ -21,7 +35,7 @@
 > This section specifies the architecture design in various views.
 > Minimum requirement:
 > - sequence diagram on a component level and necessary description
-> - component diagrams and/or package diagrams, and necessary description
+> - component diagrams and/or diagrams, and necessary description
 
 #### 3.1 Overview 
 > A summary of the architecture design -- highlights.  
