@@ -35,7 +35,18 @@
 > This section specifies the architecture design in various views.
 > Minimum requirement:
 > - sequence diagram on a component level and necessary description
-> - component diagrams and/or diagrams, and necessary description
+> - component diagrams and/or diagrams, and necessary description   
+
+#### 3.1 Component Diagram
+> Our Component Diagram contains 3 components:  
+> **1.** Frontend   
+> **2.** Backend    
+> **3.** Database   
+> The Frontend is connected to the backend via the provided Spring Boot REST API defined in the SpotifyController.     
+> The Frontend displays a users Statistics via the UserInterface. For that purpose, it requests the Backend's Statistics component, which provides either already generated Statistics from the Database or generates new statistics from a user's streams which are stored in the Database.    
+> For accessing a user's streams, the Backend communicates with Spotify via the Spotify Web API.
+
+![Component Diagram](diagrams/UML_Component_Diagram.svg)
 
 #### 3.1 Overview 
 > A summary of the architecture design -- highlights.  
