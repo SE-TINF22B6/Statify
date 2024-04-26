@@ -105,7 +105,6 @@ public class SpotifyOAuth {
         tokenData.put("token_type", jsonObject.getString("token_type"));
         tokenData.put("expires_in", String.valueOf(jsonObject.getInt("expires_in")));
         tokenData.put("refresh_token", jsonObject.optString("refresh_token"));
-
         return tokenData;
     }
 }

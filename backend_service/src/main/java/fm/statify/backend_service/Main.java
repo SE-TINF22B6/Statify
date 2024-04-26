@@ -23,6 +23,7 @@ public class Main {
             String refreshToken = tokenData.get("refresh_token");
             System.out.println("Initial Access Token: " + accessToken);
             System.out.println("Refresh Token: " + refreshToken);
+
             // Refresh the access token
             SpotifyTokenRefresher tokenRefresher = new SpotifyTokenRefresher();
             String refreshedTokenResponse = tokenRefresher.refreshAccessToken(refreshToken);

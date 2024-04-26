@@ -24,15 +24,17 @@ public class UserAuth {
         this.spotifyOAuth = spotifyOAuth;
     }
 
-    public void authenticateUser(String code) {
+    public String authenticateUser(String code) {
         try {
             String response = spotifyOAuth.requestAccessToken(code);
             Map<String, String> tokenData = spotifyOAuth.parseResponse(response);
             String accessToken = tokenData.get("access_token");
             User user = fetchSpotifyUser(accessToken);
             addUserToDatabaseIfNotExists(user, accessToken);
+            return accessToken;
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Failed to authenticate user: ", e);
+            return null;
         }
     }
 

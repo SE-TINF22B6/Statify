@@ -17,59 +17,15 @@ import java.util.concurrent.TimeUnit;
 */
 
 public class StreamingDaemon {
-    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4);
 
-    public StreamingDaemon() {
+    public StreamingDaemon(String UserId) {
         // Initialize daemon, potentially loading tokens from Firebase or another secure store
+        startStreamingForUser(UserId);
+        // For the idea here, we are starting the stream for a single user. In a real scenario, multiple users would be handled.
     }
-
     public void startStreamingForUser(String userId) {
         // Each call to this method effectively starts a new thread dedicated to a user's streaming data
         scheduler.scheduleAtFixedRate(new UserTopTracksTask(userId), 0, 20, TimeUnit.MINUTES);
-    }
-
-    private static class UserTopTracksTask implements Runnable {
-        private final String userId;
-
-        UserTopTracksTask(String userId) {
-            this.userId = userId;
-        }
-
-        @Override
-        public void run() {
-            try {
-                // Placeholder for token management
-                String token = getTokenForUser(userId);
-
-                // Placeholder for Spotify API call to fetch top tracks
-                String topTracksJson = fetchTopTracksFromSpotify(token);
-
-                // Placeholder for database operation to save fetched tracks
-                saveTopTracksToDatabase(userId, topTracksJson);
-            } catch (Exception e) {
-                e.printStackTrace();
-                // Proper error handling and logging should be implemented here
-            }
-        }
-
-        private String getTokenForUser(String userId) {
-            // Placeholder for actual implementation
-            return "user-specific-token";
-        }
-
-        private String fetchTopTracksFromSpotify(String token) {
-            // Placeholder for actual Spotify API call
-            return "{\"tracks\": []}";
-        }
-
-        private void saveTopTracksToDatabase(String userId, String topTracksJson) {
-            // Placeholder for actual database operation
-        }
-    }
-
-    public static void main(String[] args) {
-        StreamingDaemon daemon = new StreamingDaemon();
-        daemon.startStreamingForUser("exampleUserId");
-        // For the idea here, we are starting the stream for a single user. In a real scenario, multiple users would be handled.
     }
 }
