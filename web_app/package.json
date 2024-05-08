@@ -17,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test:ci": "react-scripts test --ci --coverage --reporters=default --reporters=jest-junit"
   },
   "eslintConfig": {
     "extends": [
@@ -38,9 +39,7 @@
     ]
   },
   "devDependencies": {
-    "jest-junit-reporter": "^1.1.0"
-  },
-  "jest": {
-    "testResultsProcessor": "./node_modules/jest-junit-reporter"
+    "jest": "^26.6.3",
+    "jest-junit": "^16.0.0"
   }
 }
