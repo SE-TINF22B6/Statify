@@ -12,6 +12,8 @@ on:
 permissions:
   checks: write
   pull-requests: write
+  contents: read
+  actions: read
 
 jobs:
   build:
@@ -37,9 +39,9 @@ jobs:
     - run: npm run build --if-present
     - run: npm run test:ci
     - name: Publish Test Results
-      uses: actions/upload-artifact@v2
+      uses: EnricoMi/publish-unit-test-result-action/linux@v2
       if: always()
       with:
-          name: test-results
-          path: ./web_app/junit.xml
-          if-no-files-found: error
+        json-file: ./test_results/jest.json
+        files: |
+          .web_app/junit.xml
