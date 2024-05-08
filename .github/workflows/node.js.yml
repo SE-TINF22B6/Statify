@@ -41,5 +41,5 @@ jobs:
       if: always()
       with:
           name: test-results
-          path: ./web_app/jest-junit.xml
+          path: ./web_app/junit.xml
           if-no-files-found: error
