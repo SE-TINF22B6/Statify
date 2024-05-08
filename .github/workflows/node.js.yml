@@ -40,5 +40,6 @@ jobs:
       uses: actions/upload-artifact@v2
       if: always()
       with:
-          path: ./web_app/junit.xml
+          name: junit.xml
+          path: ./web_app
           if-no-files-found: error
