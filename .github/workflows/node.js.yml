@@ -35,11 +35,11 @@ jobs:
         cache-dependency-path: './web_app/package-lock.json'
     - run: npm ci
     - run: npm run build --if-present
-    - run: npm test
+    - run: npm run test:ci
     - name: Publish Test Results
       uses: actions/upload-artifact@v2
       if: always()
       with:
-          name: junit.xml
-          path: ./web_app
+          name: test-results
+          path: ./web_app/junit.xml
           if-no-files-found: error
