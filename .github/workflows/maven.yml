@@ -38,10 +38,10 @@ jobs:
         run: mvn -B test
 
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action/linux@v2
-        id: test-results
+        uses: dorny/test-reporter@v1
         if: always()
-        with:
-          json_file: ./test_results/backend.json
-          files: |
-            ./backend_service/target/surefire-reports/*.xml
+        with:       
+          name: JUnit Tests                
+          path: './backend_service/target/surefire-reports/*.xml'                    
+          reporter: jest-junit
+          working-directory: ./backend_service
