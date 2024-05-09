@@ -31,3 +31,15 @@ jobs:
 
       - name: Update dependency graph
         run: mvn -f backend_service/pom.xml com.github.ferstl:depgraph-maven-plugin:4.0.1:graph
+
+      - name: Run tests with Maven
+        run: mvn -B test --file pom.xml
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/linux@v2
+        if: always()
+        with:
+          json_file: ./test_results/backend.json
+          json_test_case_results: true
+          files: |
+            ./backend_service/target/surefire-reports/*.xml
