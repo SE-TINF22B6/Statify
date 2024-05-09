@@ -47,16 +47,3 @@ jobs:
           reporter: java-junit
           working-directory: ./backend_service
 
-      - name: Build-A-Badge
-        uses: peterrhodesdev/build-a-badge@v1.3.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          filename: backend-test
-          label: Backend Tests
-          color: ${{
-            steps.test-results.outputs.failed == 0 && 'green'                                        ||
-            steps.test-results.outputs.failed < steps.test-results.outputs.passed && 'yellow'        ||
-            'red' }}
-          message: '${{ steps.test-results.outputs.passed }} passed, ${{ steps.test-results.outputs.failed }} failed, ${{ steps.test-results.outputs.skipped }} skipped -> ${{ steps.test-results.outputs.conclusion }}'
-
-
