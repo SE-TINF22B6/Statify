@@ -34,7 +34,7 @@ jobs:
         run: mvn -B -f './pom.xml' package
 
       - name: Update dependency graph
-        run: mvn -f backend_service/pom.xml com.github.ferstl:depgraph-maven-plugin:4.0.1:graph
+        run: mvn -f pom.xml com.github.ferstl:depgraph-maven-plugin:4.0.1:graph
 
       - name: Run tests with Maven
         run: mvn -B test
