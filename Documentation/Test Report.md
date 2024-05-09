@@ -5,7 +5,17 @@
 > This section provides an overview of the software testing process and the scope of the testing activities.
 > 
 ### 2. Test Strategy
-> This section describes the overall approach to testing, including the testing methodology, testing types, and testing techniques used. Highlight which automatic testing tools/frameworks are used for your project. 
+> This section describes the overall approach to testing, including the testing methodology, testing types, and testing techniques used. Highlight which automatic testing tools/frameworks are used for your project.
+
+We integrated running of tests with GitHub Actions. Every time some code is pushed to the repository, frontend as well as backend tests are ran automatically. The test results are reported by using the [Test Reporter Github Action](https://github.com/marketplace/actions/test-reporter). You can view hom many tests passed, how many failed and more.  
+
+#### 2.1 Frontend
+**Test Framework: Jest**  
+[Link to tests](https://github.com/SE-TINF22B6/Statify/blob/develop/web_app/src/App.test.js)
+
+#### 2.2 Backend
+**Test Framework: JUnit**  
+[Link to tests](https://github.com/SE-TINF22B6/Statify/tree/develop/backend_service/src/test/java/fm/statify/backend_service)
 
 ### 3. Test Plan
 > This section outlines the specific testing tasks, timelines, and resources required to achieve the testing objectives.
