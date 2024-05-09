@@ -40,9 +40,9 @@ jobs:
     - run: npm run test:ci
     - name: Publish Test Results
       uses: EnricoMi/publish-unit-test-result-action/linux@v2
+      id: test-results
       if: always()
       with:
-        json_file: ./test_results/jest.json
-        json_test_case_results: true
+        json_file: ./test_results/frontend.json
         files: |
           ./web_app/junit.xml
