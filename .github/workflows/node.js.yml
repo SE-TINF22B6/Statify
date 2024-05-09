@@ -44,4 +44,4 @@ jobs:
       with:
         json_file: ./test_results/jest.json
         files: |
-          .web_app/junit.xml
+          ./web_app/junit.xml
