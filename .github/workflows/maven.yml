@@ -43,5 +43,5 @@ jobs:
         with:       
           name: JUnit Tests                
           path: target/surefire-reports/*.xml                    
-          reporter: jest-junit
+          reporter: java-junit
           working-directory: ./backend_service
