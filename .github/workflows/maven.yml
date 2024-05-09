@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    
+    defaults:
+      run:
+        working-directory: './backend_service'
 
     container:
       image: archlinux:latest
@@ -33,7 +37,7 @@ jobs:
         run: mvn -f backend_service/pom.xml com.github.ferstl:depgraph-maven-plugin:4.0.1:graph
 
       - name: Run tests with Maven
-        run: mvn -B test --file pom.xml
+        run: mvn -B test
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action/linux@v2
