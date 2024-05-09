@@ -39,9 +39,23 @@ jobs:
 
       - name: Publish Test Results
         uses: dorny/test-reporter@v1
+        id: test-results
         if: always()
         with:       
           name: JUnit Tests                
           path: target/surefire-reports/*.xml                    
           reporter: java-junit
           working-directory: ./backend_service
+
+      - name: Create Test Badge
+        uses: RubbaBoy/BYOB@v1.3.0
+        with:
+          NAME: backend-test
+          LABEL: 'Backend Tests'
+          STATUS: '${{ steps.test-results.outputs.passed }} passed, ${{ steps.test-results.outputs.failed }} failed, ${{ steps.test-results.outputs.skipped }} skipped -> ${{ steps.test-results.outputs.conclusion }}'
+          COLOR: ${{
+            steps.test-results.outputs.failed == 0 && 'green'                                        ||
+            steps.test-results.outputs.failed < steps.test-results.outputs.passed && 'yellow'        ||
+            'red' }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
