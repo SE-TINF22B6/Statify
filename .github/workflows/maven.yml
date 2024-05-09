@@ -31,7 +31,7 @@ jobs:
           echo "$JAVA_HOME/bin" >> $GITHUB_PATH
 
       - name: Build with Maven
-        run: mvn -B -f './backend_service/pom.xml' package
+        run: mvn -B -f './pom.xml' package
 
       - name: Update dependency graph
         run: mvn -f backend_service/pom.xml com.github.ferstl:depgraph-maven-plugin:4.0.1:graph
