@@ -1,4 +1,6 @@
 # 📊 Statify
+[![Node.js CI](https://github.com/SE-TINF22B6/Statify/actions/workflows/node.js.yml/badge.svg?branch=develop)](https://github.com/SE-TINF22B6/Statify/actions/workflows/node.js.yml)
+[![Java CI with Maven](https://github.com/SE-TINF22B6/Statify/actions/workflows/maven.yml/badge.svg?branch=develop)](https://github.com/SE-TINF22B6/Statify/actions/workflows/maven.yml)
 ## Project Vision
 
 The web application allows the connection to a user's Spotify account to access their listening history. It is used to provide statistics about their listening habits, such as most-listened-to genres, artists, and time of day, etc..
