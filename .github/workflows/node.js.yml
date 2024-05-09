@@ -38,11 +38,11 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm run test:ci
-    - name: Publish Test Results
-      uses: EnricoMi/publish-unit-test-result-action/linux@v2
-      id: test-results
+    
+    - uses: dorny/test-reporter@v1
       if: always()
-      with:
-        json_file: ./test_results/frontend.json
-        files: |
-          ./web_app/junit.xml
+      with:       
+        name: JEST Tests                
+        path: 'junit.xml'                    
+        reporter: jest-junit
+        working-directory: ./web_app
