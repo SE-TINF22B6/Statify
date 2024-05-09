@@ -42,6 +42,6 @@ jobs:
         if: always()
         with:       
           name: JUnit Tests                
-          path: './backend_service/target/surefire-reports/*.xml'                    
+          path: ./backend_service/target/surefire-reports/*.xml                    
           reporter: jest-junit
           working-directory: ./backend_service
