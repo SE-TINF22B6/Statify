@@ -3,12 +3,17 @@ import StatisticsFrame from "../components/statisticsFrame";
 import Actionbar from "../components/actionbar";
 import StatisticItem from "../components/statisticItem";
 import PlaylistStatisticsItem from "../components/playlistStatisticsItem";
+import profile from "../images/profile-icon.png";
+import {useNavigate} from "react-router-dom";
 
 export default function StatisticsPage() {
+
+    const navigate = useNavigate();
+
     return (
         <div>
             <Actionbar className={"statistics"}>
-
+                <img className="icon" src={profile} alt="Profile Icon" onClick={() => navigate("/profile")}/>
             </Actionbar>
             <div className={"statistics-page page"}>
                 <div className={"content column"}>

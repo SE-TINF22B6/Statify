@@ -21,23 +21,22 @@
 .profile-page .content{
     box-sizing: border-box;
     width: 100%;
-    justify-content: space-around;
+    justify-content: space-evenly;
     height: 100%;
+    color: white;
 }
 
-.profile-page .content .profile{
-    width: 50%;
+.profile-page .content .profile img{
+    height: 150px;
+    width: fit-content;
 }
 
-.profile-page .content .profile .text-input{
-    padding: 4vh 0;
-}
+
 
 .profile-page .content .actions{
-    width: 20%;
-    color: white;
     display: flex;
     flex-direction: column;
+    width: 20% !important;
 }
 
 .profile-page .content .actions .action{
@@ -45,18 +44,18 @@
 
 }
 
-.profile-page .content .actions p{
+.profile-page .content p{
     opacity: 70%;
     font-weight: lighter;
 }
 
-.profile-page .content .actions .header{
+.profile-page .content .header{
     font-size: 20px;
     opacity: 100%;
     font-weight: initial;
     cursor: pointer;
 }
-.profile-page .content .actions .red{
+.profile-page .content .red{
     color: red;
 }
 
@@ -68,4 +67,9 @@
 .profile-page .content .column{
     align-self: center;
     padding: 20px 60px;
+    width:30%;
+}
+
+.profile-page .content button{
+    margin: 15px 0;
 }
