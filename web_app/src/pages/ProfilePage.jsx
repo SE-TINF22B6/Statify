@@ -19,7 +19,6 @@ export default function ProfilePage(){
             })
             .then((user) => {
                 setUser(user);
-                console.log(user)
             })
     }, []);
 

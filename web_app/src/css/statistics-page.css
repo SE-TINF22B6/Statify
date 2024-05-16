@@ -19,4 +19,11 @@
     height: auto;
     align-items: center;
     row-gap: 20px;
+    column-gap: 20px;
 }
+
+.statistics-page .content .row{
+    column-gap: inherit;
+}
+
+
