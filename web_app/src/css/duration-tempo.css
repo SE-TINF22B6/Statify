@@ -1,0 +1,25 @@
+.container {
+    width: 645px;
+    height: 148px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    margin: 10px;
+}
+
+.item {
+    text-align: center;
+    margin: 0 25px;
+}
+
+.label {
+    color: white;
+    font-size: 24px;
+}
+
+.value {
+    color: #ED6B25;
+    font-size: 86px;
+    font-weight: 600;
+}

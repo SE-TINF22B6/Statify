@@ -1,0 +1,25 @@
+.container {
+    width: 609px;
+    height: 148px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    margin: 10px;
+}
+
+.item {
+    text-align: center;
+    margin: 0 25px;
+}
+
+.label {
+    color: white;
+    font-size: 24px;
+}
+
+.lower-value {
+    color: #1DB954;
+    font-size: 96px;
+    font-weight: 600;
+}
