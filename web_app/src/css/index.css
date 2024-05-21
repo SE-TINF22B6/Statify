@@ -36,3 +36,7 @@ hr{
   flex-direction: column;
 }
 
+.scrollable{
+  overflow-y: auto;
+}
+

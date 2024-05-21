@@ -1,12 +1,15 @@
 package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
+import fm.statify.backend_service.entities.Playlist;
 import fm.statify.backend_service.entities.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -55,6 +58,18 @@ public class SpotifyController {
     public User getProfileInfo(){
         //TODO: get users profile info from Spotify
         return new User("1234", "userName", "max.mustermann@web.de", "https://open.spotify.com/user/smedjan", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228", "premium");
+    }
+
+    @GetMapping("/playlists")
+    @ResponseBody
+    public List<Playlist> getUsersPlaylists(){
+        //TODO: get users playlists from Spotify
+        List<Playlist> list = new ArrayList<>();
+
+        list.add(new Playlist("1234", "1. Playlist", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228"));
+        list.add(new Playlist("5678", "2. Playlist", "https://wrapped-images.spotifycdn.com/image/yts-2023/default/your-top-songs-2023_DEFAULT_en-GB.jpg"));
+
+        return list;
     }
 
     @ExceptionHandler

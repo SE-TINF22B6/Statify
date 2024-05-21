@@ -4,12 +4,17 @@ import Button from "../components/button";
 import "../css/generate-statistics-dialog.css"
 import {useEffect, useState} from "react";
 import ToggleButton from "../components/toggleButton";
+import PlaylistItem from "../components/playlistItem";
 
 export default function GenerateStatisticsDialog({open, setOpen}) {
 
     const [toggle, setToggle] = useState(0)
 
     const [content, setContent] = useState(<></>)
+
+    const [playlists, setPlaylists] = useState([])
+
+    const [selectedPlaylist, setSelectedPlaylist] = useState(null)
 
     useEffect(() => {
         switch (toggle) {
@@ -49,11 +54,50 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
                 break
             case 1:
                 setContent(
-
+                    <div className={"column"}>
+                        <div className={"scrollable playlist-container"}>
+                            {
+                                playlists.map((playlist, i) => (
+                                    <PlaylistItem key={i} title={playlist.name} image={playlist.imageURL} selected={i === selectedPlaylist} onClick={() => selectPlaylist(i)}/>
+                                ))
+                            }
+                        </div>
+                    </div>
                 )
                 break
         }
-    }, [toggle]);
+    }, [toggle, selectedPlaylist]);
+
+    useEffect(() => {
+        fetch("http://localhost:8081/playlists")
+            .then((result) => {
+                return result.json();
+            })
+            .then((res) => {
+                setPlaylists(res);
+            })
+    }, []);
+
+    useEffect(() => {
+        setSelectedPlaylist(null)
+        setToggle(0)
+    }, [open]);
+
+    function selectPlaylist(index){
+        if(selectedPlaylist === index){
+            setSelectedPlaylist(null)
+        }
+        else{
+            setSelectedPlaylist(index)
+        }
+    }
+
+    function onToggle(index){
+        if(index === 0){
+            setSelectedPlaylist(null)
+        }
+    }
+
 
     return (
         <Dialog open={open} onClose={() => setOpen(false)}>
@@ -61,7 +105,7 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
             <DialogContent>
                 <div className={"column"}>
                     <ToggleButton choices={["Top Tracks/Artists", "Playlists"]} selected={toggle} setSelected={setToggle}
-                                  color={"purple"} buttonWidth={300} textSize={14}/>
+                                  color={"purple"} buttonWidth={300} textSize={14} onToggle={onToggle}/>
                     {content}
                 </div>
             </DialogContent>

@@ -1,0 +1,25 @@
+.playlist-container .item img{
+    width: 3.5vw;
+    height: fit-content;
+    min-height: 25pt;
+    min-width: 25pt;
+}
+
+.playlist-container .item{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    column-gap: 20px;
+    align-items: center;
+    padding: 5px 10px;
+    background: rgba(255,255,255, 0.1);
+    cursor: pointer;
+}
+
+.playlist-container .item.selected{
+    background: rgba(255,255,255, 0.2);
+}
+
+.playlist-container .item .title{
+    font-size: 14pt;
+}

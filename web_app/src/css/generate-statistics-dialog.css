@@ -23,3 +23,11 @@
 .MuiDialog-paper .radio-group{
     row-gap: 10px;
 }
+
+.MuiDialog-paper .playlist-container{
+    max-height: 30vh;
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+

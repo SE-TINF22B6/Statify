@@ -2,7 +2,7 @@ import "../css/toggle-button.css";
 import {decodeColors} from "../util/decodeColors";
 import PropTypes from "prop-types";
 
-export default function ToggleButton({className, color, selected, setSelected, buttonWidth, textSize, choices}){
+export default function ToggleButton({className, color, selected, setSelected, buttonWidth, textSize, choices, onToggle}){
 
     let style = {
         fontSize:textSize + "px",
@@ -24,11 +24,17 @@ export default function ToggleButton({className, color, selected, setSelected, b
         <div className="toggle-button row" style={style}>
             <button className={className}
                     style={selected === 0 ? selectedStyle : unselectedStyle}
-                    onClick={() => setSelected(0)}
+                    onClick={() => {
+                        onToggle(0)
+                        setSelected(0)
+                    }}
             >{choices[0]}</button>
             <button className={className}
                     style={selected === 1 ? selectedStyle : unselectedStyle}
-                    onClick={() => setSelected(1)}
+                    onClick={() => {
+                        onToggle(1)
+                        setSelected(1)
+                    }}
             >{choices[1]}</button>
         </div>
     )
