@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import ProfilePage from "./pages/ProfilePage";
 import StatisticsPage from "./pages/StatisticsPage";
 import CallbackPage from "./pages/CallbackPage";
+import TrackPage from "./pages/TrackPage";
 function App() {
   return (
     <div className="App">
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path={"/statistics"} element={<StatisticsPage/>}/>
                 <Route path={"/callback"} element={<CallbackPage/>}/>
+                <Route path={"/track"} element={<TrackPage/>}/>
             </Routes>
         </BrowserRouter>
     </div>
