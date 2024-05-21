@@ -16,7 +16,7 @@
     height: 100vh;
 }
 
-.track,
+.track-page .track,
 .audio-features {
     display: flex;
     flex-direction: column;
@@ -24,12 +24,12 @@
     justify-content: center;
 }
 
-.divider {
+.track-page .divider {
     background-color: white;
     width: 1px;
     height: 100%;
 }
 
-.audio-features {
+.track-page .audio-features {
     justify-content: space-around;
 }

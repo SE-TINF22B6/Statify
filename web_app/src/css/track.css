@@ -1,4 +1,4 @@
-.track {
+.track-page .track {
     width: auto;
     height: auto;
     display: flex;
@@ -8,22 +8,22 @@
     box-sizing: border-box;
 }
 
-.track-image {
+.track-page .track-image {
     width: 176px;
     height: 176px;
     object-fit: cover;
 }
 
-.track-info {
+.track-page .track-info {
     text-align: center;
     font-weight: 600;
     color: #fff;
 }
 
-.track-title {
+.track-page .track-title {
     font-size: 30px;
 }
 
-.artist-name {
+.track-page .artist-name {
     font-size: 22px;
 }
