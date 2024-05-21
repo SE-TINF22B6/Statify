@@ -1,7 +1,6 @@
 import Actionbar from "../components/actionbar";
 import "../css/profile-page.css"
 import profile from "../images/profile-icon.png"
-import TextInput from "../components/textInput";
 import Button from "../components/button";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -41,7 +40,7 @@ export default function ProfilePage(){
                         </div>
                     </div>
                     <div className="profile column">
-                        <img src={user.profilePictureURL ?? "none"} alt={"Profile Picture"}/>
+                        <img src={user.profilePictureURL ?? "none"} alt={"Profile"}/>
                         <div className={"item"}>
                             <p className={"header"}>Username</p>
                             <p>{user.userDisplayName ?? "userName"}</p>

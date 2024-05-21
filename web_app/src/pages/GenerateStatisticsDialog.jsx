@@ -65,8 +65,11 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
                     </div>
                 )
                 break
+            default:
+                setContent(<div></div>)
         }
-    }, [toggle, selectedPlaylist]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [toggle, selectedPlaylist, playlists]);
 
     useEffect(() => {
         fetch("http://localhost:8081/playlists")
