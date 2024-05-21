@@ -19,7 +19,7 @@ export default function TrackPage() {
 
     return (
         <div>
-            <Actionbar></Actionbar>
+            <Actionbar className={"actionbar-track-page"}></Actionbar>
             <div className={"track-page page"}>
                 <div className="track">
                     <Track imageUrl={"https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"}

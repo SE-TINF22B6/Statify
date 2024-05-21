@@ -1,9 +1,9 @@
 @import "styleguide.css";
 
-.action-bar.track-page {
-    background-image: linear-gradient(180deg, rgba(104, 36, 229, 0.2) 0%, rgba(104, 36, 229, 0.07) var(--collection-1-actionbar-height)),
-        radial-gradient(50% 100% at 0 100px, rgba(237, 107, 37, 0.15) 8%, rgba(237, 107, 37, 0) 100%),
-        radial-gradient(80% 130% at 100% 0, rgb(21, 21, 21) 0%, rgb(5, 20, 10) 100%);
+.action-bar.actionbar-track-page {
+    background-image: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) var(--collection-1-actionbar-height)),
+    radial-gradient(50% 100% at 0 100px,  rgba(237, 107, 37, 0.15) 8%, rgba(237, 107, 37, 0) 100%),
+    radial-gradient(80% 130% at 100% 0, rgb(21, 21, 21) 0%, rgb(5, 20, 10) 100%);
     background-attachment: fixed;
 }
 
@@ -13,7 +13,6 @@
     background-attachment: fixed;
     display: grid;
     grid-template-columns: 1fr 1px 3fr;
-    height: 100vh;
 }
 
 .track-page .track,
