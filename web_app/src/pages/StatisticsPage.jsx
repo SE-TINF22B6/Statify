@@ -5,10 +5,15 @@ import StatisticItem from "../components/statisticItem";
 import PlaylistStatisticsItem from "../components/playlistStatisticsItem";
 import profile from "../images/profile-icon.png";
 import {useNavigate} from "react-router-dom";
+import Button from "../components/button";
+import {useState} from "react";
+import GenerateStatisticsDialog from "./GenerateStatisticsDialog";
 
 export default function StatisticsPage() {
 
     const navigate = useNavigate();
+
+    const [open, setOpen] = useState(false)
 
     return (
         <div>
@@ -79,6 +84,8 @@ export default function StatisticsPage() {
                                                     top_genre_count={86}/>
                         </StatisticsFrame>
                     </div>
+                    <Button color={"orange"} scale={0.6} onClick={() => setOpen(true)}>Generate</Button>
+                    <GenerateStatisticsDialog setOpen={setOpen} open={open}/>
                 </div>
             </div>
         </div>

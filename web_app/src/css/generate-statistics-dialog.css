@@ -1,0 +1,25 @@
+@import "styleguide.css";
+
+.MuiDialog-paper{
+    background: #0d1f14 !important;
+    color: white !important;
+    padding: 15px;
+    border-radius: 15px !important;
+}
+
+.MuiDialogActions-root{
+    column-gap: 30px;
+    justify-content: space-evenly !important;
+}
+
+.MuiDialog-paper .row.radio-group{
+    column-gap: 30px;
+}
+
+.MuiDialog-paper .column{
+    row-gap: 20px;
+}
+
+.MuiDialog-paper .radio-group{
+    row-gap: 10px;
+}
