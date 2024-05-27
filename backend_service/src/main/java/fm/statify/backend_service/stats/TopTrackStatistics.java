@@ -1,60 +1,54 @@
 package fm.statify.backend_service.stats;
 
+import fm.statify.backend_service.entities.SimpleTrack;
+import fm.statify.backend_service.entities.Track;
+
 import java.util.Date;
 
 public class TopTrackStatistics extends Statistics{
 
-    private String userId;
-    private String firstTrackId;
-    private String secondTrackId;
-    private String thirdTrackId;
-    private String fourthTrackId;
-    private String fifthTrackId;
-    private Date generateDate;
+    private SimpleTrack firstTrack;
+    private SimpleTrack secondTrack;
+    private SimpleTrack thirdTrack;
+    private SimpleTrack fourthTrack;
+    private SimpleTrack fifthTrack;
 
-    public TopTrackStatistics(String userId, String firstTrackId, String secondTrackId, String thirdTrackId, String fourthTrackId, String fifthTrackId) {
+    public TopTrackStatistics(String userId, SimpleTrack firstTrack, SimpleTrack secondTrack, SimpleTrack thirdTrack, SimpleTrack fourthTrack, SimpleTrack fifthTrack) {
         super(userId);
-        this.firstTrackId = firstTrackId;
-        this.secondTrackId = secondTrackId;
-        this.thirdTrackId = thirdTrackId;
-        this.fourthTrackId = fourthTrackId;
-        this.fifthTrackId = fifthTrackId;
+        this.firstTrack = firstTrack;
+        this.secondTrack = secondTrack;
+        this.thirdTrack = thirdTrack;
+        this.fourthTrack = fourthTrack;
+        this.fifthTrack = fifthTrack;
     }
 
-    public TopTrackStatistics(Date generateDate, String userId, String firstTrackId, String secondTrackId, String thirdTrackId, String fourthTrackId, String fifthTrackId) {
+    public TopTrackStatistics(Date generateDate, String userId, SimpleTrack firstTrack, SimpleTrack secondTrack, SimpleTrack thirdTrack, SimpleTrack fourthTrack, SimpleTrack fifthTrack) {
         super(generateDate, userId);
-        this.firstTrackId = firstTrackId;
-        this.secondTrackId = secondTrackId;
-        this.thirdTrackId = thirdTrackId;
-        this.fourthTrackId = fourthTrackId;
-        this.fifthTrackId = fifthTrackId;
+        this.firstTrack = firstTrack;
+        this.secondTrack = secondTrack;
+        this.thirdTrack = thirdTrack;
+        this.fourthTrack = fourthTrack;
+        this.fifthTrack = fifthTrack;
     }
 
-    public String getUserId() {
-        return userId;
+    public SimpleTrack getFirstTrack() {
+        return firstTrack;
     }
 
-    public String getFirstTrackId() {
-        return firstTrackId;
+    public SimpleTrack getSecondTrack() {
+        return secondTrack;
     }
 
-    public String getSecondTrackId() {
-        return secondTrackId;
+    public SimpleTrack getThirdTrack() {
+        return thirdTrack;
     }
 
-    public String getThirdTrackId() {
-        return thirdTrackId;
+    public SimpleTrack getFourthTrack() {
+        return fourthTrack;
     }
 
-    public String getFourthTrackId() {
-        return fourthTrackId;
+    public SimpleTrack getFifthTrack() {
+        return fifthTrack;
     }
 
-    public String getFifthTrackId() {
-        return fifthTrackId;
-    }
-
-    public Date getGenerateDate() {
-        return generateDate;
-    }
 }

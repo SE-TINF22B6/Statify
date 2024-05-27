@@ -1,60 +1,72 @@
 package fm.statify.backend_service.stats;
 
+import fm.statify.backend_service.entities.Artist;
+
 import java.util.Date;
 
-public class TopArtistStatistics extends Statistics {
+public class TopArtistStatistics extends Statistics{
 
-    private String userId;
-    private String firstArtistId;
-    private String secondArtistId;
-    private String thirdArtistId;
-    private String fourthArtistId;
-    private String fifthArtistId;
-    private Date generateDate;
+    private Artist firstArtist;
+    private Artist secondArtist;
+    private Artist thirdArtist;
+    private Artist fourthArtist;
+    private Artist fifthArtist;
 
-    public TopArtistStatistics(String userId, String firstArtistId, String secondArtistId, String thirdArtistId, String fourthArtistId, String fifthArtistId) {
+    public TopArtistStatistics(String userId, Artist firstArtist, Artist secondArtist, Artist thirdArtist, Artist fourthArtist, Artist fifthArtist) {
         super(userId);
-        this.firstArtistId = firstArtistId;
-        this.secondArtistId = secondArtistId;
-        this.thirdArtistId = thirdArtistId;
-        this.fourthArtistId = fourthArtistId;
-        this.fifthArtistId = fifthArtistId;
+        this.firstArtist = firstArtist;
+        this.secondArtist = secondArtist;
+        this.thirdArtist = thirdArtist;
+        this.fourthArtist = fourthArtist;
+        this.fifthArtist = fifthArtist;
     }
 
-    public TopArtistStatistics(Date generateDate, String userId, String firstArtistId, String secondArtistId, String thirdArtistId, String fourthArtistId, String fifthArtistId) {
+    public TopArtistStatistics(Date generateDate, String userId, Artist firstArtist, Artist secondArtist, Artist thirdArtist, Artist fourthArtist, Artist fifthArtist) {
         super(generateDate, userId);
-        this.firstArtistId = firstArtistId;
-        this.secondArtistId = secondArtistId;
-        this.thirdArtistId = thirdArtistId;
-        this.fourthArtistId = fourthArtistId;
-        this.fifthArtistId = fifthArtistId;
+        this.firstArtist = firstArtist;
+        this.secondArtist = secondArtist;
+        this.thirdArtist = thirdArtist;
+        this.fourthArtist = fourthArtist;
+        this.fifthArtist = fifthArtist;
     }
 
-    public String getUserId() {
-        return userId;
+    public Artist getFirstArtist() {
+        return firstArtist;
     }
 
-    public String getFirstArtistId() {
-        return firstArtistId;
+    public void setFirstArtist(Artist firstArtist) {
+        this.firstArtist = firstArtist;
     }
 
-    public String getSecondArtistId() {
-        return secondArtistId;
+    public Artist getSecondArtist() {
+        return secondArtist;
     }
 
-    public String getThirdArtistId() {
-        return thirdArtistId;
+    public void setSecondArtist(Artist secondArtist) {
+        this.secondArtist = secondArtist;
     }
 
-    public String getFourthArtistId() {
-        return fourthArtistId;
+    public Artist getThirdArtist() {
+        return thirdArtist;
     }
 
-    public String getFifthArtistId() {
-        return fifthArtistId;
+    public void setThirdArtist(Artist thirdArtist) {
+        this.thirdArtist = thirdArtist;
     }
 
-    public Date getGenerateDate() {
-        return generateDate;
+    public Artist getFourthArtist() {
+        return fourthArtist;
+    }
+
+    public void setFourthArtist(Artist fourthArtist) {
+        this.fourthArtist = fourthArtist;
+    }
+
+    public Artist getFifthArtist() {
+        return fifthArtist;
+    }
+
+    public void setFifthArtist(Artist fifthArtist) {
+        this.fifthArtist = fifthArtist;
     }
 }

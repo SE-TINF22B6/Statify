@@ -5,6 +5,7 @@ import "../css/generate-statistics-dialog.css"
 import {useEffect, useState} from "react";
 import ToggleButton from "../components/toggleButton";
 import PlaylistItem from "../components/playlistItem";
+import {getPlaylists} from "../util/dataManager";
 
 export default function GenerateStatisticsDialog({open, setOpen}) {
 
@@ -19,7 +20,7 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
     useEffect(() => {
         switch (toggle) {
             case 0:
-                setContent(
+                setContent(<div className={"column"}>
                     <div className={"radio-group column"}>
                         <div className={"row"}>
                             <input type="radio" name="timespan" value="long" id="long" defaultChecked/>
@@ -34,6 +35,19 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
                             <label htmlFor="short">Short Term (4 Weeks)</label>
                         </div>
                     </div>
+                    <hr/>
+                        <div className={"radio-group column"}>
+                            <div className={"row"}>
+                                <input type="radio" name="type" value="tracks" id="tracks" defaultChecked/>
+                                <label htmlFor="tracks">Top Tracks</label>
+                            </div>
+                            <div className={"row"}>
+                                <input type="radio" name="type" value="artists" id="artists"/>
+                                <label htmlFor="artists">Top Artists</label>
+                            </div>
+                        </div>
+                </div>
+
                 )
                 break
             case 1:
@@ -56,12 +70,9 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
     }, [toggle, selectedPlaylist, playlists]);
 
     useEffect(() => {
-        fetch("http://localhost:8081/playlists")
-            .then((result) => {
-                return result.json();
-            })
-            .then((res) => {
-                setPlaylists(res);
+        getPlaylists()
+            .then(res => {
+                setPlaylists(res)
             })
     }, []);
 

@@ -15,4 +15,12 @@ public class Statistics {
         this.generateDate = generateDate;
         this.userId = userId;
     }
+
+    public Date getGenerateDate() {
+        return generateDate;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
 }

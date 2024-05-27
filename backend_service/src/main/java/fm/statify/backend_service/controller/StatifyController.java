@@ -1,5 +1,7 @@
 package fm.statify.backend_service.controller;
 
+import fm.statify.backend_service.entities.Artist;
+import fm.statify.backend_service.entities.SimpleTrack;
 import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
@@ -21,7 +23,13 @@ public class StatifyController {
     @ResponseBody
     public TopTrackStatistics generateSongStatistics(@RequestParam String userId) {
         //todo: logic for getting top songs
-        return new TopTrackStatistics(userId, "track1Id", "track2Id", "track3Id", "track4Id", "track5Id");
+        return new TopTrackStatistics(userId,
+                new SimpleTrack("trackId1", "Track 1", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId2", "Track 2", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId3", "Track 3", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId4", "Track 4", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId5", "Track 5", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2"))
+        );
     }
 
 
@@ -29,7 +37,13 @@ public class StatifyController {
     @ResponseBody
     public TopArtistStatistics generateArtistStatistics(@RequestParam String userId) {
         //todo: logic for getting top artists
-        return new TopArtistStatistics(userId, "artist1ID", "artist2ID", "artist3ID", "artist4ID", "artist5ID");
+        return new TopArtistStatistics(userId,
+                new Artist("artist1Id", "Artist 1", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"),
+                new Artist("artist2Id", "Artist 2", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"),
+                new Artist("artist3Id", "Artist 3", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"),
+                new Artist("artist4Id", "Artist 4", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"),
+                new Artist("artist5Id", "Artist 5", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1")
+        );
     }
 
 
@@ -40,33 +54,59 @@ public class StatifyController {
         return new PlaylistStatistics(userId, playlistId, "Playlist", 62, 420, "Edm", 26, "The Weeknd", 23);
     }
 
-    @GetMapping("statistics/artists")
-    @ResponseBody
-    public List<TopArtistStatistics> getTopArtistsStatistics(@RequestParam String userId){
-        //todo: get top artist statistics for user from database
 
-        List<TopArtistStatistics> list = new ArrayList<>();
-        list.add(new TopArtistStatistics(userId, "artist1ID", "artist2ID", "artist3ID", "artist4ID", "artist5ID"));
-        list.add(new TopArtistStatistics(userId, "artist1ID", "artist2ID", "artist3ID", "artist4ID", "artist5ID"));
+    @GetMapping("statistics/tracks")
+    @ResponseBody
+    public List<TopTrackStatistics> getTopTracksStatistics(@RequestParam String userId) {
+        //todo: get top tracks statistics for user from database
+
+        List<TopTrackStatistics> list = new ArrayList<>();
+        list.add(new TopTrackStatistics(userId,
+                new SimpleTrack("trackId1", "Track 1", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId2", "Track 2", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId3", "Track 3", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId4", "Track 4", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId5", "Track 5", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2"))
+        ));
+
+        list.add(new TopTrackStatistics(userId,
+                new SimpleTrack("trackId1", "Track 11", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId2", "Track 22", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId3", "Track 33", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId4", "Track 44", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2")),
+                new SimpleTrack("trackId5", "Track 55", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2"))
+        ));
 
         return list;
     }
 
-    @GetMapping("statistics/tracks")
+    @GetMapping("statistics/artists")
     @ResponseBody
-    public List<TopTrackStatistics> getTopTracksStatistics(@RequestParam String userId){
-        //todo: get top tracks statistics for user from database
+    public List<TopArtistStatistics> getTopArtistsStatistics(@RequestParam String userId) {
+        //todo: get top artist statistics for user from database
 
-        List<TopTrackStatistics> list = new ArrayList<>();
-        list.add(new TopTrackStatistics(userId, "track1Id", "track2Id", "track3Id", "track4Id", "track5Id"));
-        list.add(new TopTrackStatistics(userId, "track1Id", "track2Id", "track3Id", "track4Id", "track5Id"));
+        List<TopArtistStatistics> list = new ArrayList<>();
+        list.add(new TopArtistStatistics(userId,
+                new Artist("artist1Id", "Artist 1", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33"),
+                new Artist("artist2Id", "Artist 2", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33"),
+                new Artist("artist3Id", "Artist 3", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33"),
+                new Artist("artist4Id", "Artist 4", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33"),
+                new Artist("artist5Id", "Artist 5", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33")
+        ));
+        list.add(new TopArtistStatistics(userId,
+                new Artist("artist1Id", "Artist 11", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3"),
+                new Artist("artist2Id", "Artist 22", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3"),
+                new Artist("artist3Id", "Artist 33", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3"),
+                new Artist("artist4Id", "Artist 44", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3"),
+                new Artist("artist5Id", "Artist 55", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3")
+        ));
 
         return list;
     }
 
     @GetMapping("statistics/playlists")
     @ResponseBody
-    public List<PlaylistStatistics> getPlaylistStatistics(@RequestParam String userId){
+    public List<PlaylistStatistics> getPlaylistStatistics(@RequestParam String userId) {
         //todo: get playlist statistics for user from database
 
         List<PlaylistStatistics> list = new ArrayList<>();

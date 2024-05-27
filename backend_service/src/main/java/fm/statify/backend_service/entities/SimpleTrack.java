@@ -1,15 +1,18 @@
 package fm.statify.backend_service.entities;
 
-public class Artist {
+import java.util.List;
 
+public class SimpleTrack {
     private String id;
     private String name;
     private String imageUrl;
+    private List<String> artists;
 
-    public Artist(String id, String name, String imageURL){
+    public SimpleTrack(String id, String name, String imageUrl, List<String> artists) {
         this.id = id;
         this.name = name;
-        this. imageUrl = imageURL;
+        this.imageUrl = imageUrl;
+        this.artists = artists;
     }
 
     public String getId() {
@@ -22,5 +25,9 @@ public class Artist {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public List<String> getArtists() {
+        return artists;
     }
 }

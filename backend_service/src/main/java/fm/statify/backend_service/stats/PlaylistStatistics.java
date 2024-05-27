@@ -3,7 +3,6 @@ package fm.statify.backend_service.stats;
 import java.util.Date;
 
 public class PlaylistStatistics extends Statistics {
-    private String userId;
     private String playlistId;
     private String name;
     private int tracksNumber;
@@ -12,7 +11,6 @@ public class PlaylistStatistics extends Statistics {
     private int topGenreTracksNumber;
     private String topArtist;
     private int topArtistTracksNumber;
-    private Date generateDate;
 
     public PlaylistStatistics(Date generateDate, String userId, String playlistId, String name, int tracksNumber, int duration, String topGenre, int topGenreTracksNumber, String topArtist, int topArtistTracksNumber) {
         super(generateDate, userId);
@@ -38,9 +36,6 @@ public class PlaylistStatistics extends Statistics {
         this.topArtistTracksNumber = topArtistTracksNumber;
     }
 
-    public String getUserId() {
-        return userId;
-    }
 
     public String getPlaylistId() {
         return playlistId;
@@ -74,7 +69,4 @@ public class PlaylistStatistics extends Statistics {
         return topArtistTracksNumber;
     }
 
-    public Date getGenerateDate() {
-        return generateDate;
-    }
 }
