@@ -20,4 +20,28 @@ public class Track {
         this.popularity = popularity;
         this.audioFeatures = audioFeatures;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<String> getArtists() {
+        return artists;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public AudioFeatures getAudioFeatures() {
+        return audioFeatures;
+    }
 }

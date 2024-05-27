@@ -27,4 +27,48 @@ public class AudioFeatures {
         this.key = key;
         this.mode = mode;
     }
+
+    public float getAccousticness() {
+        return accousticness;
+    }
+
+    public float getDanceabilty() {
+        return danceabilty;
+    }
+
+    public float getEnergy() {
+        return energy;
+    }
+
+    public float getInstrumentalness() {
+        return instrumentalness;
+    }
+
+    public float getLiveness() {
+        return liveness;
+    }
+
+    public float getLoudness() {
+        return loudness;
+    }
+
+    public float getSpeechiness() {
+        return speechiness;
+    }
+
+    public float getValence() {
+        return valence;
+    }
+
+    public float getTempo() {
+        return tempo;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public int getMode() {
+        return mode;
+    }
 }
