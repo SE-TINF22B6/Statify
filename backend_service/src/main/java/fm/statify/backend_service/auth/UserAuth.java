@@ -1,6 +1,6 @@
 package fm.statify.backend_service.auth;
 
-import fm.statify.backend_service.entities.User;
+import fm.statify.backend_service.entities.UserProfile;
 import fm.statify.backend_service.util.DatabaseManager;
 import org.json.JSONObject;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class UserAuth {
             String response = spotifyOAuth.requestAccessToken(code);
             Map<String, String> tokenData = spotifyOAuth.parseResponse(response);
             String accessToken = tokenData.get("access_token");
-            User user = fetchSpotifyUser(accessToken);
+            UserProfile user = fetchSpotifyUser(accessToken);
             addUserToDatabaseIfNotExists(user, accessToken);
             return accessToken;
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public class UserAuth {
     }
 
     // Fetch the user's data from Spotify API and fetch an JSON Object from the response containing the user's data
-    private User fetchSpotifyUser(String accessToken) throws Exception {
+    private UserProfile fetchSpotifyUser(String accessToken) throws Exception {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.spotify.com/v1/me"))
@@ -58,12 +58,12 @@ public class UserAuth {
                 ? json.getJSONArray("images").getJSONObject(0).getString("url")
                 : null;
         String product = json.getString("product");
-        return new User(id, displayName, email, userURL, profilePictureURL, product);
+        return new UserProfile(id, displayName, email, userURL, profilePictureURL, product);
     }
 
 
     // Test code for Database
-    private void addUserToDatabaseIfNotExists(User user, String accesstoken) {
+    private void addUserToDatabaseIfNotExists(UserProfile user, String accesstoken) {
         if (!databaseManager.userExists(user.getId())) {
             databaseManager.addUser(user, accesstoken);
         } else {

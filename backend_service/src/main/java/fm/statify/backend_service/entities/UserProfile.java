@@ -1,6 +1,6 @@
 package fm.statify.backend_service.entities;
 
-public class User {
+public class UserProfile {
 
     private String id;
     private String userName;
@@ -9,7 +9,7 @@ public class User {
     private String profilePictureURL;
     private String product;
 
-    public User (String id, String userName, String email, String userURL, String profilePictureURL, String product) {
+    public UserProfile(String id, String userName, String email, String userURL, String profilePictureURL, String product) {
         this.id = id;
         this.userName = userName;
         this.email = email;

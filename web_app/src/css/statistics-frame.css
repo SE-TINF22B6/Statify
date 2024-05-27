@@ -7,6 +7,17 @@
     padding: 10px;
     width: 30vw;
     box-shadow: 4px 4px 4px rgba(0,0,0,0.3) inset, 4px 4px 4px rgba(0,0,0,0.3);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.frame .column{
+    flex: max-content;
+}
+
+.frame img{
+    width: auto;
+    height: 25px;
 }
 
 .frame p{

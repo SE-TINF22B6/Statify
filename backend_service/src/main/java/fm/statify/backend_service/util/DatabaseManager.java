@@ -1,7 +1,6 @@
 package fm.statify.backend_service.util;
 
-import fm.statify.backend_service.entities.Stream;
-import fm.statify.backend_service.entities.User;
+import fm.statify.backend_service.entities.UserProfile;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -72,7 +71,7 @@ public class DatabaseManager {
     }
 
     // Prototyp zum Einfügen eines Users in die Datenbank (Parameter & weiteres kann beliebig erweitert werden)
-    public void addUser(User user, String accesstoken) {
+    public void addUser(UserProfile user, String accesstoken) {
         String sql = "INSERT INTO Users (UserID, UserEmail, UserName, APIKey) VALUES (?,?,?,?)";
         try (Connection conn = DriverManager.getConnection(url, username, password);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -87,10 +86,8 @@ public class DatabaseManager {
         }
     }
 
-    public void addStream(Stream stream) {
-    }
 
-    public void updateAPIKey(User user, String newAPIKey) {
+    public void updateAPIKey(UserProfile user, String newAPIKey) {
     }
 
     //Prototyp zum Überprüfen, ob ein User existiert
@@ -112,11 +109,11 @@ public class DatabaseManager {
     }
 
 
-    public List<User> getAllUsers() {
+    public List<UserProfile> getAllUsers() {
         return null;
     }
 
-    public void updateUser(User user, String accesstoken) {
+    public void updateUser(UserProfile user, String accesstoken) {
     }
 
     public static void main(String[] args) throws IOException {

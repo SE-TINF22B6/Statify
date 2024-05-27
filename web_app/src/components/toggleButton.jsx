@@ -54,12 +54,14 @@ ToggleButton.propTypes={
     color: PropTypes.oneOf(["orange", "green", "purple"]),
     className: PropTypes.string,
     selected: PropTypes.oneOf([0, 1]),
-    choices: arrayOfLength.bind(null, 2)
+    choices: arrayOfLength.bind(null, 2),
+    onToggle: PropTypes.func
 }
 
 ToggleButton.defaultProps={
     className:"",
     selected:0,
-    choices:["1", "2"]
+    choices:["1", "2"],
+    onToggle: () => {}
 }
 
