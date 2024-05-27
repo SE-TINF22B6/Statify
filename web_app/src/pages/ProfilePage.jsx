@@ -3,16 +3,16 @@ import "../css/profile-page.css"
 import profile from "../images/profile-icon.png"
 import Button from "../components/button";
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
 export default function ProfilePage(){
 
     const navigate = useNavigate()
-
+    const [searchParams] = useSearchParams();
     const [user, setUser] = useState({})
 
     useEffect(() => {
-        fetch("http://localhost:8081/profile")
+        fetch("http://localhost:8081/profile?code=" + searchParams.get("code"))
             .then((result) => {
                 return result.json()
             })
