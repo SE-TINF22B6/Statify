@@ -6,6 +6,7 @@ import fm.statify.backend_service.stats.TopTrackStatistics;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class StatifyController {
 
     @GetMapping("generate/songs")
     @ResponseBody
-    public TopTrackStatistics generateSongStatistics(String userId) {
+    public TopTrackStatistics generateSongStatistics(@RequestParam String userId) {
         //todo: logic for getting top songs
         return new TopTrackStatistics(userId, "track1Id", "track2Id", "track3Id", "track4Id", "track5Id");
     }
@@ -26,7 +27,7 @@ public class StatifyController {
 
     @GetMapping("generate/artists")
     @ResponseBody
-    public TopArtistStatistics generateArtistStatistics(String userId) {
+    public TopArtistStatistics generateArtistStatistics(@RequestParam String userId) {
         //todo: logic for getting top artists
         return new TopArtistStatistics(userId, "artist1ID", "artist2ID", "artist3ID", "artist4ID", "artist5ID");
     }
@@ -34,14 +35,14 @@ public class StatifyController {
 
     @GetMapping("generate/playlists")
     @ResponseBody
-    public PlaylistStatistics generatePlaylistStatistics(String userId, String playlistId) {
+    public PlaylistStatistics generatePlaylistStatistics(@RequestParam String userId, @RequestParam String playlistId) {
         //todo: logic for generating playlist statistics
         return new PlaylistStatistics(userId, playlistId, "Playlist", 62, 420, "Edm", 26, "The Weeknd", 23);
     }
 
     @GetMapping("statistics/artists")
     @ResponseBody
-    public List<TopArtistStatistics> getTopArtistsStatistics(String userId){
+    public List<TopArtistStatistics> getTopArtistsStatistics(@RequestParam String userId){
         //todo: get top artist statistics for user from database
 
         List<TopArtistStatistics> list = new ArrayList<>();
@@ -53,7 +54,7 @@ public class StatifyController {
 
     @GetMapping("statistics/tracks")
     @ResponseBody
-    public List<TopTrackStatistics> getTopTracksStatistics(String userId){
+    public List<TopTrackStatistics> getTopTracksStatistics(@RequestParam String userId){
         //todo: get top tracks statistics for user from database
 
         List<TopTrackStatistics> list = new ArrayList<>();
@@ -65,7 +66,7 @@ public class StatifyController {
 
     @GetMapping("statistics/playlists")
     @ResponseBody
-    public List<PlaylistStatistics> getPlaylistStatistics(String userId){
+    public List<PlaylistStatistics> getPlaylistStatistics(@RequestParam String userId){
         //todo: get playlist statistics for user from database
 
         List<PlaylistStatistics> list = new ArrayList<>();

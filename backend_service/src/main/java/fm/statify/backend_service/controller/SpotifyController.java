@@ -57,14 +57,14 @@ public class SpotifyController {
 
     @GetMapping("/profile")
     @ResponseBody
-    public UserProfile getProfileInfo(String userId){
+    public UserProfile getProfileInfo(@RequestParam String userId){
         //TODO: get users profile info from Spotify
         return new UserProfile(userId, "userName", "max.mustermann@web.de", "https://open.spotify.com/user/smedjan", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228", "premium");
     }
 
     @GetMapping("/playlists")
     @ResponseBody
-    public List<Playlist> getUsersPlaylists(String userId){
+    public List<Playlist> getUsersPlaylists(@RequestParam String userId){
         //TODO: get users playlists from Spotify
         List<Playlist> list = new ArrayList<>();
 
@@ -76,7 +76,7 @@ public class SpotifyController {
 
     @GetMapping("/track")
     @ResponseBody
-    public Track getTrackWithAudioFeatures(String trackId){
+    public Track getTrackWithAudioFeatures(@RequestParam String trackId){
         AudioFeatures audioFeatures = new AudioFeatures(0.77f, 0.56f, 0.61f, 0.91f, 0.73f, -31, 0.73f, 0.74f, 0.36f, 5, 1);
         return new Track(trackId, "Track Name", List.of("Artist 1", "Artist 2"), 125, 12, audioFeatures);
     }
