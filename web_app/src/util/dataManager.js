@@ -2,6 +2,7 @@ let playlistStatistics = []
 let topTrackStatistics = []
 let topArtistStatistics = []
 let playlists = []
+let profile
 
 let userId = "thisIsAUserId"
 
@@ -39,6 +40,15 @@ export function getPlaylists(){
     }
     return new Promise(() => {
         return playlists
+    })
+}
+
+export function getProfile() {
+    if(profile == null){
+        return fetchProfile()
+    }
+    return new Promise(() => {
+        return profile
     })
 }
 
@@ -96,6 +106,39 @@ function fetchPlaylists(){
             .then(res => {
                 playlists = res
                 resolve(playlists)
+            })
+            .catch(err => {
+                console.log(err)
+                reject(err)
+            })
+    })
+}
+
+function fetchProfile(){
+    return new Promise((resolve, reject) => {
+        fetch("http://localhost:8081/profile?userId=" + userId)
+            .then((result) => {
+                return result.json()
+            })
+            .then((user) => {
+                profile = user
+                resolve(user);
+            })
+            .catch(err => {
+                console.log(err)
+                reject(err)
+            })
+    })
+}
+
+export function fetchTrack(trackId){
+    return new Promise((resolve, reject) => {
+        fetch("http://localhost:8081/track?trackId=abc")
+            .then((result) => {
+                return result.json();
+            })
+            .then(res => {
+                resolve(res)
             })
             .catch(err => {
                 console.log(err)

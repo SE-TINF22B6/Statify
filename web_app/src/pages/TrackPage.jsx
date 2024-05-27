@@ -6,6 +6,7 @@ import PopularityKeyMode from "../components/popularityKeyMode";
 import Chart from "../components/chart";
 import {useEffect, useState} from "react";
 import {keyDict, modeDict} from "../util/decodeAudioFeatures";
+import {fetchTrack} from "../util/dataManager";
 
 export default function TrackPage() {
 
@@ -31,10 +32,8 @@ export default function TrackPage() {
     })
 
     useEffect(() => {
-        fetch("http://localhost:8081/track?trackId=abc")
-            .then((result) => {
-                return result.json();
-            })
+        let trackId = "abc"
+        fetchTrack(trackId)
             .then((res) => {
                 setTrack({
                     name: res.name,

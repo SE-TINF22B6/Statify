@@ -4,6 +4,7 @@ import profile from "../images/profile-icon.png"
 import Button from "../components/button";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {getProfile} from "../util/dataManager";
 
 export default function ProfilePage(){
 
@@ -12,12 +13,10 @@ export default function ProfilePage(){
     const [user, setUser] = useState({})
 
     useEffect(() => {
-        fetch("http://localhost:8081/profile")
-            .then((result) => {
-                return result.json()
-            })
-            .then((user) => {
-                setUser(user);
+        getProfile()
+            .then(res => {
+                setUser(res)
+                console.log("test")
             })
     }, []);
 
