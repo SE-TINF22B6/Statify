@@ -17,25 +17,33 @@ public class StatifyController {
 
 
     // Handler-Methode für die Generierung von Statistiken über Songs
-    @GetMapping("/songs")
+    @GetMapping("generate/songs")
     @ResponseBody
-    public String generateSongStatistics() {
-        // Hier könnte Logik zur Generierung von Song-Statistiken stehen
-        return "Song statistics generated successfully!";
+    public TopTrackStatistics generateSongStatistics(String userId) {
+        //todo: logic for getting top songs
+        return new TopTrackStatistics();
     }
 
     // Handler-Methode für die Generierung von Statistiken über Künstler
-    @GetMapping("/artists")
+    @GetMapping("generate/artists")
     @ResponseBody
-    public String generateArtistStatistics() {
-        // Hier könnte Logik zur Generierung von Künstler-Statistiken stehen
-        return "Artist statistics generated successfully!";
+    public TopArtistStatistics generateArtistStatistics(String userId) {
+        //todo: logic for getting top artists
+        return new TopArtistStatistics();
+    }
+
+    // Handler-Methode für die Generierung von Statistiken über Playlists
+    @GetMapping("generate/playlists")
+    @ResponseBody
+    public PlaylistStatistics generatePlaylistStatistics(String userId, String playlistId) {
+        //todo: logic for generating playlist statistics
+        return new PlaylistStatistics();
     }
 
     @GetMapping("statistics/artists")
     @ResponseBody
     public List<TopArtistStatistics> getTopArtistsStatistics(String userId){
-        //todo get top artist statistics for user from database
+        //todo: get top artist statistics for user from database
 
         List<TopArtistStatistics> list = new ArrayList<>();
         list.add(new TopArtistStatistics());
@@ -46,7 +54,7 @@ public class StatifyController {
     @GetMapping("statistics/tracks")
     @ResponseBody
     public List<TopTrackStatistics> getTopTracksStatistics(String userId){
-        //todo get top tracks statistics for user from database
+        //todo: get top tracks statistics for user from database
 
         List<TopTrackStatistics> list = new ArrayList<>();
         list.add(new TopTrackStatistics());
@@ -57,7 +65,7 @@ public class StatifyController {
     @GetMapping("statistics/playlists")
     @ResponseBody
     public List<PlaylistStatistics> getPlaylistStatistics(String userId){
-        //todo get playlist statistics for user from database
+        //todo: get playlist statistics for user from database
 
         List<PlaylistStatistics> list = new ArrayList<>();
         list.add(new PlaylistStatistics());
