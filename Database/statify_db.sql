@@ -11,16 +11,16 @@ USE statify_db;
 
 CREATE TABLE `user` (
  guid CHAR(36) NOT NULL,
- access_token TEXT NOT NULL UNIQUE,
- refresh_token TEXT NOT NULL UNIQUE,
- user_id TEXT UNIQUE,
+ access_token TEXT NOT NULL,
+ refresh_token TEXT NOT NULL,
+ user_id TEXT,
  PRIMARY KEY (`guid`)
  );
 
-CREATE TABLE playlists (
+CREATE TABLE playlist (
  guid CHAR(36) NOT NULL,
  user_guid CHAR(36),
- playlist_id TEXT NOT NULL UNIQUE,
+ playlist_id TEXT NOT NULL,
  `name` TEXT NOT NULL,
  tracks_number INT NOT NULL,
  duration INT NOT NULL,
@@ -32,19 +32,27 @@ CREATE TABLE playlists (
  FOREIGN KEY (user_guid) REFERENCES `user`(`guid`)
  );
 
-CREATE TABLE top_artist (
+CREATE TABLE top_artists (
  guid CHAR(36) NOT NULL,
  user_guid CHAR(36),
- artist_id TEXT NOT NULL UNIQUE,
+ first_artist_id TEXT NOT NULL,
+ second_artist_id TEXT NOT NULL,
+ third_artist_id TEXT NOT NULL,
+ fourth_artist_id TEXT NOT NULL,
+ fifth_artist_id TEXT NOT NULL,
  generate_date DATE NOT NULL,
  PRIMARY KEY (`guid`),
  FOREIGN KEY (user_guid) REFERENCES `user`(`guid`)
  );
 
-CREATE TABLE top_track (
+CREATE TABLE top_tracks (
  guid CHAR(36) NOT NULL,
  user_guid CHAR(36),
- track_id TEXT NOT NULL UNIQUE,
+ first_track_id TEXT NOT NULL,
+ second_track_id TEXT NOT NULL,
+ third_track_id TEXT NOT NULL,
+ fourth_track_id TEXT NOT NULL,
+ fifth_track_id TEXT NOT NULL,
  generate_date DATE NOT NULL,
  PRIMARY KEY (`guid`),
  FOREIGN KEY (user_guid) REFERENCES `user`(`guid`)
