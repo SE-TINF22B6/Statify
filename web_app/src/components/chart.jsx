@@ -31,7 +31,7 @@ export default function Chart({ data }) {
         scales: {
             x: {
                 grid: {
-                    color: 'white',
+                    color: 'grey',
                 },
                 ticks: {
                     color: 'white',
@@ -41,12 +41,12 @@ export default function Chart({ data }) {
             },
             y: {
                 grid: {
-                    color: 'white',
+                    color: 'grey',
                 },
                 ticks: {
                     color: 'white',
                     beginAtZero: true,
-                    precision: 0,
+                    precision: 1,
                 },
             },
         },
