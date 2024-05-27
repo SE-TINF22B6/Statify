@@ -20,34 +20,18 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
         switch (toggle) {
             case 0:
                 setContent(
-                    <div className={"row radio-group"}>
-                        <div className={"radio-group column"}>
-                            <div className={"row"}>
-                                <input type="radio" name="timespan" value="week" id="week" defaultChecked/>
-                                <label htmlFor="week">1 Week</label>
-                            </div>
-                            <div className={"row"}>
-                                <input type="radio" name="timespan" value="month" id="month"/>
-                                <label htmlFor="month">1 Month</label>
-                            </div>
-                            <div className={"row"}>
-                                <input type="radio" name="timespan" value="year" id="year"/>
-                                <label htmlFor="year">1 Year</label>
-                            </div>
+                    <div className={"radio-group column"}>
+                        <div className={"row"}>
+                            <input type="radio" name="timespan" value="long" id="long" defaultChecked/>
+                            <label htmlFor="long">Long Term (1 Year)</label>
                         </div>
-                        <div className={"radio-group column"}>
-                            <div className={"row"}>
-                                <input type="radio" name="timespan" value="this-month" id="this-month"/>
-                                <label htmlFor="this-month">This Month</label>
-                            </div>
-                            <div className={"row"}>
-                                <input type="radio" name="timespan" value="this-year" id="this-year"/>
-                                <label htmlFor="this-year">This Year</label>
-                            </div>
-                            <div className={"row"}>
-                                <input type="radio" name="timespan" value="lifetime" id="lifetime"/>
-                                <label htmlFor="lifetime">Lifetime</label>
-                            </div>
+                        <div className={"row"}>
+                            <input type="radio" name="timespan" value="medium" id="medium"/>
+                            <label htmlFor="medium">Medium Term (6 Months)</label>
+                        </div>
+                        <div className={"row"}>
+                            <input type="radio" name="timespan" value="short" id="short"/>
+                            <label htmlFor="short">Short Term (4 Weeks)</label>
                         </div>
                     </div>
                 )
