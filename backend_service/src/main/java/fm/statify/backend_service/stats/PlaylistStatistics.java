@@ -37,4 +37,44 @@ public class PlaylistStatistics extends Statistics {
         this.topArtist = topArtist;
         this.topArtistTracksNumber = topArtistTracksNumber;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getPlaylistId() {
+        return playlistId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getTracksNumber() {
+        return tracksNumber;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getTopGenre() {
+        return topGenre;
+    }
+
+    public int getTopGenreTracksNumber() {
+        return topGenreTracksNumber;
+    }
+
+    public String getTopArtist() {
+        return topArtist;
+    }
+
+    public int getTopArtistTracksNumber() {
+        return topArtistTracksNumber;
+    }
+
+    public Date getGenerateDate() {
+        return generateDate;
+    }
 }

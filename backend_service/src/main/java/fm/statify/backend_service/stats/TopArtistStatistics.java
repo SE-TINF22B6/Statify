@@ -29,4 +29,32 @@ public class TopArtistStatistics extends Statistics {
         this.fourthArtistId = fourthArtistId;
         this.fifthArtistId = fifthArtistId;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getFirstArtistId() {
+        return firstArtistId;
+    }
+
+    public String getSecondArtistId() {
+        return secondArtistId;
+    }
+
+    public String getThirdArtistId() {
+        return thirdArtistId;
+    }
+
+    public String getFourthArtistId() {
+        return fourthArtistId;
+    }
+
+    public String getFifthArtistId() {
+        return fifthArtistId;
+    }
+
+    public Date getGenerateDate() {
+        return generateDate;
+    }
 }

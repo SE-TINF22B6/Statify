@@ -29,4 +29,32 @@ public class TopTrackStatistics extends Statistics{
         this.fourthTrackId = fourthTrackId;
         this.fifthTrackId = fifthTrackId;
     }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getFirstTrackId() {
+        return firstTrackId;
+    }
+
+    public String getSecondTrackId() {
+        return secondTrackId;
+    }
+
+    public String getThirdTrackId() {
+        return thirdTrackId;
+    }
+
+    public String getFourthTrackId() {
+        return fourthTrackId;
+    }
+
+    public String getFifthTrackId() {
+        return fifthTrackId;
+    }
+
+    public Date getGenerateDate() {
+        return generateDate;
+    }
 }
