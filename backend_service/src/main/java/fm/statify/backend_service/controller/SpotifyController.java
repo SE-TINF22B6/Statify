@@ -2,7 +2,7 @@ package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
 import fm.statify.backend_service.entities.Playlist;
-import fm.statify.backend_service.entities.User;
+import fm.statify.backend_service.entities.UserProfile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -62,8 +62,7 @@ public class SpotifyController {
 
     @GetMapping("/profile")
     @ResponseBody
-    public User getProfileInfo() throws IOException {
-
+    public UserProfile getProfileInfo() throws IOException {
         System.out.println(tokenData.get("access_token"));
             URL url = new URL("https://api.spotify.com/v1/me");
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -79,7 +78,7 @@ public class SpotifyController {
             System.out.println(response);
         //TODO: get users profile info from Spotify
 
-        return new User("1234", "userName", "max.mustermann@web.de", "https://open.spotify.com/user/smedjan", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228", "premium");
+        return new UserProfile("1234", "userName", "max.mustermann@web.de", "https://open.spotify.com/user/smedjan", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228", "premium");
     }
 
     @GetMapping("/playlists")
