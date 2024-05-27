@@ -1,7 +1,7 @@
 import React from "react";
 import '../css/duration-tempo.css';
 
-export default function DurationTempo({ duration, tempo }) {
+export default function DurationTempoLoudness({ duration, tempo, loudness }) {
     return (
         <div className="container">
             <div className="item">
@@ -11,6 +11,10 @@ export default function DurationTempo({ duration, tempo }) {
             <div className="item">
                 <div className="label">Tempo</div>
                 <div className="value">{tempo}</div>
+            </div>
+            <div className="item">
+                <div className="label">Loudness</div>
+                <div className="value">{loudness}</div>
             </div>
         </div>
     )

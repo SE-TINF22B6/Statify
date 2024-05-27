@@ -78,7 +78,7 @@ public class SpotifyController {
     @ResponseBody
     public Track getTrackWithAudioFeatures(@RequestParam String trackId){
         AudioFeatures audioFeatures = new AudioFeatures(0.77f, 0.56f, 0.61f, 0.91f, 0.73f, -31, 0.73f, 0.74f, 0.36f, 5, 1);
-        return new Track(trackId, "Track Name", List.of("Artist 1", "Artist 2"), 125, 12, audioFeatures);
+        return new Track(trackId, "Track Name", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1", "Artist 2"), 125, 12, audioFeatures);
     }
 
     @ExceptionHandler
