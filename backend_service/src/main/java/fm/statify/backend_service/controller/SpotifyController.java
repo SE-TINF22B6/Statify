@@ -1,8 +1,10 @@
 package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
+import fm.statify.backend_service.entities.AudioFeatures;
 import fm.statify.backend_service.entities.Playlist;
-import fm.statify.backend_service.entities.User;
+import fm.statify.backend_service.entities.Track;
+import fm.statify.backend_service.entities.UserProfile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -55,14 +57,14 @@ public class SpotifyController {
 
     @GetMapping("/profile")
     @ResponseBody
-    public User getProfileInfo(){
+    public UserProfile getProfileInfo(String userId){
         //TODO: get users profile info from Spotify
-        return new User("1234", "userName", "max.mustermann@web.de", "https://open.spotify.com/user/smedjan", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228", "premium");
+        return new UserProfile(userId, "userName", "max.mustermann@web.de", "https://open.spotify.com/user/smedjan", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228", "premium");
     }
 
     @GetMapping("/playlists")
     @ResponseBody
-    public List<Playlist> getUsersPlaylists(){
+    public List<Playlist> getUsersPlaylists(String userId){
         //TODO: get users playlists from Spotify
         List<Playlist> list = new ArrayList<>();
 
@@ -70,6 +72,13 @@ public class SpotifyController {
         list.add(new Playlist("5678", "2. Playlist", "https://wrapped-images.spotifycdn.com/image/yts-2023/default/your-top-songs-2023_DEFAULT_en-GB.jpg"));
 
         return list;
+    }
+
+    @GetMapping("/track")
+    @ResponseBody
+    public Track getTrackWithAudioFeatures(String trackId){
+        AudioFeatures audioFeatures = new AudioFeatures(0.77f, 0.56f, 0.61f, 0.91f, 0.73f, -31, 0.73f, 0.74f, 0.36f, 5, 1);
+        return new Track(trackId, "Track Name", List.of("Artist 1", "Artist 2"), 125, 12, audioFeatures);
     }
 
     @ExceptionHandler

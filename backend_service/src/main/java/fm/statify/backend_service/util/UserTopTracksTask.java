@@ -1,26 +1,20 @@
 package fm.statify.backend_service.util;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
-import fm.statify.backend_service.auth.SpotifyTokenRefresher;
 import fm.statify.backend_service.auth.UserAuth;
-import fm.statify.backend_service.entities.User;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.sql.*;
 import java.util.Arrays;
-import java.util.EventListener;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
