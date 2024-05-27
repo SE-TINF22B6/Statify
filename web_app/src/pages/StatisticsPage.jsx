@@ -118,7 +118,11 @@ export default function StatisticsPage() {
                         </StatisticsFrame>
                     </div>
                     <Button color={"orange"} scale={0.6} onClick={() => setOpen(true)}>Generate</Button>
-                    <GenerateStatisticsDialog setOpen={setOpen} open={open}/>
+                    <GenerateStatisticsDialog setOpen={setOpen} open={open}
+                                              addPlaylistStats={(stat) => console.log("test")}
+                                              addTracksStats={(stat) => console.log("test")}
+                                              addArtistStats={(stat) => console.log("test")}
+                    />
                 </div>
             </div>
         </div>

@@ -5,21 +5,31 @@ import "../css/generate-statistics-dialog.css"
 import {useEffect, useState} from "react";
 import ToggleButton from "../components/toggleButton";
 import PlaylistItem from "../components/playlistItem";
-import {getPlaylists} from "../util/dataManager";
+import {
+    generatePlaylistStatistics,
+    generateTopArtistsStatistics,
+    generateTopTracksStatistics,
+    getPlaylists
+} from "../util/dataManager";
 
 export default function GenerateStatisticsDialog({open, setOpen}) {
 
-    const [toggle, setToggle] = useState(0)
+    const TOGGLE_TRACKS_ARTISTS = 0
+    const TOGGLE_PLAYLISTS = 1
+
+    const [toggle, setToggle] = useState(TOGGLE_TRACKS_ARTISTS)
 
     const [content, setContent] = useState(<></>)
 
     const [playlists, setPlaylists] = useState([])
 
-    const [selectedPlaylist, setSelectedPlaylist] = useState(null)
+    const [selectedPlaylist, setSelectedPlaylist] = useState(1)
+
+    const[selection, setSelection] = useState("tracks")
 
     useEffect(() => {
         switch (toggle) {
-            case 0:
+            case TOGGLE_TRACKS_ARTISTS:
                 setContent(<div className={"column"}>
                     <div className={"radio-group column"}>
                         <div className={"row"}>
@@ -38,11 +48,11 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
                     <hr/>
                         <div className={"radio-group column"}>
                             <div className={"row"}>
-                                <input type="radio" name="type" value="tracks" id="tracks" defaultChecked/>
+                                <input type="radio" name="type" value="tracks" id="tracks" defaultChecked onChange={(e) => handleChange(e, setSelection)}/>
                                 <label htmlFor="tracks">Top Tracks</label>
                             </div>
                             <div className={"row"}>
-                                <input type="radio" name="type" value="artists" id="artists"/>
+                                <input type="radio" name="type" value="artists" id="artists" onChange={(e) => handleChange(e, setSelection)}/>
                                 <label htmlFor="artists">Top Artists</label>
                             </div>
                         </div>
@@ -50,7 +60,7 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
 
                 )
                 break
-            case 1:
+            case TOGGLE_PLAYLISTS:
                 setContent(
                     <div className={"column"}>
                         <div className={"scrollable playlist-container"}>
@@ -77,23 +87,32 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
     }, []);
 
     useEffect(() => {
-        setSelectedPlaylist(null)
-        setToggle(0)
+        setSelectedPlaylist(0)
+        setToggle(TOGGLE_TRACKS_ARTISTS)
     }, [open]);
 
     function selectPlaylist(index){
-        if(selectedPlaylist === index){
-            setSelectedPlaylist(null)
-        }
-        else{
+        if(selectedPlaylist !== index){
             setSelectedPlaylist(index)
         }
     }
+    function handleChange (e, setVariable) {
+        setVariable(e.currentTarget.value);
+    }
 
-    function onToggle(index){
-        if(index === 0){
-            setSelectedPlaylist(null)
+    function onGenerate(){
+        if(toggle === TOGGLE_TRACKS_ARTISTS){
+            if(selection === "artists"){
+                generateTopArtistsStatistics()
+            }
+            else if(selection === "tracks"){
+                generateTopTracksStatistics()
+            }
         }
+        else if(toggle === TOGGLE_PLAYLISTS){
+            generatePlaylistStatistics(playlists[selectedPlaylist].id)
+        }
+        setOpen(false)
     }
 
 
@@ -103,12 +122,12 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
             <DialogContent>
                 <div className={"column"}>
                     <ToggleButton choices={["Top Tracks/Artists", "Playlists"]} selected={toggle} setSelected={setToggle}
-                                  color={"purple"} buttonWidth={300} textSize={14} onToggle={onToggle}/>
+                                  color={"purple"} buttonWidth={300} textSize={14}/>
                     {content}
                 </div>
             </DialogContent>
             <DialogActions className={"row"}>
-                <Button className={"button"} color={"green"} scale={0.45} widthOffset={-20}>Generate</Button>
+                <Button className={"button"} color={"green"} scale={0.45} widthOffset={-20} onClick={onGenerate}>Generate</Button>
                 <Button className={"button"} color={"purple"} scale={0.45} widthOffset={-20} onClick={() => setOpen(false)}>Cancel</Button>
             </DialogActions>
         </Dialog>
@@ -117,5 +136,5 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
 
 GenerateStatisticsDialog.propTypes = {
     open: PropTypes.bool.isRequired,
-    setOpen: PropTypes.func.isRequired
+    setOpen: PropTypes.func.isRequired,
 }

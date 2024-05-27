@@ -75,7 +75,6 @@ function fetchTopArtistsStatistics(){
             .then(res => {
                 topArtistStatistics = topArtistStatistics.concat(res)
                 resolve(topArtistStatistics)
-                console.log(res)
             })
             .catch(err => {
                 console.log(err)
@@ -148,36 +147,36 @@ export function fetchTrack(trackId){
 }
 
 export function generatePlaylistStatistics(playlistId){
-    fetch("http://localhost:8081/generate/playlists?userId=" + userId + "&playlistId=" + playlistId)
-        .then(result => result.json())
-        .then(res => {
-            playlistStatistics.push(res)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        fetch("http://localhost:8081/generate/playlists?userId=" + userId + "&playlistId=" + playlistId)
+            .then(result => result.json())
+            .then(res => {
+                playlistStatistics.push(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 }
 
 export function generateTopArtistsStatistics(){
-    fetch("http://localhost:8081/generate/artists?userId=" + userId)
-        .then(result => result.json())
-        .then(res => {
-            topArtistStatistics.push(res)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        fetch("http://localhost:8081/generate/artists?userId=" + userId)
+            .then(result => result.json())
+            .then(res => {
+                topArtistStatistics.push(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 }
 
 export function generateTopTracksStatistics(){
-    fetch("http://localhost:8081/generate/tracks?userId=" + userId)
-        .then(result => result.json())
-        .then(res => {
-            topTrackStatistics.push(res)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        fetch("http://localhost:8081/generate/tracks?userId=" + userId)
+            .then(result => result.json())
+            .then(res => {
+                topTrackStatistics.push(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
 }
 
 export function setUserId(id){

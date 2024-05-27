@@ -47,6 +47,7 @@ public class SpotifyController {
             String response = spotifyOAuth.requestAccessToken(code);
             Map<String, String> tokenData = spotifyOAuth.parseResponse(response);
             System.out.println("Token Data: " + tokenData);
+            //todo: return userID
         } catch (Exception e) {
             e.printStackTrace();
             return "error";
