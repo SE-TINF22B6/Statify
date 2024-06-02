@@ -27,6 +27,8 @@ public class SpotifyController {
     private String ACCESS_TOKEN;
     private String REFRESH_TOKEN;
 
+    private final Parser parser = new Parser();
+
 
     public SpotifyController(SpotifyOAuth spotifyOAuth) {
         this.spotifyOAuth = spotifyOAuth;
@@ -71,31 +73,15 @@ public class SpotifyController {
     @GetMapping("/profile")
     @ResponseBody
     public UserProfile getProfileInfo() throws IOException {
-        URL url = new URL("https://api.spotify.com/v1/me");
-        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-        httpConn.setRequestMethod("GET");
-
-        httpConn.setRequestProperty("Authorization", "Bearer " + ACCESS_TOKEN);
-
-        InputStream responseStream = httpConn.getResponseCode() / 100 == 2
-                ? httpConn.getInputStream()
-                : httpConn.getErrorStream();
-        Scanner s = new Scanner(responseStream).useDelimiter("\\A");
-        String response = s.hasNext() ? s.next() : "";
-
-        return jsonToUserProfile(response);
+        String response = performRequest("https://api.spotify.com/v1/me");
+        return parser.parseUserProfile(response);
     }
 
     @GetMapping("/playlists")
     @ResponseBody
-    public List<Playlist> getUsersPlaylists() {
-        //TODO: get users playlists from Spotify
-        List<Playlist> list = new ArrayList<>();
-
-        list.add(new Playlist("1234", "1. Playlist", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228"));
-        list.add(new Playlist("5678", "2. Playlist", "https://wrapped-images.spotifycdn.com/image/yts-2023/default/your-top-songs-2023_DEFAULT_en-GB.jpg"));
-
-        return list;
+    public List<Playlist> getUsersPlaylists() throws IOException {
+        String response = performRequest("https://api.spotify.com/v1/me/playlists");
+        return parser.parsePlaylists(response);
     }
 
     @ExceptionHandler
@@ -107,26 +93,19 @@ public class SpotifyController {
         return "error";
     }
 
+    private String performRequest(String endpoint) throws IOException {
+        URL url = new URL(endpoint);
+        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+        httpConn.setRequestMethod("GET");
 
-    public UserProfile jsonToUserProfile(String response) {
-        JSONObject userProfileJson = new JSONObject(response);
-        try {
-            String id = userProfileJson.getString("id");
-            String userName = userProfileJson.getString("display_name");
-            String email = userProfileJson.getString("email");
+        httpConn.setRequestProperty("Authorization", "Bearer " + ACCESS_TOKEN);
 
-            JSONObject external_urls = userProfileJson.getJSONObject("external_urls");
-            String userURL = external_urls.getString("spotify");
+        InputStream responseStream = httpConn.getResponseCode() / 100 == 2
+                ? httpConn.getInputStream()
+                : httpConn.getErrorStream();
+        Scanner s = new Scanner(responseStream).useDelimiter("\\A");
 
-            JSONArray images = userProfileJson.getJSONArray("images");
-            JSONObject firstImage = images.getJSONObject(1);
-            String profilePictureURL = firstImage.getString("url");
-
-            String product = userProfileJson.getString("product");
-            return new UserProfile(id, userName, email, userURL, profilePictureURL, product);
-        } catch (Exception e) {
-            return null;
-        }
+        return s.hasNext() ? s.next() : "";
     }
 }
 
