@@ -60,7 +60,8 @@ function getUserId(){
 }
 
 export function isLoggedIn(){
-    return getUserId() !== null;
+    // return getUserId() !== null; // TODO: auskommentiert zu Testzwecken
+    return false;
 }
 
 function fetchPlaylistStatistics(){
@@ -112,7 +113,9 @@ function fetchTopTracksStatistics(){
 function fetchPlaylists(){
     return new Promise((resolve, reject) => {
         fetch("http://localhost:8081/playlists?userId=" + getUserId())
-            .then(result => result.json())
+            .then(result => {
+                return result.json()
+            })
             .then(res => {
                 playlists = res
                 resolve(playlists)

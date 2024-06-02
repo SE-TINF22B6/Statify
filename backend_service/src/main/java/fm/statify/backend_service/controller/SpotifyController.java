@@ -2,12 +2,12 @@ package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
 import fm.statify.backend_service.entities.*;
+import fm.statify.backend_service.util.Parser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.json.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -110,7 +110,7 @@ public class SpotifyController {
         return "error";
     }
 
-    private String performRequest(String endpoint, String access_token) throws IOException, InterruptedException {
+    private String performRequest(String endpoint, String access_token) throws IOException {
         URL url = new URL(endpoint);
         HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
         httpConn.setRequestMethod("GET");

@@ -1,4 +1,4 @@
-package fm.statify.backend_service.controller;
+package fm.statify.backend_service.util;
 
 import fm.statify.backend_service.entities.Playlist;
 import fm.statify.backend_service.entities.UserProfile;
