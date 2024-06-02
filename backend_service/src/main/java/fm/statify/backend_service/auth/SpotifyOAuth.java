@@ -20,10 +20,10 @@ import org.json.JSONObject;
 @Service
 public class SpotifyOAuth {
     @Value("${app.clientId}")
-    private String clientId = "ce5694e58fa6452fb8633cbd087ce0d1";
+    private String clientId;
 
     @Value("${app.clientSecret}")
-    private String clientSecret = "822bc6aaf88144c59a2fb19aad3d14ff";
+    private String clientSecret;
     private static final String REDIRECT_URI = "http://localhost:3000/callback";
     private static final String AUTH_URL = "https://accounts.spotify.com/authorize";
     private static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
