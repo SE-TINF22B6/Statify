@@ -10,7 +10,7 @@ import {
     generateTopArtistsStatistics,
     generateTopTracksStatistics,
     getPlaylists
-} from "../util/dataManager";
+} from "../util/apiClient";
 
 export default function GenerateStatisticsDialog({open, setOpen}) {
 

@@ -4,7 +4,7 @@ import profile from "../images/profile-icon.png"
 import Button from "../components/button";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {getProfile} from "../util/dataManager";
+import {getProfile} from "../util/apiClient";
 
 export default function ProfilePage(){
 

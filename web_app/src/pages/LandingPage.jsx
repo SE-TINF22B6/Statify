@@ -5,7 +5,7 @@ import GitHubLogo from "../images/GitHub_Logo_White.png"
 import GitHubMark from "../images/github-mark-white.svg"
 import logo from "../images/StatifyLogo.png"
 import {useNavigate} from "react-router-dom";
-import {isLoggedIn} from "../util/dataManager";
+import {isLoggedIn} from "../util/apiClient";
 
 export default function LandingPage(){
     const navigate = useNavigate();

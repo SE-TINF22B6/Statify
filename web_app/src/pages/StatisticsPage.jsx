@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 import Button from "../components/button";
 import {useEffect, useState} from "react";
 import GenerateStatisticsDialog from "./GenerateStatisticsDialog";
-import {getPlaylistStatistics, getTopArtistsStatistics, getTopTracksStatistics} from "../util/dataManager";
+import {getPlaylistStatistics, getTopArtistsStatistics, getTopTracksStatistics} from "../util/apiClient";
 
 export default function StatisticsPage() {
 

@@ -6,7 +6,7 @@ import PopularityKeyMode from "../components/popularityKeyMode";
 import Chart from "../components/chart";
 import {useEffect, useState} from "react";
 import {keyDict, modeDict} from "../util/decodeAudioFeatures";
-import {fetchTrack} from "../util/dataManager";
+import {fetchTrack} from "../util/apiClient";
 
 export default function TrackPage() {
 

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {setUserId} from "../util/dataManager";
+import {setUserId} from "../util/apiClient";
 
 export default function CallbackPage(){
     const navigate = useNavigate()
