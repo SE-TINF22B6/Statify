@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.json.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.*;
 
@@ -22,7 +21,9 @@ public class SpotifyController {
 
     // This Class is responsible for handling the Spotify OAuth flow
     private final SpotifyOAuth spotifyOAuth;
-    Map<String, User> userData = new HashMap<>();
+    private Map<String, User> userData = new HashMap<>();
+
+    private final Parser parser = new Parser();
 
 
     public SpotifyController(SpotifyOAuth spotifyOAuth) {
@@ -73,39 +74,23 @@ public class SpotifyController {
 
     @GetMapping("/profile")
     @ResponseBody
-    public UserProfile getProfileInfo(String userId) throws IOException, InterruptedException {
-        UserProfile profile = getProfile(userData.get(userId).getValidAccessToken(spotifyOAuth));
+    public UserProfile getProfileInfo(String userId) throws Exception {
+        UserProfile profile = getProfile(getUser(userId).getValidAccessToken(spotifyOAuth));
 
         return profile;
     }
 
-    public UserProfile getProfile(String access_token) throws IOException{
-            URL url = new URL("https://api.spotify.com/v1/me");
-            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            httpConn.setRequestMethod("GET");
-
-            httpConn.setRequestProperty("Authorization", "Bearer " + access_token);
-
-            InputStream responseStream = httpConn.getResponseCode() / 100 == 2
-                    ? httpConn.getInputStream()
-                    : httpConn.getErrorStream();
-            Scanner s = new Scanner(responseStream).useDelimiter("\\A");
-            String response = s.hasNext() ? s.next() : "";
-
-            return jsonToUserProfile(response);
+    public UserProfile getProfile(String access_token) throws IOException, InterruptedException {
+            String response = performRequest("https://api.spotify.com/v1/me", access_token);
+            return parser.parseUserProfile(response);
 
     }
 
     @GetMapping("/playlists")
     @ResponseBody
-    public List<Playlist> getUsersPlaylists() {
-        //TODO: get users playlists from Spotify
-        List<Playlist> list = new ArrayList<>();
-
-        list.add(new Playlist("1234", "1. Playlist", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228"));
-        list.add(new Playlist("5678", "2. Playlist", "https://wrapped-images.spotifycdn.com/image/yts-2023/default/your-top-songs-2023_DEFAULT_en-GB.jpg"));
-
-        return list;
+    public List<Playlist> getUsersPlaylists(@RequestParam String userId) throws Exception {
+        String response = performRequest("https://api.spotify.com/v1/me/playlists", getUser(userId).getValidAccessToken(spotifyOAuth));
+        return parser.parsePlaylists(response);
     }
 
     @GetMapping("/track")
@@ -125,25 +110,27 @@ public class SpotifyController {
         return "error";
     }
 
+    private String performRequest(String endpoint, String access_token) throws IOException, InterruptedException {
+        URL url = new URL(endpoint);
+        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+        httpConn.setRequestMethod("GET");
 
-    public UserProfile jsonToUserProfile(String response) {
-        JSONObject userProfileJson = new JSONObject(response);
-        try {
-            String id = userProfileJson.getString("id");
-            String userName = userProfileJson.getString("display_name");
-            String email = userProfileJson.getString("email");
+        httpConn.setRequestProperty("Authorization", "Bearer " + access_token);
 
-            JSONObject external_urls = userProfileJson.getJSONObject("external_urls");
-            String userURL = external_urls.getString("spotify");
+        InputStream responseStream = httpConn.getResponseCode() / 100 == 2
+                ? httpConn.getInputStream()
+                : httpConn.getErrorStream();
+        Scanner s = new Scanner(responseStream).useDelimiter("\\A");
 
-            JSONArray images = userProfileJson.getJSONArray("images");
-            JSONObject firstImage = images.getJSONObject(1);
-            String profilePictureURL = firstImage.getString("url");
+        return s.hasNext() ? s.next() : "";
+    }
 
-            String product = userProfileJson.getString("product");
-            return new UserProfile(id, userName, email, userURL, profilePictureURL, product);
-        } catch (Exception e) {
-            return null;
+    private User getUser(String userId) throws Exception {
+        if(userData.containsKey(userId)){
+            return userData.get(userId);
+        }
+        else{
+            throw new Exception("User ID not found");
         }
     }
 }
