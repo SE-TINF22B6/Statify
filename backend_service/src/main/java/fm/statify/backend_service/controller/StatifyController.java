@@ -6,10 +6,7 @@ import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +111,16 @@ public class StatifyController {
         list.add(new PlaylistStatistics(userId, "playlist2Id", "Playlist 2", 109, 120, "Rock", 31, "Imagine Dragons", 20));
 
         return list;
+    }
+
+    @DeleteMapping("statistics/delete")
+    public void deleteStatistics(@RequestParam String userId){
+        // TODO: remove all statistics for user from database
+    }
+
+    @DeleteMapping("delete")
+    public void deleteData(@RequestParam String userId){
+        // TODO: remove all statistics and user data for user from database
     }
 }
 
