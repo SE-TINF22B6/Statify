@@ -48,7 +48,7 @@ public class Parser {
                 String imageURL = null;
                 JSONArray images = playlistJson.getJSONArray("images");
                 if (!images.isEmpty()) {
-                    imageURL = images.getJSONObject(1).getString("url");
+                    imageURL = images.getJSONObject(0).getString("url");
                 }
 
                 Playlist playlist = new Playlist(id, name, imageURL);
