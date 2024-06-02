@@ -1,10 +1,7 @@
 package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
-import fm.statify.backend_service.entities.AudioFeatures;
-import fm.statify.backend_service.entities.Playlist;
-import fm.statify.backend_service.entities.Track;
-import fm.statify.backend_service.entities.UserProfile;
+import fm.statify.backend_service.entities.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -14,11 +11,10 @@ import org.json.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -26,8 +22,7 @@ public class SpotifyController {
 
     // This Class is responsible for handling the Spotify OAuth flow
     private final SpotifyOAuth spotifyOAuth;
-    private String ACCESS_TOKEN;
-    private String REFRESH_TOKEN;
+    Map<String, User> userData = new HashMap<>();
 
 
     public SpotifyController(SpotifyOAuth spotifyOAuth) {
@@ -51,42 +46,53 @@ public class SpotifyController {
 
     // Most important part currently - Handle the callback from Spotify after the user has logged in - currently just prints the code
     @GetMapping("/callback")
-    public String callback(@RequestParam String code) {
+    public String callback(@RequestParam String code) throws IOException, InterruptedException {
         System.out.println("Received code: " + code);
 
-        try {
             String response = spotifyOAuth.requestAccessToken(code);
             tokenData = spotifyOAuth.parseResponse(response);
             JSONObject tokenDataJson = new JSONObject(tokenData);
-            ACCESS_TOKEN = tokenDataJson.getString("access_token");
-            REFRESH_TOKEN = tokenDataJson.getString("refresh_token");
+            String access_token = tokenDataJson.getString("access_token");
+            String refresh_token = tokenDataJson.getString("refresh_token");
+            int expires_in = Integer.parseInt(tokenDataJson.getString("expires_in"));
+
+            UserProfile profile = getProfile(access_token);
+
+            userData.put(profile.getId(), new User(
+                    profile.getId(),
+                    access_token,
+                    new Date(System.currentTimeMillis() + 1000 * expires_in),
+                    refresh_token
+            ));
             // TODO: add the data into the user table in the database
             System.out.println("Token Data: " + tokenData);
-            // TODO: return userID
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "error";
-        }
 
-        return "redirect:/";
+            return profile.getId();
     }
 
     @GetMapping("/profile")
     @ResponseBody
-    public UserProfile getProfileInfo() throws IOException {
-        URL url = new URL("https://api.spotify.com/v1/me");
-        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-        httpConn.setRequestMethod("GET");
+    public UserProfile getProfileInfo(String userId) throws IOException, InterruptedException {
+        UserProfile profile = getProfile(userData.get(userId).getValidAccessToken(spotifyOAuth));
 
-        httpConn.setRequestProperty("Authorization", "Bearer " + ACCESS_TOKEN);
+        return profile;
+    }
 
-        InputStream responseStream = httpConn.getResponseCode() / 100 == 2
-                ? httpConn.getInputStream()
-                : httpConn.getErrorStream();
-        Scanner s = new Scanner(responseStream).useDelimiter("\\A");
-        String response = s.hasNext() ? s.next() : "";
+    public UserProfile getProfile(String access_token) throws IOException{
+            URL url = new URL("https://api.spotify.com/v1/me");
+            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setRequestMethod("GET");
 
-        return jsonToUserProfile(response);
+            httpConn.setRequestProperty("Authorization", "Bearer " + access_token);
+
+            InputStream responseStream = httpConn.getResponseCode() / 100 == 2
+                    ? httpConn.getInputStream()
+                    : httpConn.getErrorStream();
+            Scanner s = new Scanner(responseStream).useDelimiter("\\A");
+            String response = s.hasNext() ? s.next() : "";
+
+            return jsonToUserProfile(response);
+
     }
 
     @GetMapping("/playlists")
