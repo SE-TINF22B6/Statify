@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
+import {setUserId} from "../util/dataManager";
 
 export default function CallbackPage(){
     const navigate = useNavigate()
@@ -18,7 +19,11 @@ export default function CallbackPage(){
         if(!searchParams.has("error")) {
 
             fetch("http://localhost:8081/callback?code=" + searchParams.get("code"))
-                .then(() => {
+                .then((response) => {
+                    return response.text()
+                })
+                .then(res => {
+                    setUserId(res)
                     navigate("/statistics")
                 })
                 .catch(err => {

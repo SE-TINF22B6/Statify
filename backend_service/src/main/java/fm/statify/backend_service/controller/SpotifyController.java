@@ -46,6 +46,7 @@ public class SpotifyController {
 
     // Most important part currently - Handle the callback from Spotify after the user has logged in - currently just prints the code
     @GetMapping("/callback")
+    @ResponseBody
     public String callback(@RequestParam String code) throws IOException, InterruptedException {
         System.out.println("Received code: " + code);
 
