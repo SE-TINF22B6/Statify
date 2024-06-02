@@ -19,7 +19,7 @@ export default function ProfilePage(){
             .then((user) => {
                 setUser(user);
             })
-    }, []);
+    });
 
 
     return(
@@ -43,7 +43,7 @@ export default function ProfilePage(){
                         <img src={user.profilePictureURL ?? "none"} alt={"Profile"}/>
                         <div className={"item"}>
                             <p className={"header"}>Username</p>
-                            <p>{user.userDisplayName ?? "userName"}</p>
+                            <p>{user.userName ?? "none"}</p>
                         </div>
                         <div className={"item"}>
                             <p className={"header"}>E-Mail</p>

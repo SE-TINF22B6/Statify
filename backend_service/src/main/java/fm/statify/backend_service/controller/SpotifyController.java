@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
+import org.json.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +24,9 @@ public class SpotifyController {
 
     // This Class is responsible for handling the Spotify OAuth flow
     private final SpotifyOAuth spotifyOAuth;
+    private String ACCESS_TOKEN;
+    private String REFRESH_TOKEN;
+
 
     public SpotifyController(SpotifyOAuth spotifyOAuth) {
         this.spotifyOAuth = spotifyOAuth;
@@ -38,7 +42,7 @@ public class SpotifyController {
     // Redirect the user to the Spotify login page
     @GetMapping("/authorize")
     @ResponseBody
-    public String authorize(){
+    public String authorize() {
         return spotifyOAuth.getAuthUrl();
     }
 
@@ -51,6 +55,10 @@ public class SpotifyController {
         try {
             String response = spotifyOAuth.requestAccessToken(code);
             tokenData = spotifyOAuth.parseResponse(response);
+            JSONObject tokenDataJson = new JSONObject(tokenData);
+            ACCESS_TOKEN = tokenDataJson.getString("access_token");
+            REFRESH_TOKEN = tokenDataJson.getString("refresh_token");
+            // TODO: add the data into the user table in the database
             System.out.println("Token Data: " + tokenData);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,27 +71,24 @@ public class SpotifyController {
     @GetMapping("/profile")
     @ResponseBody
     public UserProfile getProfileInfo() throws IOException {
-        System.out.println(tokenData.get("access_token"));
-            URL url = new URL("https://api.spotify.com/v1/me");
-            HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            httpConn.setRequestMethod("GET");
+        URL url = new URL("https://api.spotify.com/v1/me");
+        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+        httpConn.setRequestMethod("GET");
 
-            httpConn.setRequestProperty("Authorization", "Bearer " + tokenData.get("access_token"));
+        httpConn.setRequestProperty("Authorization", "Bearer " + ACCESS_TOKEN);
 
-            InputStream responseStream = httpConn.getResponseCode() / 100 == 2
-                    ? httpConn.getInputStream()
-                    : httpConn.getErrorStream();
-            Scanner s = new Scanner(responseStream).useDelimiter("\\A");
-            String response = s.hasNext() ? s.next() : "";
-            System.out.println(response);
-        //TODO: get users profile info from Spotify
+        InputStream responseStream = httpConn.getResponseCode() / 100 == 2
+                ? httpConn.getInputStream()
+                : httpConn.getErrorStream();
+        Scanner s = new Scanner(responseStream).useDelimiter("\\A");
+        String response = s.hasNext() ? s.next() : "";
 
-        return new UserProfile("1234", "userName", "max.mustermann@web.de", "https://open.spotify.com/user/smedjan", "https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228", "premium");
+        return jsonToUserProfile(response);
     }
 
     @GetMapping("/playlists")
     @ResponseBody
-    public List<Playlist> getUsersPlaylists(){
+    public List<Playlist> getUsersPlaylists() {
         //TODO: get users playlists from Spotify
         List<Playlist> list = new ArrayList<>();
 
@@ -100,6 +105,28 @@ public class SpotifyController {
 
         model.addAttribute("errorMessage", ex.getMessage());
         return "error";
+    }
+
+
+    public UserProfile jsonToUserProfile(String response) {
+        JSONObject userProfileJson = new JSONObject(response);
+        try {
+            String id = userProfileJson.getString("id");
+            String userName = userProfileJson.getString("display_name");
+            String email = userProfileJson.getString("email");
+
+            JSONObject external_urls = userProfileJson.getJSONObject("external_urls");
+            String userURL = external_urls.getString("spotify");
+
+            JSONArray images = userProfileJson.getJSONArray("images");
+            JSONObject firstImage = images.getJSONObject(1);
+            String profilePictureURL = firstImage.getString("url");
+
+            String product = userProfileJson.getString("product");
+            return new UserProfile(id, userName, email, userURL, profilePictureURL, product);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
 
