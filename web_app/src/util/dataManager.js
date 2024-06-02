@@ -59,6 +59,10 @@ function getUserId(){
     return userId
 }
 
+export function isLoggedIn(){
+    return getUserId() !== null;
+}
+
 function fetchPlaylistStatistics(){
     return new Promise((resolve, reject) => {
         fetch("http://localhost:8081/statistics/playlists?userId=" + getUserId())

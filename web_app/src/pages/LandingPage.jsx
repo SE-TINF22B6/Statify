@@ -5,6 +5,7 @@ import GitHubLogo from "../images/GitHub_Logo_White.png"
 import GitHubMark from "../images/github-mark-white.svg"
 import logo from "../images/StatifyLogo.png"
 import {useNavigate} from "react-router-dom";
+import {isLoggedIn} from "../util/dataManager";
 
 export default function LandingPage(){
     const navigate = useNavigate();
@@ -45,20 +46,25 @@ export default function LandingPage(){
     )
 
     function login(){
-        fetch("http://localhost:8081/authorize")
-            .then((res) => {
-                return res.text()
-            })
-            .catch((err) => {
-                navigate("/callback?error=true")
-                return null
-            })
-            .then((link) => {
-                if(link != null) {
-                    console.log(link)
-                    window.location = (link)
-                }
-            })
+        if(isLoggedIn()){
+            navigate("statistics")
+        }
+        else{
+            fetch("http://localhost:8081/authorize")
+                .then((res) => {
+                    return res.text()
+                })
+                .catch((err) => {
+                    navigate("/callback?error=true")
+                    return null
+                })
+                .then((link) => {
+                    if (link != null) {
+                        console.log(link)
+                        window.location = (link)
+                    }
+                })
+        }
 
     }
 }
