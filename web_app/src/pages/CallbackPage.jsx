@@ -25,6 +25,8 @@ export default function CallbackPage(){
                 .then(res => {
                     setUserId(res)
                     navigate("/statistics")
+                    //todo save userId in cookie
+                    document.cookie = "userId=" + res;
                 })
                 .catch(err => {
                     setMessage("Error while logging in.")

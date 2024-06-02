@@ -4,7 +4,7 @@ let topArtistStatistics = []
 let playlists = []
 let profile
 
-let userId = "thisIsAUserId"
+let userId
 
 
 export function getTopTracksStatistics(){
@@ -52,9 +52,16 @@ export function getProfile() {
     })
 }
 
+function getUserId(){
+    if(!userId){
+        userId = getCookie("userId")
+    }
+    return userId
+}
+
 function fetchPlaylistStatistics(){
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/statistics/playlists?userId=" + userId)
+        fetch("http://localhost:8081/statistics/playlists?userId=" + getUserId())
             .then(result => result.json())
             .then(res => {
                 playlistStatistics = playlistStatistics.concat(res)
@@ -70,7 +77,7 @@ function fetchPlaylistStatistics(){
 
 function fetchTopArtistsStatistics(){
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/statistics/artists?userId=" + userId)
+        fetch("http://localhost:8081/statistics/artists?userId=" + getUserId())
             .then(result => result.json())
             .then(res => {
                 topArtistStatistics = topArtistStatistics.concat(res)
@@ -85,7 +92,7 @@ function fetchTopArtistsStatistics(){
 
 function fetchTopTracksStatistics(){
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/statistics/tracks?userId=" + userId)
+        fetch("http://localhost:8081/statistics/tracks?userId=" + getUserId())
             .then(result => result.json())
             .then(res => {
                 topTrackStatistics = topTrackStatistics.concat(res)
@@ -100,7 +107,7 @@ function fetchTopTracksStatistics(){
 
 function fetchPlaylists(){
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/playlists?userId=" + userId)
+        fetch("http://localhost:8081/playlists?userId=" + getUserId())
             .then(result => result.json())
             .then(res => {
                 playlists = res
@@ -115,7 +122,7 @@ function fetchPlaylists(){
 
 function fetchProfile(){
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/profile?userId=" + userId)
+        fetch("http://localhost:8081/profile?userId=" + getUserId())
             .then((result) => {
                 return result.json()
             })
@@ -132,7 +139,7 @@ function fetchProfile(){
 
 export function fetchTrack(trackId){
     return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/track?trackId=abc")
+        fetch("http://localhost:8081/track?trackId="  + trackId)
             .then((result) => {
                 return result.json();
             })
@@ -147,7 +154,7 @@ export function fetchTrack(trackId){
 }
 
 export function generatePlaylistStatistics(playlistId){
-        fetch("http://localhost:8081/generate/playlists?userId=" + userId + "&playlistId=" + playlistId)
+        fetch("http://localhost:8081/generate/playlists?userId=" + getUserId() + "&playlistId=" + playlistId)
             .then(result => result.json())
             .then(res => {
                 playlistStatistics.push(res)
@@ -158,7 +165,7 @@ export function generatePlaylistStatistics(playlistId){
 }
 
 export function generateTopArtistsStatistics(){
-        fetch("http://localhost:8081/generate/artists?userId=" + userId)
+        fetch("http://localhost:8081/generate/artists?userId=" + getUserId())
             .then(result => result.json())
             .then(res => {
                 topArtistStatistics.push(res)
@@ -169,7 +176,7 @@ export function generateTopArtistsStatistics(){
 }
 
 export function generateTopTracksStatistics(){
-        fetch("http://localhost:8081/generate/tracks?userId=" + userId)
+        fetch("http://localhost:8081/generate/tracks?userId=" + getUserId())
             .then(result => result.json())
             .then(res => {
                 topTrackStatistics.push(res)
@@ -181,4 +188,21 @@ export function generateTopTracksStatistics(){
 
 export function setUserId(id){
     userId = id
+    setCookie("userId", id, 400)
+}
+
+
+function setCookie (name, value, days) {
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + days);
+
+    document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
+}
+
+function getCookie (name) {
+    const cookies = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith(`${name}=`));
+
+    return cookies ? cookies.split("=")[1] : null;
 }
