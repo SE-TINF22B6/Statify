@@ -20,10 +20,10 @@ import org.json.JSONObject;
 @Service
 public class SpotifyOAuth {
     @Value("${app.clientId}")
-    private String clientId;
+    private String clientId = "ce5694e58fa6452fb8633cbd087ce0d1";
 
     @Value("${app.clientSecret}")
-    private String clientSecret;
+    private String clientSecret = "822bc6aaf88144c59a2fb19aad3d14ff";
     private static final String REDIRECT_URI = "http://localhost:3000/callback";
     private static final String AUTH_URL = "https://accounts.spotify.com/authorize";
     private static final String TOKEN_URL = "https://accounts.spotify.com/api/token";
@@ -31,13 +31,16 @@ public class SpotifyOAuth {
 
     // Get the URL to redirect the user to the Spotify login page
     public String getAuthUrl() {
-        String allScopes = "ugc-image-upload+user-read-playback-state+user-modify-playback-state+user-read-currently-playing+app-remote-control" +
-                "+streaming+playlist-read-private+playlist-read-collaborative+playlist-modify-private+playlist-modify-public+user-follow-modify+user-follow-read+user-read-playback-position" +
-                "+user-top-read+user-read-recently-played+user-library-modify+user-library-read+user-read-email+user-read-private";
+        String scopes = "playlist-read-collaborative"
+                + "+playlist-read-private"
+                + "+user-read-private"
+                + "+user-read-email"
+                + "+user-top-read";
+
         return AUTH_URL + "?client_id=" + clientId
                 + "&response_type=code"
                 + "&redirect_uri=" + URLEncoder.encode(REDIRECT_URI, StandardCharsets.UTF_8)
-                + "&scope=" + allScopes;
+                + "&scope=" + scopes;
     }
 
     // Get the access token from the response
