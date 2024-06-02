@@ -99,6 +99,28 @@ public class SpotifyOAuth {
         return response.body();
     }
 
+    public String refreshAccessToken(String refreshToken) throws IOException, InterruptedException{
+        HttpClient client = HttpClient.newHttpClient();
+
+        String auth = clientId + ":" + clientSecret;
+        String basicAuth = "Basic " + Base64.getEncoder().encodeToString(auth.getBytes());
+
+        String body = "grant_type=refresh_token"
+                + "&refresh_token=" + refreshToken;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(TOKEN_URL))
+                .header("Authorization", basicAuth)
+                .header("Content-Type", "application/x-www-form-urlencoded")
+                //Here the actual request is made
+                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.body();
+    }
+
     // Parse the response from Spotify to get different token data (for example in Class Main)
     public Map<String, String> parseResponse(String response) {
         Map<String, String> tokenData = new HashMap<>();

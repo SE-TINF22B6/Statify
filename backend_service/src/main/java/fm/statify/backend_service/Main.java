@@ -1,7 +1,6 @@
 package fm.statify.backend_service;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
-import fm.statify.backend_service.auth.SpotifyTokenRefresher;
 import java.util.Map;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,8 +24,7 @@ public class Main {
             System.out.println("Refresh Token: " + refreshToken);
 
             // Refresh the access token
-            SpotifyTokenRefresher tokenRefresher = new SpotifyTokenRefresher();
-            String refreshedTokenResponse = tokenRefresher.refreshAccessToken(refreshToken);
+            String refreshedTokenResponse = spotifyOAuth.refreshAccessToken(refreshToken);
             Map<String, String> refreshedTokenData = spotifyOAuth.parseResponse(refreshedTokenResponse);
             String refreshedAccessToken = refreshedTokenData.get("access_token");
             System.out.println("Refreshed Access Token: " + refreshedAccessToken);
@@ -59,4 +57,6 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+
 }
