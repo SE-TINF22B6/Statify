@@ -57,7 +57,7 @@ public class Parser {
 
             return playlists;
         } catch (Exception e) {
-            return null;
+            return playlists;
         }
 
     }

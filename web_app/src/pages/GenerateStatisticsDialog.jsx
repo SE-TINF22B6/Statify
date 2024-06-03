@@ -2,26 +2,23 @@ import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import PropTypes from "prop-types";
 import Button from "../components/button";
 import "../css/generate-statistics-dialog.css"
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import ToggleButton from "../components/toggleButton";
 import PlaylistItem from "../components/playlistItem";
-import {
-    generatePlaylistStatistics,
-    generateTopArtistsStatistics,
-    generateTopTracksStatistics,
-    getPlaylists
-} from "../util/apiClient";
+import {ApiClientContext} from "../App";
 
 export default function GenerateStatisticsDialog({open, setOpen}) {
 
     const TOGGLE_TRACKS_ARTISTS = 0
     const TOGGLE_PLAYLISTS = 1
 
+    const apiClient = useContext(ApiClientContext)
+
     const [toggle, setToggle] = useState(TOGGLE_TRACKS_ARTISTS)
 
     const [content, setContent] = useState(<></>)
 
-    const [playlists, setPlaylists] = useState([])
+    const [playlists, setPlaylists] = useState(apiClient.playlists)
 
     const [selectedPlaylist, setSelectedPlaylist] = useState(1)
 
@@ -31,21 +28,21 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
         switch (toggle) {
             case TOGGLE_TRACKS_ARTISTS:
                 setContent(<div className={"column"}>
-                    <div className={"radio-group column"}>
-                        <div className={"row"}>
-                            <input type="radio" name="timespan" value="long" id="long" defaultChecked/>
-                            <label htmlFor="long">Long Term (1 Year)</label>
+                        <div className={"radio-group column"}>
+                            <div className={"row"}>
+                                <input type="radio" name="timespan" value="long" id="long" defaultChecked/>
+                                <label htmlFor="long">Long Term (1 Year)</label>
+                            </div>
+                            <div className={"row"}>
+                                <input type="radio" name="timespan" value="medium" id="medium"/>
+                                <label htmlFor="medium">Medium Term (6 Months)</label>
+                            </div>
+                            <div className={"row"}>
+                                <input type="radio" name="timespan" value="short" id="short"/>
+                                <label htmlFor="short">Short Term (4 Weeks)</label>
+                            </div>
                         </div>
-                        <div className={"row"}>
-                            <input type="radio" name="timespan" value="medium" id="medium"/>
-                            <label htmlFor="medium">Medium Term (6 Months)</label>
-                        </div>
-                        <div className={"row"}>
-                            <input type="radio" name="timespan" value="short" id="short"/>
-                            <label htmlFor="short">Short Term (4 Weeks)</label>
-                        </div>
-                    </div>
-                    <hr/>
+                        <hr/>
                         <div className={"radio-group column"}>
                             <div className={"row"}>
                                 <input type="radio" name="type" value="tracks" id="tracks" defaultChecked onChange={(e) => handleChange(e, setSelection)}/>
@@ -56,7 +53,7 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
                                 <label htmlFor="artists">Top Artists</label>
                             </div>
                         </div>
-                </div>
+                    </div>
 
                 )
                 break
@@ -80,11 +77,11 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
     }, [toggle, selectedPlaylist, playlists]);
 
     useEffect(() => {
-        getPlaylists()
+        apiClient.getPlaylists()
             .then(res => {
                 setPlaylists(res)
             })
-    }, []);
+    }, [apiClient]);
 
     useEffect(() => {
         setSelectedPlaylist(0)
@@ -103,14 +100,14 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
     function onGenerate(){
         if(toggle === TOGGLE_TRACKS_ARTISTS){
             if(selection === "artists"){
-                generateTopArtistsStatistics()
+                apiClient.generateTopArtistsStatistics()
             }
             else if(selection === "tracks"){
-                generateTopTracksStatistics()
+                apiClient.generateTopTracksStatistics()
             }
         }
         else if(toggle === TOGGLE_PLAYLISTS){
-            generatePlaylistStatistics(playlists[selectedPlaylist].id)
+            apiClient.generatePlaylistStatistics(playlists[selectedPlaylist].id)
         }
         setOpen(false)
     }

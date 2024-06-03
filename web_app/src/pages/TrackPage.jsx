@@ -4,11 +4,14 @@ import Track from "../components/track";
 import DurationTempoLoudness from "../components/durationTempoLoudness";
 import PopularityKeyMode from "../components/popularityKeyMode";
 import Chart from "../components/chart";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {keyDict, modeDict} from "../util/decodeAudioFeatures";
-import {fetchTrack} from "../util/apiClient";
+//import {fetchTrack} from "../util/apiClient";
+import {ApiClientContext} from "../App";
 
 export default function TrackPage() {
+
+    const apiClient = useContext(ApiClientContext)
 
 
     const [track, setTrack] = useState({
@@ -33,7 +36,7 @@ export default function TrackPage() {
 
     useEffect(() => {
         let trackId = "abc"
-        fetchTrack(trackId)
+        apiClient.fetchTrack(trackId)
             .then((res) => {
                 setTrack({
                     name: res.name,
@@ -59,7 +62,7 @@ export default function TrackPage() {
             .catch(err => {
                 console.log(err)
             })
-    }, []);
+    }, [apiClient]);
 
 
     return (

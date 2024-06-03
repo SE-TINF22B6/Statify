@@ -6,47 +6,51 @@ import PlaylistStatisticsItem from "../components/playlistStatisticsItem";
 import profile from "../images/profile-icon.png";
 import {useNavigate} from "react-router-dom";
 import Button from "../components/button";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import GenerateStatisticsDialog from "./GenerateStatisticsDialog";
-import {getPlaylistStatistics, getTopArtistsStatistics, getTopTracksStatistics} from "../util/apiClient";
+// import ApiClient from "../util/apiClient";
+import {ApiClientContext} from "../App";
+//import {getPlaylistStatistics, getTopArtistsStatistics, getTopTracksStatistics} from "../util/apiClient";
 
 export default function StatisticsPage() {
 
     const navigate = useNavigate();
 
+    const apiClient = useContext(ApiClientContext)
+
     const [open, setOpen] = useState(false)
 
-    const [playlistStats, setPlaylistStats] = useState([]);
-    const [artistsStats, setArtistsStats] = useState([]);
-    const [tracksStats, setTracksStats] = useState([]);
+    const [playlistStats, setPlaylistStats] = useState(apiClient.playlistStatistics);
+    const [artistsStats, setArtistsStats] = useState(apiClient.topArtistStatistics);
+    const [tracksStats, setTracksStats] = useState(apiClient.topTrackStatistics);
 
     const [playlistIndex, setPlaylistIndex] = useState(0)
     const [artistsIndex, setArtistsIndex] = useState(0)
     const [tracksIndex, setTracksIndex] = useState(0)
 
     useEffect(() => {
-        getTopTracksStatistics()
+        apiClient.getTopTracksStatistics()
             .then(res => {
                 setTracksStats(res)
             })
             .catch(err => {
                 console.log(err)
             })
-        getTopArtistsStatistics()
+        apiClient.getTopArtistsStatistics()
             .then(res => {
                 setArtistsStats(res)
             })
             .catch(err => {
                 console.log(err)
             })
-        getPlaylistStatistics()
+        apiClient.getPlaylistStatistics()
             .then(res => {
                 setPlaylistStats(res)
             })
             .catch(err => {
                 console.log(err)
             })
-    }, []);
+    }, [apiClient]);
 
     return (
         <div>

@@ -1,215 +1,221 @@
-let playlistStatistics = []
-let topTrackStatistics = []
-let topArtistStatistics = []
-let playlists = []
-let profile
-
-let userId
+export default class ApiClient
+{
 
 
-export function getTopTracksStatistics(){
-    if(topArtistStatistics.length === 0){
-        return fetchTopTracksStatistics()
+    playlistStatistics = []
+    topTrackStatistics = []
+    topArtistStatistics = []
+    playlists = []
+    profile
+
+    userId
+
+
+    getTopTracksStatistics() {
+        if (this.topArtistStatistics.length === 0) {
+            return this.fetchTopTracksStatistics()
+        }
+        return new Promise(() => {
+            return this.topTrackStatistics
+        })
     }
-    return new Promise(() => {
-        return topTrackStatistics
-    })
-}
 
-export function getTopArtistsStatistics(){
-    if(topArtistStatistics.length === 0){
-        return fetchTopArtistsStatistics()
+    getTopArtistsStatistics() {
+        if (this.topArtistStatistics.length === 0) {
+            return this.fetchTopArtistsStatistics()
+        }
+        return new Promise(() => {
+            return this.topArtistStatistics
+        })
     }
-    return new Promise(() => {
-        return topArtistStatistics
-    })
-}
 
-export function getPlaylistStatistics(){
-    if(playlistStatistics.length === 0){
-        return fetchPlaylistStatistics()
+    getPlaylistStatistics() {
+        if (this.playlistStatistics.length === 0) {
+            return this.fetchPlaylistStatistics()
+        }
+        return new Promise(() => {
+            return this.playlistStatistics
+        })
     }
-    return new Promise(() => {
-        return playlistStatistics
-    })
-}
 
-export function getPlaylists(){
-    if(playlists.length === 0){
-        return fetchPlaylists()
+    getPlaylists() {
+        if (this.playlists.length === 0) {
+            return this.fetchPlaylists()
+        }
+        return new Promise(() => {
+            return this.playlists
+        })
     }
-    return new Promise(() => {
-        return playlists
-    })
-}
 
-export function getProfile() {
-    if(profile == null){
-        return fetchProfile()
+     getProfile() {
+        if (this.profile == null) {
+            return this.fetchProfile()
+        }
+        return new Promise(() => {
+            return this.profile
+        })
     }
-    return new Promise(() => {
-        return profile
-    })
-}
 
-function getUserId(){
-    if(!userId){
-        userId = getCookie("userId")
+     getUserId() {
+        if (!this.userId) {
+            this.userId = this.getCookie("userId")
+        }
+        return this.userId
     }
-    return userId
-}
 
-export function isLoggedIn(){
-    // return getUserId() !== null; // TODO: auskommentiert zu Testzwecken
-    return false;
-}
+     isLoggedIn() {
+        // return getthis.userId() !== null; // TODO: auskommentiert zu Testzwecken
+        return false;
+    }
 
-function fetchPlaylistStatistics(){
-    return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/statistics/playlists?userId=" + getUserId())
+     fetchPlaylistStatistics() {
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:8081/statistics/playlists?userId=" + this.getUserId())
+                .then(result => result.json())
+                .then(res => {
+                    this.playlistStatistics = this.playlistStatistics.concat(res)
+                    resolve(this.playlistStatistics)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+
+    }
+
+     fetchTopArtistsStatistics() {
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:8081/statistics/artists?userId=" + this.getUserId())
+                .then(result => result.json())
+                .then(res => {
+                    this.topArtistStatistics = this.topArtistStatistics.concat(res)
+                    resolve(this.topArtistStatistics)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+    }
+
+     fetchTopTracksStatistics() {
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:8081/statistics/tracks?userId=" + this.getUserId())
+                .then(result => result.json())
+                .then(res => {
+                    this.topTrackStatistics = this.topTrackStatistics.concat(res)
+                    resolve(this.topTrackStatistics)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+    }
+
+     fetchPlaylists() {
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:8081/playlists?userId=" + this.getUserId())
+                .then(result => {
+                    return result.json()
+                })
+                .then(res => {
+                    this.playlists = res
+                    resolve(this.playlists)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+    }
+
+     fetchProfile() {
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:8081/profile?userId=" + this.getUserId())
+                .then((result) => {
+                    return result.json()
+                })
+                .then((user) => {
+                    this.profile = user
+                    resolve(user);
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+    }
+
+     fetchTrack(trackId) {
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:8081/track?trackId=" + trackId)
+                .then((result) => {
+                    return result.json();
+                })
+                .then(res => {
+                    resolve(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+    }
+
+     generatePlaylistStatistics(playlistId) {
+        fetch("http://localhost:8081/generate/playlists?userId=" + this.getUserId() + "&playlistId=" + playlistId)
             .then(result => result.json())
             .then(res => {
-                playlistStatistics = playlistStatistics.concat(res)
-                resolve(playlistStatistics)
+                this.playlistStatistics.push(res)
             })
             .catch(err => {
                 console.log(err)
-                reject(err)
             })
-    })
+    }
 
-}
-
-function fetchTopArtistsStatistics(){
-    return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/statistics/artists?userId=" + getUserId())
+     generateTopArtistsStatistics() {
+        fetch("http://localhost:8081/generate/artists?userId=" + this.getUserId())
             .then(result => result.json())
             .then(res => {
-                topArtistStatistics = topArtistStatistics.concat(res)
-                resolve(topArtistStatistics)
+                this.topArtistStatistics.push(res)
             })
             .catch(err => {
                 console.log(err)
-                reject(err)
             })
-    })
-}
+    }
 
-function fetchTopTracksStatistics(){
-    return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/statistics/tracks?userId=" + getUserId())
+     generateTopTracksStatistics() {
+        fetch("http://localhost:8081/generate/tracks?userId=" + this.getUserId())
             .then(result => result.json())
             .then(res => {
-                topTrackStatistics = topTrackStatistics.concat(res)
-                resolve(topTrackStatistics)
-            })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
-    })
-}
-
-function fetchPlaylists(){
-    return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/playlists?userId=" + getUserId())
-            .then(result => {
-                return result.json()
-            })
-            .then(res => {
-                playlists = res
-                resolve(playlists)
-            })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
-    })
-}
-
-function fetchProfile(){
-    return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/profile?userId=" + getUserId())
-            .then((result) => {
-                return result.json()
-            })
-            .then((user) => {
-                profile = user
-                resolve(user);
-            })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
-    })
-}
-
-export function fetchTrack(trackId){
-    return new Promise((resolve, reject) => {
-        fetch("http://localhost:8081/track?trackId="  + trackId)
-            .then((result) => {
-                return result.json();
-            })
-            .then(res => {
-                resolve(res)
-            })
-            .catch(err => {
-                console.log(err)
-                reject(err)
-            })
-    })
-}
-
-export function generatePlaylistStatistics(playlistId){
-        fetch("http://localhost:8081/generate/playlists?userId=" + getUserId() + "&playlistId=" + playlistId)
-            .then(result => result.json())
-            .then(res => {
-                playlistStatistics.push(res)
+                this.topTrackStatistics.push(res)
             })
             .catch(err => {
                 console.log(err)
             })
-}
+    }
 
-export function generateTopArtistsStatistics(){
-        fetch("http://localhost:8081/generate/artists?userId=" + getUserId())
-            .then(result => result.json())
-            .then(res => {
-                topArtistStatistics.push(res)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-}
-
-export function generateTopTracksStatistics(){
-        fetch("http://localhost:8081/generate/tracks?userId=" + getUserId())
-            .then(result => result.json())
-            .then(res => {
-                topTrackStatistics.push(res)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-}
-
-export function setUserId(id){
-    userId = id
-    setCookie("userId", id, 400)
-}
+     setUserId(id) {
+        this.userId = id
+        this.setCookie("userId", id, 400)
+    }
 
 
-function setCookie (name, value, days) {
-    const expirationDate = new Date();
-    expirationDate.setDate(expirationDate.getDate() + days);
+     setCookie(name, value, days) {
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + days);
 
-    document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
-}
+        document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
+    }
 
-function getCookie (name) {
-    const cookies = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith(`${name}=`));
+     getCookie(name) {
+        const cookies = document.cookie
+            .split("; ")
+            .find((row) => row.startsWith(`${name}=`));
 
-    return cookies ? cookies.split("=")[1] : null;
+        return cookies ? cookies.split("=")[1] : null;
+    }
+
 }
