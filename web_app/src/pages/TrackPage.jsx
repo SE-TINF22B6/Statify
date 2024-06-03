@@ -64,7 +64,7 @@ export default function TrackPage() {
             .catch(err => {
                 console.log(err)
             })
-    }, [apiClient]);
+    }, [apiClient, trackId]);
 
 
     return (
@@ -73,8 +73,8 @@ export default function TrackPage() {
             <div className={"track-page page"}>
                 <div className="track">
                     <Track imageUrl={track.imageUrl}
-                        trackTitle={track.name}
-                        artistName={track.artists}
+                           trackTitle={track.name}
+                           artistName={track.artists}
                     ></Track>
                 </div>
                 <div className="divider"></div>
@@ -85,8 +85,8 @@ export default function TrackPage() {
                                            loudness={track.loudness}
                     ></DurationTempoLoudness>
                     <PopularityKeyMode popularity={track.popularity}
-                        trackKey={track.key}
-                        mode={track.mode}
+                                       trackKey={track.key}
+                                       mode={track.mode}
                     ></PopularityKeyMode>
                 </div>
             </div>
