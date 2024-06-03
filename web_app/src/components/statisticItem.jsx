@@ -1,9 +1,9 @@
 import "../css/statistic-item.css"
 import PropTypes from "prop-types";
 
-export default function StatisticItem({number, title, subtitle, image, color}){
+export default function StatisticItem({number, title, subtitle, image, color, onClick, className}){
     return(
-        <div className={"item row"}>
+        <div className={"item row " + className} onClick={onClick}>
             <div className={"left row"}>
                 <p className={"number " + color}>{number}.</p>
                 <div className={"column"}>
@@ -22,10 +22,14 @@ StatisticItem.propTypes={
     subtitle: PropTypes.string,
     number: PropTypes.number.isRequired,
     image: PropTypes.string,
+    onClick: PropTypes.func,
+    className: PropTypes.string,
 }
 
 StatisticItem.defaultProps={
     color: "orange",
     title: "Name",
-    number: 0
+    number: 0,
+    onClick: () => {},
+    className: "",
 }

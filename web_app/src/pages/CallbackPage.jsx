@@ -1,6 +1,5 @@
 import {useContext, useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {setUserId} from "../util/apiClient";
 import {ApiClientContext} from "../App";
 
 export default function CallbackPage(){
@@ -34,7 +33,7 @@ export default function CallbackPage(){
                     console.log(err)
                 })
         }
-    }, [searchParams, navigate]);
+    }, [searchParams, navigate, apiClient]);
     return (
         <div style={{textAlign:"center", margin:"20px", fontSize:"16pt", color:"black"}}>
             {message}

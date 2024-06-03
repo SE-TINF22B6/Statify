@@ -6,12 +6,15 @@ import PopularityKeyMode from "../components/popularityKeyMode";
 import Chart from "../components/chart";
 import {useContext, useEffect, useState} from "react";
 import {keyDict, modeDict} from "../util/decodeAudioFeatures";
-//import {fetchTrack} from "../util/apiClient";
 import {ApiClientContext} from "../App";
+import {useLocation} from "react-router-dom";
 
 export default function TrackPage() {
 
     const apiClient = useContext(ApiClientContext)
+
+    const location = useLocation();
+    const { trackId } = location.state || {};
 
 
     const [track, setTrack] = useState({
@@ -35,7 +38,6 @@ export default function TrackPage() {
     })
 
     useEffect(() => {
-        let trackId = "abc"
         apiClient.fetchTrack(trackId)
             .then((res) => {
                 setTrack({
