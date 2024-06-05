@@ -121,7 +121,7 @@ public class Parser {
         }
     }
 
-    public PlaylistWithSimpleTracksWithGenre parsePlaylistWithSimpleTracks(String response){
+    public PlaylistWithSimplePlaylistTracks parsePlaylistWithSimpleTracks(String response){
         try{
             JSONObject responseJson = new JSONObject(response);
             String id = responseJson.getString("id");
@@ -143,7 +143,7 @@ public class Parser {
                 simpleTracks.add(t);
             }
 
-            return new PlaylistWithSimpleTracksWithGenre(id, name, imageURL, simpleTracks); //hier duration 0
+            return new PlaylistWithSimplePlaylistTracks(id, name, imageURL, simpleTracks); //hier duration 0
         }
         catch (Exception e){
             e.printStackTrace();

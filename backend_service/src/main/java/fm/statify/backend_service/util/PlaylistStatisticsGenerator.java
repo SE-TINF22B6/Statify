@@ -12,14 +12,14 @@ public class PlaylistStatisticsGenerator {
     private static final Parser parser = new Parser();
 
     public static PlaylistStatistics generatePlaylistStatistics(String userId, String playlistId, String userAccessToken){
-        PlaylistWithSimpleTracksWithGenre playlistWithSimpleTracks = getPlaylist(playlistId, userAccessToken);
+        PlaylistWithSimplePlaylistTracks playlistWithSimpleTracks = getPlaylist(playlistId, userAccessToken);
         return calculatePlaylistStatistics(userId, playlistId, playlistWithSimpleTracks, userAccessToken);
     }
 
-    private static PlaylistWithSimpleTracksWithGenre getPlaylist(String playlistId, String userAccessToken){
+    private static PlaylistWithSimplePlaylistTracks getPlaylist(String playlistId, String userAccessToken){
         try {
             String result = httpHelper.performRequest("https://api.spotify.com/v1/playlists/" + playlistId, userAccessToken);
-            PlaylistWithSimpleTracksWithGenre playlist = parser.parsePlaylistWithSimpleTracks(result);
+            PlaylistWithSimplePlaylistTracks playlist = parser.parsePlaylistWithSimpleTracks(result);
             return playlist;
         }
         catch (IOException e) {
@@ -27,7 +27,7 @@ public class PlaylistStatisticsGenerator {
         }
     }
 
-    private static PlaylistStatistics calculatePlaylistStatistics(String userId, String playlistId, PlaylistWithSimpleTracksWithGenre playlist, String userAccessToken){
+    private static PlaylistStatistics calculatePlaylistStatistics(String userId, String playlistId, PlaylistWithSimplePlaylistTracks playlist, String userAccessToken){
         Map<String, Integer> countGenres = new HashMap<>();
         Map<String, Integer> countArtists = new HashMap<>();
         int sumDuration = 0;
