@@ -1,7 +1,9 @@
 package fm.statify.backend_service.util;
 
 import fm.statify.backend_service.entities.Playlist;
+import fm.statify.backend_service.entities.SimpleTrack;
 import fm.statify.backend_service.entities.UserProfile;
+import fm.statify.backend_service.stats.TopTrackStatistics;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -60,5 +62,39 @@ public class Parser {
             return null;
         }
 
+    }
+    public List<SimpleTrack> parseTopTracks (String response){
+        List<SimpleTrack> topTracks = new ArrayList<>();
+        try {
+            JSONObject responseJson = new JSONObject(response);
+            JSONArray tracks = responseJson.getJSONArray("items");
+
+            for (int i = 0; i < tracks.length(); i++) {
+                JSONObject trackJson = tracks.getJSONObject(i);
+
+                String id = trackJson.getString("id");
+                String name = trackJson.getString("name");
+
+                String imageURL = null;
+                JSONObject album = trackJson.getJSONObject("album");
+                JSONArray images = album.getJSONArray("images");
+                if (!images.isEmpty()) {
+                    imageURL = images.getJSONObject(0).getString("url");
+                }
+
+                List<String> artists = new ArrayList<>();
+                JSONArray artistsJson = trackJson.getJSONArray("artists");
+                for (int x = 0; x < artistsJson.length(); x++) {
+                    JSONObject artist = artistsJson.getJSONObject(x);
+                    artists.add(artist.getString("name"));
+                }
+
+                topTracks.add(new SimpleTrack(id, name, imageURL, artists));
+            }
+
+            return topTracks;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -2,6 +2,7 @@ package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
 import fm.statify.backend_service.entities.*;
+import fm.statify.backend_service.util.HTTPHelper;
 import fm.statify.backend_service.util.Parser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +25,10 @@ public class SpotifyController {
     private Map<String, User> userData = new HashMap<>();
 
     private final Parser parser = new Parser();
+    private final HTTPHelper http = new HTTPHelper();
 
 
-    public SpotifyController(SpotifyOAuth spotifyOAuth) {
+    SpotifyController(SpotifyOAuth spotifyOAuth) {
         this.spotifyOAuth = spotifyOAuth;
     }
 
@@ -81,7 +83,7 @@ public class SpotifyController {
     }
 
     public UserProfile getProfile(String access_token) throws IOException, InterruptedException {
-            String response = performRequest("https://api.spotify.com/v1/me", access_token);
+            String response = http.performRequest("https://api.spotify.com/v1/me", access_token);
             return parser.parseUserProfile(response);
 
     }
@@ -89,7 +91,7 @@ public class SpotifyController {
     @GetMapping("/playlists")
     @ResponseBody
     public List<Playlist> getUsersPlaylists(@RequestParam String userId) throws Exception {
-        String response = performRequest("https://api.spotify.com/v1/me/playlists", getUser(userId).getValidAccessToken(spotifyOAuth));
+        String response = http.performRequest("https://api.spotify.com/v1/me/playlists", getUser(userId).getValidAccessToken(spotifyOAuth));
         return parser.parsePlaylists(response);
     }
 
@@ -108,21 +110,6 @@ public class SpotifyController {
 
         model.addAttribute("errorMessage", ex.getMessage());
         return "error";
-    }
-
-    private String performRequest(String endpoint, String access_token) throws IOException {
-        URL url = new URL(endpoint);
-        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-        httpConn.setRequestMethod("GET");
-
-        httpConn.setRequestProperty("Authorization", "Bearer " + access_token);
-
-        InputStream responseStream = httpConn.getResponseCode() / 100 == 2
-                ? httpConn.getInputStream()
-                : httpConn.getErrorStream();
-        Scanner s = new Scanner(responseStream).useDelimiter("\\A");
-
-        return s.hasNext() ? s.next() : "";
     }
 
     private User getUser(String userId) throws Exception {

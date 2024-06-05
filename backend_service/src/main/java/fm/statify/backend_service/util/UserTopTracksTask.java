@@ -35,9 +35,10 @@ public class UserTopTracksTask implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(DatabaseManager.class.getName());
 
 
-    UserTopTracksTask(String userId) {
+    public UserTopTracksTask(String userId) {
         this.userId = userId;
     }
+
 
     @Override
     public void run() {
@@ -80,7 +81,7 @@ public class UserTopTracksTask implements Runnable {
         return user.authenticateUser(code);
     }
 
-    private String[] fetchTopTracksFromSpotify(String accessToken) throws IOException, InterruptedException {
+    public String[] fetchTopTracksFromSpotify(String accessToken) throws IOException, InterruptedException {
 
         // Placeholder for actual Spotify API call
         HttpClient client = HttpClient.newHttpClient();

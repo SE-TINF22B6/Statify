@@ -1,32 +1,41 @@
 package fm.statify.backend_service.controller;
 
+import fm.statify.backend_service.auth.SpotifyOAuth;
 import fm.statify.backend_service.entities.Artist;
 import fm.statify.backend_service.entities.SimpleTrack;
 import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
+import fm.statify.backend_service.util.HTTPHelper;
+import fm.statify.backend_service.util.Parser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 @Controller
 @RequestMapping("/")
 public class StatifyController {
 
+    private final HTTPHelper http = new HTTPHelper();
+    private final Parser parser = new Parser();
+
+    private final SpotifyController spotifyController = new SpotifyController(new SpotifyOAuth());
 
     @GetMapping("generate/tracks")
     @ResponseBody
-    public TopTrackStatistics generateSongStatistics(@RequestParam String userId) {
+    public TopTrackStatistics generateSongStatistics(@RequestParam String userId) throws IOException {
         //todo: logic for getting top songs
-        return new TopTrackStatistics(userId,
-                new SimpleTrack("trackId1", "Track 1", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 3, Artist 2")),
-                new SimpleTrack("trackId2", "Track 2", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 4, Artist 2")),
-                new SimpleTrack("trackId3", "Track 3", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 5, Artist 2")),
-                new SimpleTrack("trackId4", "Track 4", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 4, Artist 2")),
-                new SimpleTrack("trackId5", "Track 5", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 2, Artist 2"))
-        );
+
+        String accessToken = ""; // insert here an access token
+        List<SimpleTrack> topTracks = parser.parseTopTracks(http.performRequest("https://api.spotify.com/v1/me/top/tracks/?limit=5", accessToken));
+        return new TopTrackStatistics(userId, topTracks.get(0), topTracks.get(1), topTracks.get(2), topTracks.get(3), topTracks.get(4));
     }
 
 
