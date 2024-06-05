@@ -4,11 +4,17 @@ import Track from "../components/track";
 import DurationTempoLoudness from "../components/durationTempoLoudness";
 import PopularityKeyMode from "../components/popularityKeyMode";
 import Chart from "../components/chart";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {keyDict, modeDict} from "../util/decodeAudioFeatures";
-import {fetchTrack} from "../util/dataManager";
+import {ApiClientContext} from "../App";
+import {useLocation} from "react-router-dom";
 
 export default function TrackPage() {
+
+    const apiClient = useContext(ApiClientContext)
+
+    const location = useLocation();
+    const { trackId } = location.state || {};
 
 
     const [track, setTrack] = useState({
@@ -32,8 +38,7 @@ export default function TrackPage() {
     })
 
     useEffect(() => {
-        let trackId = "abc"
-        fetchTrack(trackId)
+        apiClient.fetchTrack(trackId)
             .then((res) => {
                 setTrack({
                     name: res.name,
@@ -59,7 +64,7 @@ export default function TrackPage() {
             .catch(err => {
                 console.log(err)
             })
-    }, []);
+    }, [apiClient, trackId]);
 
 
     return (
@@ -68,8 +73,8 @@ export default function TrackPage() {
             <div className={"track-page page"}>
                 <div className="track">
                     <Track imageUrl={track.imageUrl}
-                        trackTitle={track.name}
-                        artistName={track.artists}
+                           trackTitle={track.name}
+                           artistName={track.artists}
                     ></Track>
                 </div>
                 <div className="divider"></div>
@@ -80,8 +85,8 @@ export default function TrackPage() {
                                            loudness={track.loudness}
                     ></DurationTempoLoudness>
                     <PopularityKeyMode popularity={track.popularity}
-                        trackKey={track.key}
-                        mode={track.mode}
+                                       trackKey={track.key}
+                                       mode={track.mode}
                     ></PopularityKeyMode>
                 </div>
             </div>

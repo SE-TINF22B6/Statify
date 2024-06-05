@@ -1,11 +1,13 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {setUserId} from "../util/dataManager";
+import {ApiClientContext} from "../App";
 
 export default function CallbackPage(){
     const navigate = useNavigate()
     const [searchParams] = useSearchParams();
     const [message, setMessage] = useState("Logging in...");
+
+    const apiClient = useContext(ApiClientContext)
 
 
     useEffect(() => {
@@ -23,17 +25,15 @@ export default function CallbackPage(){
                     return response.text()
                 })
                 .then(res => {
-                    setUserId(res)
+                    apiClient.setUserId(res)
                     navigate("/statistics")
-                    //todo save userId in cookie
-                    document.cookie = "userId=" + res;
                 })
                 .catch(err => {
                     setMessage("Error while logging in.")
                     console.log(err)
                 })
         }
-    }, [searchParams, navigate]);
+    }, [searchParams, navigate, apiClient]);
     return (
         <div style={{textAlign:"center", margin:"20px", fontSize:"16pt", color:"black"}}>
             {message}

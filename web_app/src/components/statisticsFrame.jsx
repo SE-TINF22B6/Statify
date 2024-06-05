@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export default function StatisticsFrame({children, header, subheader, scrollable, onScroll}){
     return(
         <div className={"frame row"}>
-            {scrollable && <img src={arrow} style={{rotate:"180deg"}} alt={"arrow icon"} onClick={() => onScroll(-1)}/>}
+            {scrollable && <img className={"clickable"} src={arrow} style={{rotate:"180deg"}} alt={"arrow icon"} onClick={() => onScroll(-1)}/>}
             <div className={"column"}>
                 <p className={"header"}>{header}</p>
                 {subheader != null && <p className={"subheader"}>{subheader}</p>}
@@ -14,7 +14,7 @@ export default function StatisticsFrame({children, header, subheader, scrollable
                     {children}
                 </div>
             </div>
-            {scrollable && <img src={arrow} alt={"arrow icon"} onClick={() => onScroll(1)}/>}
+            {scrollable && <img className={"clickable"} src={arrow} alt={"arrow icon"} onClick={() => onScroll(1)}/>}
         </div>
     )
 }

@@ -40,3 +40,7 @@ hr{
   overflow-y: auto;
 }
 
+.clickable{
+  cursor: pointer;
+}
+

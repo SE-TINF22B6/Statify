@@ -6,47 +6,51 @@ import PlaylistStatisticsItem from "../components/playlistStatisticsItem";
 import profile from "../images/profile-icon.png";
 import {useNavigate} from "react-router-dom";
 import Button from "../components/button";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import GenerateStatisticsDialog from "./GenerateStatisticsDialog";
-import {getPlaylistStatistics, getTopArtistsStatistics, getTopTracksStatistics} from "../util/dataManager";
+// import ApiClient from "../util/apiClient";
+import {ApiClientContext} from "../App";
+//import {getPlaylistStatistics, getTopArtistsStatistics, getTopTracksStatistics} from "../util/apiClient";
 
 export default function StatisticsPage() {
 
     const navigate = useNavigate();
 
+    const apiClient = useContext(ApiClientContext)
+
     const [open, setOpen] = useState(false)
 
-    const [playlistStats, setPlaylistStats] = useState([]);
-    const [artistsStats, setArtistsStats] = useState([]);
-    const [tracksStats, setTracksStats] = useState([]);
+    const [playlistStats, setPlaylistStats] = useState(apiClient.playlistStatistics);
+    const [artistsStats, setArtistsStats] = useState(apiClient.topArtistStatistics);
+    const [tracksStats, setTracksStats] = useState(apiClient.topTrackStatistics);
 
     const [playlistIndex, setPlaylistIndex] = useState(0)
     const [artistsIndex, setArtistsIndex] = useState(0)
     const [tracksIndex, setTracksIndex] = useState(0)
 
     useEffect(() => {
-        getTopTracksStatistics()
+        apiClient.getTopTracksStatistics()
             .then(res => {
                 setTracksStats(res)
             })
             .catch(err => {
                 console.log(err)
             })
-        getTopArtistsStatistics()
+        apiClient.getTopArtistsStatistics()
             .then(res => {
                 setArtistsStats(res)
             })
             .catch(err => {
                 console.log(err)
             })
-        getPlaylistStatistics()
+        apiClient.getPlaylistStatistics()
             .then(res => {
                 setPlaylistStats(res)
             })
             .catch(err => {
                 console.log(err)
             })
-    }, []);
+    }, [apiClient]);
 
     return (
         <div>
@@ -61,27 +65,37 @@ export default function StatisticsPage() {
                                            title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].firstTrack.name : ""}
                                            subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].firstTrack.artists.join(", "): ""}
                                            number={1}
-                                           color={"green"}/>
+                                           color={"green"}
+                                           className={"clickable"}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].firstTrack.id)}/>
                             <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].secondTrack.imageUrl: ""}
                                            title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].secondTrack.name : ""}
                                            subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].secondTrack.artists.join(", ") : ""}
                                            number={2}
-                                           color={"orange"}/>
+                                           color={"orange"}
+                                           className={"clickable"}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].secondTrack.id)}/>
                             <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].thirdTrack.imageUrl : ""}
                                            title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].thirdTrack.name : ""}
                                            subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].thirdTrack.artists.join(", ") : ""}
                                            number={3}
-                                           color={"orange"}/>
+                                           color={"orange"}
+                                           className={"clickable"}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].thirdTrack.id)}/>
                             <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fourthTrack.imageUrl : ""}
                                            title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fourthTrack.name : ""}
                                            subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fourthTrack.artists.join(", ") : ""}
                                            number={4}
-                                           color={"purple"}/>
+                                           color={"purple"}
+                                           className={"clickable"}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].fourthTrack.id)}/>
                             <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fifthTrack.imageUrl : ""}
                                            title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fifthTrack.name : ""}
                                            subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fifthTrack.artists.join(", ") : ""}
                                            number={5}
-                                           color={"purple"}/>
+                                           color={"purple"}
+                                           className={"clickable"}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].fifthTrack.id)}/>
                         </StatisticsFrame>
                         <StatisticsFrame header={"Top Artists"} subheader={artistsStats[artistsIndex] != null ? new Date((artistsStats[artistsIndex].generateDate)).toString().substring(4, 15) : ""} scrollable={artistsStats.length > 1} onScroll={scrollArtists}>
                             <StatisticItem image={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].firstArtist.imageUrl : ""}
@@ -127,6 +141,10 @@ export default function StatisticsPage() {
             </div>
         </div>
     )
+
+    function navigateToTrack(trackId){
+        navigate("/track", { state: { trackId: trackId } })
+    }
 
     function scrollPlaylist(direction){
         if(direction > 0) {

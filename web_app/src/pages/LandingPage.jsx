@@ -5,10 +5,13 @@ import GitHubLogo from "../images/GitHub_Logo_White.png"
 import GitHubMark from "../images/github-mark-white.svg"
 import logo from "../images/StatifyLogo.png"
 import {useNavigate} from "react-router-dom";
-import {isLoggedIn} from "../util/dataManager";
+import {useContext} from "react";
+import {ApiClientContext} from "../App";
 
 export default function LandingPage(){
     const navigate = useNavigate();
+
+    const apiClient = useContext(ApiClientContext)
 
     return (
         <div>
@@ -46,7 +49,7 @@ export default function LandingPage(){
     )
 
     function login(){
-        if(isLoggedIn()){
+        if(apiClient.isLoggedIn()){
             navigate("statistics")
         }
         else{
