@@ -22,6 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "testcoverage": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject",
     "test:ci": "react-scripts test --ci --coverage --reporters=default --reporters=jest-junit"
   },
