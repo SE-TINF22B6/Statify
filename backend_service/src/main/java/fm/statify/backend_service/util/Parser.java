@@ -1,14 +1,12 @@
 package fm.statify.backend_service.util;
 
-import fm.statify.backend_service.entities.Artist;
-import fm.statify.backend_service.entities.Playlist;
-import fm.statify.backend_service.entities.SimpleTrack;
-import fm.statify.backend_service.entities.UserProfile;
+import fm.statify.backend_service.entities.*;
 import fm.statify.backend_service.stats.TopTrackStatistics;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Parser {
@@ -124,5 +122,46 @@ public class Parser {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public PlaylistWithSimpleTracks parsePlaylistWithSimpleTracks(String response){
+        try{
+            JSONObject responseJson = new JSONObject(response);
+            String id = responseJson.getString("id");
+            String name = responseJson.getString("name");
+
+            String imageURL = null;
+
+            JSONArray images = responseJson.getJSONArray("images");
+            if (!images.isEmpty()) {
+                imageURL = images.getJSONObject(0).getString("url");
+            }
+
+            List<SimpleTrack> simpleTracks = new ArrayList<>();
+
+            JSONArray tracks = responseJson.getJSONObject("tracks").getJSONArray("items");
+            for (int i = 0; i < tracks.length(); i++) {
+                JSONObject track = tracks.getJSONObject(i).getJSONObject("track").getJSONObject("TrackObject");
+                simpleTracks.add(parsePlaylistTrack(track));
+            }
+
+            return new PlaylistWithSimpleTracks(id, name, imageURL, simpleTracks);
+        }
+        catch (Exception e){
+            return  null;
+        }
+    }
+
+    public SimpleTrack parsePlaylistTrack(JSONObject track){
+        String id = track.getString("id");
+        String name = track.getString("name");
+        List<String> artists = new ArrayList<>();
+
+        JSONArray artistsArr = track.getJSONArray("artists");
+        for (int i = 0; i < artistsArr.length(); i++) {
+            artists.add(artistsArr.getJSONObject(i).getString("name"));
+        }
+
+        return new SimpleTrack(id, name, null, artists);
     }
 }
