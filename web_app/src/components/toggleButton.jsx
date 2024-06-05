@@ -27,8 +27,9 @@ export default function ToggleButton({className, color, selected, setSelected, b
                     onClick={() => {
                         onToggle(0)
                         setSelected(0)
-                    }}
-            >{choices[0]}</button>
+                    }}>
+                {choices[0]}
+            </button>
             <button className={className}
                     style={selected === 1 ? selectedStyle : unselectedStyle}
                     onClick={() => {
