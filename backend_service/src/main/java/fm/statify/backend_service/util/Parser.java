@@ -1,5 +1,6 @@
 package fm.statify.backend_service.util;
 
+import fm.statify.backend_service.entities.Artist;
 import fm.statify.backend_service.entities.Playlist;
 import fm.statify.backend_service.entities.SimpleTrack;
 import fm.statify.backend_service.entities.UserProfile;
@@ -34,7 +35,7 @@ public class Parser {
         }
     }
 
-    public List<Playlist> parsePlaylists(String response){
+    public List<Playlist> parsePlaylists(String response) {
         List<Playlist> playlists = new ArrayList<>();
 
         try {
@@ -63,7 +64,8 @@ public class Parser {
         }
 
     }
-    public List<SimpleTrack> parseTopTracks (String response){
+
+    public List<SimpleTrack> parseTopTracks(String response) {
         List<SimpleTrack> topTracks = new ArrayList<>();
         try {
             JSONObject responseJson = new JSONObject(response);
@@ -93,6 +95,32 @@ public class Parser {
             }
 
             return topTracks;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<Artist> parseTopArtists(String response) {
+        List<Artist> topArtists = new ArrayList<>();
+        try {
+            JSONObject responseJson = new JSONObject(response);
+            JSONArray artists = responseJson.getJSONArray("items");
+
+            for (int i = 0; i < artists.length(); i++) {
+                JSONObject artistJson = artists.getJSONObject(i);
+
+                String id = artistJson.getString("id");
+                String name = artistJson.getString("name");
+
+                String imageURL = null;
+                JSONArray images = artistJson.getJSONArray("images");
+                if (!images.isEmpty()) {
+                    imageURL = images.getJSONObject(0).getString("url");
+                }
+                topArtists.add(new Artist(id, name, imageURL));
+            }
+
+            return topArtists;
         } catch (Exception e) {
             return null;
         }

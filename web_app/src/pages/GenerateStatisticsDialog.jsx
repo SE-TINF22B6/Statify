@@ -107,7 +107,7 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
     function onGenerate() {
         if (toggle === TOGGLE_TRACKS_ARTISTS) {
             if (selection === "artists") {
-                apiClient.generateTopArtistsStatistics()
+                apiClient.generateTopArtistsStatistics(timeRange)
             } else if (selection === "tracks") {
                 apiClient.generateTopTracksStatistics(timeRange)
             }

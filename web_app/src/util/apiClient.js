@@ -174,8 +174,8 @@ export default class ApiClient {
             })
     }
 
-    generateTopArtistsStatistics() {
-        fetch("http://localhost:8081/generate/artists?userId=" + this.getUserId())
+    generateTopArtistsStatistics(timeRange) {
+        fetch("http://localhost:8081/generate/artists?userId=" + this.getUserId() + "&time_range=" + timeRange)
             .then(result => result.json())
             .then(res => {
                 this.topArtistStatistics.push(res)

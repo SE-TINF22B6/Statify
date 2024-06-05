@@ -41,15 +41,10 @@ public class StatifyController {
 
     @GetMapping("generate/artists")
     @ResponseBody
-    public TopArtistStatistics generateArtistStatistics(@RequestParam String userId) {
-        //todo: logic for getting top artists
-        return new TopArtistStatistics(userId,
-                new Artist("artist1Id", "Artist 1", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"),
-                new Artist("artist2Id", "Artist 2", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"),
-                new Artist("artist3Id", "Artist 3", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"),
-                new Artist("artist4Id", "Artist 4", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1"),
-                new Artist("artist5Id", "Artist 5", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1")
-        );
+    public TopArtistStatistics generateArtistStatistics(@RequestParam String userId, @RequestParam String time_range) throws IOException {
+        String accessToken = getAccessTokenByUserID(userId);
+        List<Artist> topArtists = parser.parseTopArtists(http.performRequest("https://api.spotify.com/v1/me/top/artists/?limit=5&time_range=" + time_range, accessToken));
+        return new TopArtistStatistics(userId, topArtists.get(0), topArtists.get(1), topArtists.get(2), topArtists.get(3), topArtists.get(4));
     }
 
 
