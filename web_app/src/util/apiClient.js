@@ -167,7 +167,9 @@ export default class ApiClient {
         fetch("http://localhost:8081/generate/playlists?userId=" + this.getUserId() + "&playlistId=" + playlistId)
             .then(result => result.json())
             .then(res => {
-                this.playlistStatistics.push(res)
+                if(!(res.status >= 300)){
+                    this.playlistStatistics.push(res)
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -178,7 +180,9 @@ export default class ApiClient {
         fetch("http://localhost:8081/generate/artists?userId=" + this.getUserId() + "&time_range=" + timeRange)
             .then(result => result.json())
             .then(res => {
-                this.topArtistStatistics.push(res)
+                if(!(res.status >= 300)) {
+                    this.topArtistStatistics.push(res)
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -189,7 +193,9 @@ export default class ApiClient {
         fetch("http://localhost:8081/generate/tracks?userId=" + this.getUserId() + "&time_range=" + timeRange)
             .then(result => result.json())
             .then(res => {
-                this.topTrackStatistics.push(res)
+                if(!(res.status >= 300)) {
+                    this.topTrackStatistics.push(res)
+                }
             })
             .catch(err => {
                 console.log(err)

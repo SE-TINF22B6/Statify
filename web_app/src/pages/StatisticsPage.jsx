@@ -8,9 +8,7 @@ import {useNavigate} from "react-router-dom";
 import Button from "../components/button";
 import {useContext, useEffect, useState} from "react";
 import GenerateStatisticsDialog from "./GenerateStatisticsDialog";
-// import ApiClient from "../util/apiClient";
 import {ApiClientContext} from "../App";
-//import {getPlaylistStatistics, getTopArtistsStatistics, getTopTracksStatistics} from "../util/apiClient";
 
 export default function StatisticsPage() {
 
@@ -123,7 +121,7 @@ export default function StatisticsPage() {
                     <div className={"row"}>
                         <StatisticsFrame header={"Playlist Statistics"} subheader={playlistStats[playlistIndex] != null ? new Date((playlistStats[playlistIndex].generateDate)).toString().substring(4, 15) : ""} scrollable={playlistStats.length > 1} onScroll={scrollPlaylist}>
                             <PlaylistStatisticsItem name={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].name : ""}
-                                                    minutes={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].duration : 0}
+                                                    duration={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].duration : 0}
                                                     songs={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].tracksNumber : 0}
                                                     top_artist={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].topArtist : ""}
                                                     top_genre={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].topGenre : ""}

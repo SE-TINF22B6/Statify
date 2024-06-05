@@ -26,7 +26,7 @@ export default function CallbackPage(){
                 })
                 .then(res => {
                     apiClient.setUserId(res)
-                    navigate("/statistics")
+                    navigate("/statistics", {replace: true})
                 })
                 .catch(err => {
                     setMessage("Error while logging in.")

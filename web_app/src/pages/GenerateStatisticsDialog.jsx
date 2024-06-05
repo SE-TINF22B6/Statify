@@ -31,7 +31,7 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
                 setContent(<div className={"column"}>
                         <div className={"radio-group column"}>
                             <div className={"row"}>
-                                <input type="radio" name="timespan" value="long_term" id="long"
+                                <input type="radio" name="timespan" value="long_term" id="long" defaultChecked
                                        onChange={(e) => setTimeRange(e.currentTarget.value)}/>
                                 <label htmlFor="long">Long Term (1 Year)</label>
                             </div>
