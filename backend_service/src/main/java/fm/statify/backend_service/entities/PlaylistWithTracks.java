@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PlaylistWithTracks extends Playlist{
 
-    List<Track> tracks = new ArrayList<>();
+    List<Track> tracks;
     public PlaylistWithTracks(String id, String name, String imageURL, List<Track> tracks) {
         super(id, name, imageURL);
         this.tracks = tracks;
