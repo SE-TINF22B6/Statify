@@ -8,6 +8,7 @@ import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
 import fm.statify.backend_service.util.HTTPHelper;
 import fm.statify.backend_service.util.Parser;
+import fm.statify.backend_service.util.PlaylistStatisticsGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +52,9 @@ public class StatifyController {
     @GetMapping("generate/playlists")
     @ResponseBody
     public PlaylistStatistics generatePlaylistStatistics(@RequestParam String userId, @RequestParam String playlistId) {
-        //todo: logic for generating playlist statistics
-        return new PlaylistStatistics(userId, playlistId, "Playlist", 62, 420, "Edm", 26, "The Weeknd", 23);
+        String accessToken = getAccessTokenByUserID(userId);
+        PlaylistStatistics playlistStatistics = PlaylistStatisticsGenerator.generatePlaylistStatistics(userId, playlistId, accessToken);
+        return playlistStatistics;
     }
 
 

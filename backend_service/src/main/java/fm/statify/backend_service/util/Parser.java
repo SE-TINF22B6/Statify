@@ -1,13 +1,10 @@
 package fm.statify.backend_service.util;
 
 import fm.statify.backend_service.entities.*;
-import fm.statify.backend_service.stats.TopTrackStatistics;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Parser {
     public UserProfile parseUserProfile(String response) {
@@ -124,7 +121,7 @@ public class Parser {
         }
     }
 
-    public PlaylistWithSimpleTracks parsePlaylistWithSimpleTracks(String response){
+    public PlaylistWithSimpleTracksWithGenre parsePlaylistWithSimpleTracks(String response){
         try{
             JSONObject responseJson = new JSONObject(response);
             String id = responseJson.getString("id");
@@ -137,31 +134,46 @@ public class Parser {
                 imageURL = images.getJSONObject(0).getString("url");
             }
 
-            List<SimpleTrack> simpleTracks = new ArrayList<>();
+            List<SimplePlaylistTrack> simpleTracks = new ArrayList<>();
 
             JSONArray tracks = responseJson.getJSONObject("tracks").getJSONArray("items");
             for (int i = 0; i < tracks.length(); i++) {
-                JSONObject track = tracks.getJSONObject(i).getJSONObject("track").getJSONObject("TrackObject");
-                simpleTracks.add(parsePlaylistTrack(track));
+                JSONObject track = tracks.getJSONObject(i).getJSONObject("track");
+                SimplePlaylistTrack t = parsePlaylistTrack(track);
+                simpleTracks.add(t);
             }
 
-            return new PlaylistWithSimpleTracks(id, name, imageURL, simpleTracks);
+            return new PlaylistWithSimpleTracksWithGenre(id, name, imageURL, simpleTracks); //hier duration 0
         }
         catch (Exception e){
+            e.printStackTrace();
             return  null;
         }
     }
 
-    public SimpleTrack parsePlaylistTrack(JSONObject track){
+    private SimplePlaylistTrack parsePlaylistTrack(JSONObject track){
         String id = track.getString("id");
         String name = track.getString("name");
+        int duration = track.getInt("duration_ms");
         List<String> artists = new ArrayList<>();
+        Set<String> genres = new HashSet<>();
 
         JSONArray artistsArr = track.getJSONArray("artists");
         for (int i = 0; i < artistsArr.length(); i++) {
-            artists.add(artistsArr.getJSONObject(i).getString("name"));
-        }
+            JSONObject artist = artistsArr.getJSONObject(i);
+            artists.add(artist.getString("name"));
 
-        return new SimpleTrack(id, name, null, artists);
+            // Never returns genres // TODO: add genres later -> artists endpoint
+
+            if(artist.has("genres")){
+                JSONArray genresArr = artist.getJSONArray("genres");
+                for (int ii = 0; ii < genresArr.length(); ii++) {
+                    String genre = genresArr.getString(ii);
+                    genres.add(genre);
+                }
+            }
+        }
+        SimplePlaylistTrack t = new SimplePlaylistTrack(id, name, null, artists, genres, duration);
+        return t;
     }
 }
