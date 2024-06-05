@@ -1,23 +1,21 @@
 package fm.statify.backend_service.controller;
 
-import fm.statify.backend_service.auth.SpotifyOAuth;
 import fm.statify.backend_service.entities.Artist;
 import fm.statify.backend_service.entities.SimpleTrack;
+import fm.statify.backend_service.entities.User;
 import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
 import fm.statify.backend_service.util.HTTPHelper;
 import fm.statify.backend_service.util.Parser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -25,16 +23,18 @@ public class StatifyController {
 
     private final HTTPHelper http = new HTTPHelper();
     private final Parser parser = new Parser();
+    private final SpotifyController spotifyController;
 
-    private final SpotifyController spotifyController = new SpotifyController(new SpotifyOAuth());
+    @Autowired
+    public StatifyController(SpotifyController spotifyController) {
+        this.spotifyController = spotifyController;
+    }
 
     @GetMapping("generate/tracks")
     @ResponseBody
-    public TopTrackStatistics generateSongStatistics(@RequestParam String userId) throws IOException {
-        //todo: logic for getting top songs
-
-        String accessToken = ""; // insert here an access token
-        List<SimpleTrack> topTracks = parser.parseTopTracks(http.performRequest("https://api.spotify.com/v1/me/top/tracks/?limit=5", accessToken));
+    public TopTrackStatistics generateSongStatistics(@RequestParam String userId, @RequestParam String time_range) throws IOException {
+        String accessToken = getAccessTokenByUserID(userId);
+        List<SimpleTrack> topTracks = parser.parseTopTracks(http.performRequest("https://api.spotify.com/v1/me/top/tracks/?limit=5&time_range=" + time_range, accessToken));
         return new TopTrackStatistics(userId, topTracks.get(0), topTracks.get(1), topTracks.get(2), topTracks.get(3), topTracks.get(4));
     }
 
@@ -123,13 +123,19 @@ public class StatifyController {
     }
 
     @DeleteMapping("statistics/delete")
-    public void deleteStatistics(@RequestParam String userId){
+    public void deleteStatistics(@RequestParam String userId) {
         // TODO: remove all statistics for user from database
     }
 
     @DeleteMapping("delete")
-    public void deleteData(@RequestParam String userId){
+    public void deleteData(@RequestParam String userId) {
         // TODO: remove all statistics and user data for user from database
+    }
+
+    private String getAccessTokenByUserID(String userID) {
+        Map<String, User> userData = this.spotifyController.getUserData();
+        User user = userData.get(userID);
+        return user.getAccessToken();
     }
 }
 

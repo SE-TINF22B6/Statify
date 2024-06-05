@@ -4,6 +4,7 @@ import fm.statify.backend_service.auth.SpotifyOAuth;
 import fm.statify.backend_service.entities.*;
 import fm.statify.backend_service.util.HTTPHelper;
 import fm.statify.backend_service.util.Parser;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/")
+@Component
 public class SpotifyController {
 
     // This Class is responsible for handling the Spotify OAuth flow
@@ -33,6 +35,10 @@ public class SpotifyController {
     }
 
     public Map<String, String> tokenData;
+
+    public Map<String, User> getUserData() {
+        return userData;
+    }
 
     @GetMapping
     public String index() {

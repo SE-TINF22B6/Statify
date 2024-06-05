@@ -22,7 +22,8 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
 
     const [selectedPlaylist, setSelectedPlaylist] = useState(1)
 
-    const[selection, setSelection] = useState("tracks")
+    const [selection, setSelection] = useState("tracks")
+    const [timeRange, setTimeRange] = useState("long")
 
     useEffect(() => {
         switch (toggle) {
@@ -30,31 +31,35 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
                 setContent(<div className={"column"}>
                         <div className={"radio-group column"}>
                             <div className={"row"}>
-                                <input type="radio" name="timespan" value="long" id="long" defaultChecked/>
+                                <input type="radio" name="timespan" value="long_term" id="long"
+                                       onChange={(e) => setTimeRange(e.currentTarget.value)}/>
                                 <label htmlFor="long">Long Term (1 Year)</label>
                             </div>
                             <div className={"row"}>
-                                <input type="radio" name="timespan" value="medium" id="medium"/>
+                                <input type="radio" name="timespan" value="medium_term" id="medium"
+                                       onChange={(e) => setTimeRange(e.currentTarget.value)}/>
                                 <label htmlFor="medium">Medium Term (6 Months)</label>
                             </div>
                             <div className={"row"}>
-                                <input type="radio" name="timespan" value="short" id="short"/>
+                                <input type="radio" name="timespan" value="short_term" id="short"
+                                       onChange={(e) => setTimeRange(e.currentTarget.value)}/>
                                 <label htmlFor="short">Short Term (4 Weeks)</label>
                             </div>
                         </div>
                         <hr/>
                         <div className={"radio-group column"}>
                             <div className={"row"}>
-                                <input type="radio" name="type" value="tracks" id="tracks" defaultChecked onChange={(e) => handleChange(e, setSelection)}/>
+                                <input type="radio" name="type" value="tracks" id="tracks" defaultChecked
+                                       onChange={(e) => handleChange(e, setSelection)}/>
                                 <label htmlFor="tracks">Top Tracks</label>
                             </div>
                             <div className={"row"}>
-                                <input type="radio" name="type" value="artists" id="artists" onChange={(e) => handleChange(e, setSelection)}/>
+                                <input type="radio" name="type" value="artists" id="artists"
+                                       onChange={(e) => handleChange(e, setSelection)}/>
                                 <label htmlFor="artists">Top Artists</label>
                             </div>
                         </div>
                     </div>
-
                 )
                 break
             case TOGGLE_PLAYLISTS:
@@ -63,7 +68,8 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
                         <div className={"scrollable playlist-container"}>
                             {
                                 playlists.map((playlist, i) => (
-                                    <PlaylistItem key={i} title={playlist.name} image={playlist.imageURL} selected={i === selectedPlaylist} onClick={() => selectPlaylist(i)}/>
+                                    <PlaylistItem key={i} title={playlist.name} image={playlist.imageURL}
+                                                  selected={i === selectedPlaylist} onClick={() => selectPlaylist(i)}/>
                                 ))
                             }
                         </div>
@@ -88,25 +94,24 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
         setToggle(TOGGLE_TRACKS_ARTISTS)
     }, [open]);
 
-    function selectPlaylist(index){
-        if(selectedPlaylist !== index){
+    function selectPlaylist(index) {
+        if (selectedPlaylist !== index) {
             setSelectedPlaylist(index)
         }
     }
-    function handleChange (e, setVariable) {
+
+    function handleChange(e, setVariable) {
         setVariable(e.currentTarget.value);
     }
 
-    function onGenerate(){
-        if(toggle === TOGGLE_TRACKS_ARTISTS){
-            if(selection === "artists"){
+    function onGenerate() {
+        if (toggle === TOGGLE_TRACKS_ARTISTS) {
+            if (selection === "artists") {
                 apiClient.generateTopArtistsStatistics()
+            } else if (selection === "tracks") {
+                apiClient.generateTopTracksStatistics(timeRange)
             }
-            else if(selection === "tracks"){
-                apiClient.generateTopTracksStatistics()
-            }
-        }
-        else if(toggle === TOGGLE_PLAYLISTS){
+        } else if (toggle === TOGGLE_PLAYLISTS) {
             apiClient.generatePlaylistStatistics(playlists[selectedPlaylist].id)
         }
         setOpen(false)
@@ -118,14 +123,17 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
             <DialogTitle>Generate Statistics</DialogTitle>
             <DialogContent>
                 <div className={"column"}>
-                    <ToggleButton choices={["Top Tracks/Artists", "Playlists"]} selected={toggle} setSelected={setToggle}
+                    <ToggleButton choices={["Top Tracks/Artists", "Playlists"]} selected={toggle}
+                                  setSelected={setToggle}
                                   color={"purple"} buttonWidth={300} textSize={14}/>
                     {content}
                 </div>
             </DialogContent>
             <DialogActions className={"row"}>
-                <Button className={"button"} color={"green"} scale={0.45} widthOffset={-20} onClick={onGenerate}>Generate</Button>
-                <Button className={"button"} color={"purple"} scale={0.45} widthOffset={-20} onClick={() => setOpen(false)}>Cancel</Button>
+                <Button className={"button"} color={"green"} scale={0.45} widthOffset={-20}
+                        onClick={onGenerate}>Generate</Button>
+                <Button className={"button"} color={"purple"} scale={0.45} widthOffset={-20}
+                        onClick={() => setOpen(false)}>Cancel</Button>
             </DialogActions>
         </Dialog>
     )

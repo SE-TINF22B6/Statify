@@ -1,5 +1,4 @@
-export default class ApiClient
-{
+export default class ApiClient {
 
 
     playlistStatistics = []
@@ -47,7 +46,7 @@ export default class ApiClient
         })
     }
 
-     getProfile() {
+    getProfile() {
         if (this.profile == null) {
             return this.fetchProfile()
         }
@@ -56,19 +55,19 @@ export default class ApiClient
         })
     }
 
-     getUserId() {
+    getUserId() {
         if (!this.userId) {
             this.userId = this.getCookie("userId")
         }
         return this.userId
     }
 
-     isLoggedIn() {
+    isLoggedIn() {
         // return getthis.userId() !== null; // TODO: auskommentiert zu Testzwecken
         return false;
     }
 
-     fetchPlaylistStatistics() {
+    fetchPlaylistStatistics() {
         return new Promise((resolve, reject) => {
             fetch("http://localhost:8081/statistics/playlists?userId=" + this.getUserId())
                 .then(result => result.json())
@@ -84,7 +83,7 @@ export default class ApiClient
 
     }
 
-     fetchTopArtistsStatistics() {
+    fetchTopArtistsStatistics() {
         return new Promise((resolve, reject) => {
             fetch("http://localhost:8081/statistics/artists?userId=" + this.getUserId())
                 .then(result => result.json())
@@ -99,7 +98,7 @@ export default class ApiClient
         })
     }
 
-     fetchTopTracksStatistics() {
+    fetchTopTracksStatistics() {
         return new Promise((resolve, reject) => {
             fetch("http://localhost:8081/statistics/tracks?userId=" + this.getUserId())
                 .then(result => result.json())
@@ -114,7 +113,7 @@ export default class ApiClient
         })
     }
 
-     fetchPlaylists() {
+    fetchPlaylists() {
         return new Promise((resolve, reject) => {
             fetch("http://localhost:8081/playlists?userId=" + this.getUserId())
                 .then(result => {
@@ -131,7 +130,7 @@ export default class ApiClient
         })
     }
 
-     fetchProfile() {
+    fetchProfile() {
         return new Promise((resolve, reject) => {
             fetch("http://localhost:8081/profile?userId=" + this.getUserId())
                 .then((result) => {
@@ -148,7 +147,7 @@ export default class ApiClient
         })
     }
 
-     fetchTrack(trackId) {
+    fetchTrack(trackId) {
         return new Promise((resolve, reject) => {
             fetch("http://localhost:8081/track?trackId=" + trackId)
                 .then((result) => {
@@ -164,7 +163,7 @@ export default class ApiClient
         })
     }
 
-     generatePlaylistStatistics(playlistId) {
+    generatePlaylistStatistics(playlistId) {
         fetch("http://localhost:8081/generate/playlists?userId=" + this.getUserId() + "&playlistId=" + playlistId)
             .then(result => result.json())
             .then(res => {
@@ -175,7 +174,7 @@ export default class ApiClient
             })
     }
 
-     generateTopArtistsStatistics() {
+    generateTopArtistsStatistics() {
         fetch("http://localhost:8081/generate/artists?userId=" + this.getUserId())
             .then(result => result.json())
             .then(res => {
@@ -186,8 +185,8 @@ export default class ApiClient
             })
     }
 
-     generateTopTracksStatistics() {
-        fetch("http://localhost:8081/generate/tracks?userId=" + this.getUserId())
+    generateTopTracksStatistics(timeRange) {
+        fetch("http://localhost:8081/generate/tracks?userId=" + this.getUserId() + "&time_range=" + timeRange)
             .then(result => result.json())
             .then(res => {
                 this.topTrackStatistics.push(res)
@@ -197,20 +196,20 @@ export default class ApiClient
             })
     }
 
-     setUserId(id) {
+    setUserId(id) {
         this.userId = id
         this.setCookie("userId", id, 400)
     }
 
 
-     setCookie(name, value, days) {
+    setCookie(name, value, days) {
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + days);
 
         document.cookie = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
     }
 
-     getCookie(name) {
+    getCookie(name) {
         const cookies = document.cookie
             .split("; ")
             .find((row) => row.startsWith(`${name}=`));
