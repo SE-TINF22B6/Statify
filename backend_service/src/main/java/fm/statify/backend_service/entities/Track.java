@@ -2,37 +2,18 @@ package fm.statify.backend_service.entities;
 
 import java.util.List;
 
-public class Track {
+public class Track extends SimpleTrack{
 
-    private String id;
-    private String name;
-    private String imageUrl;
-    private List<String> artists;
     private int duration;
     private int popularity; // 0 - 100
 
     private AudioFeatures audioFeatures;
 
     public Track(String id, String name, String imageUrl, List<String> artists, int duration, int popularity, AudioFeatures audioFeatures) {
-        this.id = id;
-        this.name = name;
-        this.imageUrl = imageUrl;
-        this.artists = artists;
+        super(id, name, imageUrl, artists);
         this.duration = duration;
         this.popularity = popularity;
         this.audioFeatures = audioFeatures;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<String> getArtists() {
-        return artists;
     }
 
     public int getDuration() {
@@ -47,7 +28,8 @@ public class Track {
         return audioFeatures;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public static Track create(SimpleTrack track, int duration, int popularity, AudioFeatures audioFeatures){
+        return new Track(track.getId(), track.getName(), track.getImageUrl(), track.getArtists(), duration, popularity, audioFeatures);
     }
+
 }
