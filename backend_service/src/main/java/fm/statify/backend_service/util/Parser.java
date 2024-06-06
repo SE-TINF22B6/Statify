@@ -193,7 +193,7 @@ public class Parser {
     public AudioFeatures parseAudioFeatures(String response) {
         try {
             JSONObject audioFeaturesJSON = new JSONObject(response);
-            float accousticness = audioFeaturesJSON.getFloat("acousticness");
+            float acousticness = audioFeaturesJSON.getFloat("acousticness");
             float danceability = audioFeaturesJSON.getFloat("danceability");
             float energy = audioFeaturesJSON.getFloat("energy");
             float instrumentalness = audioFeaturesJSON.getFloat("instrumentalness");
@@ -204,7 +204,7 @@ public class Parser {
             float tempo = audioFeaturesJSON.getFloat("tempo");
             int key = audioFeaturesJSON.getInt("key");
             int mode = audioFeaturesJSON.getInt("mode");
-            return new AudioFeatures(accousticness, danceability, energy, instrumentalness, liveness, loudness, speechiness, valence, tempo, key, mode);
+            return new AudioFeatures(acousticness, danceability, energy, instrumentalness, liveness, loudness, speechiness, valence, tempo, key, mode);
         } catch (JSONException e) {
             return null;
         }

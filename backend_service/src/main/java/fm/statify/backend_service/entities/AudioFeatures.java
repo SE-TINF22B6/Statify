@@ -1,7 +1,7 @@
 package fm.statify.backend_service.entities;
 
 public class AudioFeatures {
-    private float accousticness; // 0.0 to 1.0
+    private float acousticness; // 0.0 to 1.0
     private float danceability; // 0.0 to 1.0
     private float energy; // 0.0 to 1.0
     private float instrumentalness; // probably 0.0 to 1.0
@@ -14,8 +14,8 @@ public class AudioFeatures {
     private int key; // -1 to 11 (-1 = no key) -> 0 = C, 1 = C♯/D♭ ...
     private int mode; // 0 or 1 (1 = major, 1 = minor)
 
-    public AudioFeatures(float accousticness, float danceability, float energy, float instrumentalness, float liveness, float loudness, float speechiness, float valence, float tempo, int key, int mode) {
-        this.accousticness = accousticness;
+    public AudioFeatures(float acousticness, float danceability, float energy, float instrumentalness, float liveness, float loudness, float speechiness, float valence, float tempo, int key, int mode) {
+        this.acousticness = acousticness;
         this.danceability = danceability;
         this.energy = energy;
         this.instrumentalness = instrumentalness;
@@ -28,8 +28,8 @@ public class AudioFeatures {
         this.mode = mode;
     }
 
-    public float getAccousticness() {
-        return accousticness;
+    public float getAcousticness() {
+        return acousticness;
     }
 
     public float getDanceability() {
