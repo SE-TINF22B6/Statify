@@ -149,7 +149,7 @@ export default class ApiClient {
 
     fetchTrack(trackId) {
         return new Promise((resolve, reject) => {
-            fetch("http://localhost:8081/track?trackId=" + trackId)
+            fetch("http://localhost:8081/track?trackId=" + trackId + "&userID=" + this.getUserId())
                 .then((result) => {
                     return result.json();
                 })

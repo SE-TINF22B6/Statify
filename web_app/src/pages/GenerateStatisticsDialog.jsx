@@ -23,7 +23,7 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
     const [selectedPlaylist, setSelectedPlaylist] = useState(1)
 
     const [selection, setSelection] = useState("tracks")
-    const [timeRange, setTimeRange] = useState("long")
+    const [timeRange, setTimeRange] = useState("long_term")
 
     useEffect(() => {
         switch (toggle) {
