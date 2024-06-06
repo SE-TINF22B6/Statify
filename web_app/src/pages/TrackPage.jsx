@@ -14,26 +14,26 @@ export default function TrackPage() {
     const apiClient = useContext(ApiClientContext)
 
     const location = useLocation();
-    const { trackId } = location.state || {};
+    const {trackId} = location.state || {};
 
 
     const [track, setTrack] = useState({
         name: "Track Name",
-        duration: 0,
+        duration: "00:00",
         popularity: 0,
         tempo: 0,
         key: "Key",
         mode: "Mode",
         artists: "Artists",
         imageUrl: "",
-        audioFeatures:[
-            { label: 'danceability', value: 0 },
-            { label: 'energy', value: 0 },
-            { label: 'speechiness', value: 0 },
-            { label: 'acousticness', value: 0 },
-            { label: 'instrumentalness', value: 0 },
-            { label: 'liveness', value: 0 },
-            { label: 'valence', value: 0 },
+        audioFeatures: [
+            {label: 'danceability', value: 0},
+            {label: 'energy', value: 0},
+            {label: 'speechiness', value: 0},
+            {label: 'acousticness', value: 0},
+            {label: 'instrumentalness', value: 0},
+            {label: 'liveness', value: 0},
+            {label: 'valence', value: 0},
         ]
     })
 
@@ -50,14 +50,14 @@ export default function TrackPage() {
                     artists: res.artists.join(", "),
                     imageUrl: res.imageUrl,
                     loudness: res.audioFeatures.loudness,
-                    audioFeatures:[
-                        { label: 'danceability', value: res.audioFeatures.danceability },
-                        { label: 'energy', value: res.audioFeatures.energy },
-                        { label: 'speechiness', value: res.audioFeatures.speechiness },
-                        { label: 'acousticness', value: res.audioFeatures.acousticness },
-                        { label: 'instrumentalness', value: res.audioFeatures.instrumentalness },
-                        { label: 'liveness', value: res.audioFeatures.liveness },
-                        { label: 'valence', value: res.audioFeatures.valence },
+                    audioFeatures: [
+                        {label: 'danceability', value: res.audioFeatures.danceability},
+                        {label: 'energy', value: res.audioFeatures.energy},
+                        {label: 'speechiness', value: res.audioFeatures.speechiness},
+                        {label: 'acousticness', value: res.audioFeatures.acousticness},
+                        {label: 'instrumentalness', value: res.audioFeatures.instrumentalness},
+                        {label: 'liveness', value: res.audioFeatures.liveness},
+                        {label: 'valence', value: res.audioFeatures.valence},
                     ]
                 })
             })
@@ -79,7 +79,7 @@ export default function TrackPage() {
                 </div>
                 <div className="divider"></div>
                 <div className="audio-features">
-                    <Chart data={track.audioFeatures} />
+                    <Chart data={track.audioFeatures}/>
                     <DurationTempoLoudness duration={track.duration}
                                            tempo={track.tempo}
                                            loudness={track.loudness}
