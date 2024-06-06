@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 export default function PlaylistStatisticsItem({name, songs, duration, top_artist, top_genre, top_artist_count, top_genre_count}){
 
     let seconds = duration * 0.001;
-    let mins = Math.floor(seconds/60)
+    let mins = Math.round(seconds/60)
 
     return (
         <div className={"column playlist-statistics"}>
@@ -14,7 +14,7 @@ export default function PlaylistStatisticsItem({name, songs, duration, top_artis
             <div className={"content column"}>
                 <div className={"row"}>
                     <NumberItem number={songs} unit={"Songs"} color={"green"}/>
-                    <NumberItem number={mins} unit={"Minutes"} color={"green"}/>
+                    <NumberItem number={mins} unit={"Minutes"} color={"green"} dataTestId={"playlist-minutes"} />
                 </div>
                 <div className={"row"}>
                     <NumberItem title={"Top Genre"} subtitle={top_genre} number={top_genre_count} unit={"Songs"} color={"orange"}/>
