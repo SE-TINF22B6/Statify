@@ -69,25 +69,7 @@ public class Parser {
 
             for (int i = 0; i < tracks.length(); i++) {
                 JSONObject trackJson = tracks.getJSONObject(i);
-
-                String id = trackJson.getString("id");
-                String name = trackJson.getString("name");
-
-                String imageURL = null;
-                JSONObject album = trackJson.getJSONObject("album");
-                JSONArray images = album.getJSONArray("images");
-                if (!images.isEmpty()) {
-                    imageURL = images.getJSONObject(0).getString("url");
-                }
-
-                List<String> artists = new ArrayList<>();
-                JSONArray artistsJson = trackJson.getJSONArray("artists");
-                for (int x = 0; x < artistsJson.length(); x++) {
-                    JSONObject artist = artistsJson.getJSONObject(x);
-                    artists.add(artist.getString("name"));
-                }
-
-                topTracks.add(new SimpleTrack(id, name, imageURL, artists));
+                topTracks.add(parseSimpleTrack(trackJson));
             }
 
             return topTracks;
@@ -122,8 +104,8 @@ public class Parser {
         }
     }
 
-    public PlaylistWithSimplePlaylistTracks parsePlaylistWithSimpleTracks(String response){
-        try{
+    public PlaylistWithSimplePlaylistTracks parsePlaylistWithSimpleTracks(String response) {
+        try {
             JSONObject responseJson = new JSONObject(response);
             String id = responseJson.getString("id");
             String name = responseJson.getString("name");
@@ -145,14 +127,13 @@ public class Parser {
             }
 
             return new PlaylistWithSimplePlaylistTracks(id, name, imageURL, simpleTracks); //hier duration 0
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            return  null;
+            return null;
         }
     }
 
-    private SimplePlaylistTrack parsePlaylistTrack(JSONObject track){
+    private SimplePlaylistTrack parsePlaylistTrack(JSONObject track) {
         String id = track.getString("id");
         String name = track.getString("name");
         int duration = track.getInt("duration_ms");
@@ -178,7 +159,7 @@ public class Parser {
         return t;
     }
 
-    public List<ArtistWithGenre> parseArtists(String response){
+    public List<ArtistWithGenre> parseArtists(String response) {
         List<ArtistWithGenre> artists = new ArrayList<>();
 
         try {
@@ -194,7 +175,7 @@ public class Parser {
                 JSONArray genresArr = artistJson.getJSONArray("genres");
 
                 List<String> genres = new ArrayList<>();
-                for(int j = 0; j < genresArr.length(); j++){
+                for (int j = 0; j < genresArr.length(); j++) {
                     genres.add(genresArr.getString(j));
                 }
 
@@ -203,10 +184,68 @@ public class Parser {
 
             return artists;
 
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             return null;
         }
 
     }
+
+    public AudioFeatures parseAudioFeatures(String response) {
+        try {
+            JSONObject audioFeaturesJSON = new JSONObject(response);
+            float accousticness = audioFeaturesJSON.getFloat("acousticness");
+            float danceability = audioFeaturesJSON.getFloat("danceability");
+            float energy = audioFeaturesJSON.getFloat("energy");
+            float instrumentalness = audioFeaturesJSON.getFloat("instrumentalness");
+            float liveness = audioFeaturesJSON.getFloat("liveness");
+            float loudness = audioFeaturesJSON.getFloat("loudness");
+            float speechiness = audioFeaturesJSON.getFloat("speechiness");
+            float valence = audioFeaturesJSON.getFloat("valence");
+            float tempo = audioFeaturesJSON.getFloat("tempo");
+            int key = audioFeaturesJSON.getInt("key");
+            int mode = audioFeaturesJSON.getInt("mode");
+            return new AudioFeatures(accousticness, danceability, energy, instrumentalness, liveness, loudness, speechiness, valence, tempo, key, mode);
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public Track parseTrackForTrackPage(String trackId, String response, AudioFeatures audioFeatures) {
+        try {
+            JSONObject trackJson = new JSONObject(response);
+            // parse a simple track first
+            SimpleTrack simpleTrack = parseSimpleTrack(trackJson);
+
+            // use it to create a track
+            return new Track(trackId, simpleTrack.getName(), simpleTrack.getImageUrl(), simpleTrack.getArtists(), trackJson.getInt("duration_ms"), trackJson.getInt("popularity"), audioFeatures);
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public SimpleTrack parseSimpleTrack(JSONObject trackJson) {
+        try {
+            String id = trackJson.getString("id");
+            String name = trackJson.getString("name");
+
+            String imageURL = null;
+            JSONObject album = trackJson.getJSONObject("album");
+            JSONArray images = album.getJSONArray("images");
+            if (!images.isEmpty()) {
+                imageURL = images.getJSONObject(0).getString("url");
+            }
+
+            List<String> artists = new ArrayList<>();
+            JSONArray artistsJson = trackJson.getJSONArray("artists");
+            for (int x = 0; x < artistsJson.length(); x++) {
+                JSONObject artist = artistsJson.getJSONObject(x);
+                artists.add(artist.getString("name"));
+            }
+            return new SimpleTrack(id, name, imageURL, artists);
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+
 }
