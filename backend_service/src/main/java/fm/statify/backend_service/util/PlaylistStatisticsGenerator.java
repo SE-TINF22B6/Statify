@@ -13,6 +13,10 @@ public class PlaylistStatisticsGenerator {
 
     public static PlaylistStatistics generatePlaylistStatistics(String userId, String playlistId, String userAccessToken){
         PlaylistWithSimplePlaylistTracks playlistWithSimpleTracks = getPlaylist(playlistId, userAccessToken);
+        if(playlistWithSimpleTracks == null){
+            return null;
+        }
+        addGenresAndArtistNames(playlistWithSimpleTracks, userAccessToken);
         return calculatePlaylistStatistics(userId, playlistId, playlistWithSimpleTracks, userAccessToken);
     }
 
@@ -23,7 +27,32 @@ public class PlaylistStatisticsGenerator {
             return playlist;
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            return null;
+        }
+    }
+
+    private static void addGenresAndArtistNames(PlaylistWithSimplePlaylistTracks playlist, String userAccessToken){
+        for(SimplePlaylistTrack t: playlist.getTracks()){
+            try{
+                String endpoint = "https://api.spotify.com/v1/artists?ids=" + String.join(",", t.getArtists());
+                String artistsResult = httpHelper.performRequest(endpoint, userAccessToken);
+                List<ArtistWithGenre> artists = parser.parseArtists(artistsResult);
+
+                List<String> artistNames = artists.stream().map(Artist::getName).toList();
+
+                Set<String> genres = new HashSet<>();
+                for(ArtistWithGenre a: artists){
+                    genres.addAll(a.getGenres());
+                }
+
+                t.setArtists(artistNames);
+
+                t.setGenres(genres);
+
+            }
+            catch (IOException e) {
+               continue;
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package fm.statify.backend_service.util;
 
 import fm.statify.backend_service.entities.*;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -161,19 +162,51 @@ public class Parser {
         JSONArray artistsArr = track.getJSONArray("artists");
         for (int i = 0; i < artistsArr.length(); i++) {
             JSONObject artist = artistsArr.getJSONObject(i);
-            artists.add(artist.getString("name"));
+            artists.add(artist.getString("id"));
 
-            // Never returns genres // TODO: add genres later -> artists endpoint
+            // Never returns genres // TODO: add genres & artist names later -> artists endpoint
 
-            if(artist.has("genres")){
+            /*if(artist.has("genres")){
                 JSONArray genresArr = artist.getJSONArray("genres");
                 for (int ii = 0; ii < genresArr.length(); ii++) {
                     String genre = genresArr.getString(ii);
                     genres.add(genre);
                 }
-            }
+            }*/
         }
         SimplePlaylistTrack t = new SimplePlaylistTrack(id, name, null, artists, genres, duration);
         return t;
+    }
+
+    public List<ArtistWithGenre> parseArtists(String response){
+        List<ArtistWithGenre> artists = new ArrayList<>();
+
+        try {
+            JSONObject responseObj = new JSONObject(response);
+            JSONArray artistsArr = responseObj.getJSONArray("artists");
+
+            for (int i = 0; i < artistsArr.length(); i++) {
+                JSONObject artistJson = artistsArr.getJSONObject(i);
+
+                String id = artistJson.getString("id");
+                String name = artistJson.getString("name");
+
+                JSONArray genresArr = artistJson.getJSONArray("genres");
+
+                List<String> genres = new ArrayList<>();
+                for(int j = 0; j < genresArr.length(); j++){
+                    genres.add(genresArr.getString(j));
+                }
+
+                artists.add(new ArtistWithGenre(id, name, null, genres));
+            }
+
+            return artists;
+
+        }
+        catch (JSONException e) {
+            return null;
+        }
+
     }
 }

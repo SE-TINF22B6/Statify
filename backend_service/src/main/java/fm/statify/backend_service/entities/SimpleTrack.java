@@ -30,4 +30,8 @@ public class SimpleTrack {
     public List<String> getArtists() {
         return artists;
     }
+
+    public void setArtists(List<String> artists) {
+        this.artists = artists;
+    }
 }

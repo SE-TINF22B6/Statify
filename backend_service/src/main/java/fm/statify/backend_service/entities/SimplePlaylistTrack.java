@@ -22,4 +22,8 @@ public class SimplePlaylistTrack extends SimpleTrack{
     public int getDuration() {
         return duration;
     }
+
+    public void setGenres(Set<String> genres) {
+        this.genres = genres;
+    }
 }
