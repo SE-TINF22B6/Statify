@@ -59,6 +59,15 @@ public class StatifyController {
     public TopArtistStatistics generateArtistStatistics(@RequestParam String userId, @RequestParam String time_range) throws IOException {
         String accessToken = getAccessTokenByUserID(userId);
         List<Artist> topArtists = parser.parseTopArtists(http.performRequest("https://api.spotify.com/v1/me/top/artists/?limit=5&time_range=" + time_range, accessToken));
+        String user_guid = db.getUserGuid(userId);
+        Date date = java.sql.Date.valueOf(LocalDate.now());
+        db.insertTopArtistsStatistics(user_guid,
+                topArtists.get(0).getId(),
+                topArtists.get(1).getId(),
+                topArtists.get(2).getId(),
+                topArtists.get(3).getId(),
+                topArtists.get(4).getId(),
+                date);
         return new TopArtistStatistics(userId, topArtists.get(0), topArtists.get(1), topArtists.get(2), topArtists.get(3), topArtists.get(4));
     }
 

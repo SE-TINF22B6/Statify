@@ -107,4 +107,29 @@ public class DBManager {
             e.printStackTrace();
         }
     }
+    public void insertTopArtistsStatistics(String user_guid, String first_artist_id, String second_artist_id, String third_artist_id, String fourth_artist_id, String fifth_artist_id, Date generate_date) {
+        try {
+            String sql = "INSERT INTO top_artists (guid, user_guid, first_artist_id, second_artist_id, third_artist_id, fourth_artist_id, fifth_artist_id, generate_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            Connection con = this.establishConnection();
+
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            String guid = UUID.randomUUID().toString();
+            statement.setString(1, guid);
+            statement.setString(2, user_guid);
+            statement.setString(3, first_artist_id);
+            statement.setString(4, second_artist_id);
+            statement.setString(5, third_artist_id);
+            statement.setString(6, fourth_artist_id);
+            statement.setString(7, fifth_artist_id);
+            statement.setDate(8, generate_date);
+
+            statement.executeUpdate();
+
+            System.out.println("Top artist statistics created.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
