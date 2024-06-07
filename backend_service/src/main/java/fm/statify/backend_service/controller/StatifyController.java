@@ -77,6 +77,21 @@ public class StatifyController {
     public PlaylistStatistics generatePlaylistStatistics(@RequestParam String userId, @RequestParam String playlistId) {
         String accessToken = getAccessTokenByUserID(userId);
         PlaylistStatistics playlistStatistics = PlaylistStatisticsGenerator.generatePlaylistStatistics(userId, playlistId, accessToken);
+
+        java.sql.Date generate_date = new java.sql.Date(playlistStatistics.getGenerateDate().getTime());
+        String user_guid = db.getUserGuid(userId);
+
+        db.insertPlaylist(user_guid,
+                playlistId,
+                playlistStatistics.getName(),
+                playlistStatistics.getTracksNumber(),
+                playlistStatistics.getDuration(),
+                playlistStatistics.getTopGenre(),
+                playlistStatistics.getTopGenreTracksNumber(),
+                playlistStatistics.getTopArtist(),
+                playlistStatistics.getTopArtistTracksNumber(),
+                generate_date);
+
         return playlistStatistics;
     }
 
