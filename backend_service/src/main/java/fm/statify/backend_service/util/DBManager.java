@@ -47,6 +47,15 @@ public class DBManager {
 
     }
 
+    public Boolean userExists(String userID) {
+        String foundGuid = getUserGuid(userID);
+        if (foundGuid.isEmpty()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public String getUserGuid(String userID) {
         try {
             String guid = new String();

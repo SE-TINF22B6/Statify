@@ -79,7 +79,9 @@ public class SpotifyController {
                 refresh_token
         ));
 
-        db.insertUser(access_token, refresh_token, profile.getId());
+        if (!(db.userExists(profile.getId()))) {
+            db.insertUser(access_token, refresh_token, profile.getId());
+        }
 
         System.out.println("Token Data: " + tokenData);
 
