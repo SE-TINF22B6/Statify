@@ -15,6 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +41,15 @@ public class StatifyController {
     public TopTrackStatistics generateSongStatistics(@RequestParam String userId, @RequestParam String time_range) throws IOException {
         String accessToken = getAccessTokenByUserID(userId);
         List<SimpleTrack> topTracks = parser.parseTopTracks(http.performRequest("https://api.spotify.com/v1/me/top/tracks/?limit=5&time_range=" + time_range, accessToken));
-        // TODO: add guid user_guid fist_track_id ... generate_data
         String user_guid = db.getUserGuid(userId);
+        Date date = java.sql.Date.valueOf(LocalDate.now());
+        db.insertTopTrackStatistics(user_guid,
+                topTracks.get(0).getId(),
+                topTracks.get(1).getId(),
+                topTracks.get(2).getId(),
+                topTracks.get(3).getId(),
+                topTracks.get(4).getId(),
+                date);
         return new TopTrackStatistics(userId, topTracks.get(0), topTracks.get(1), topTracks.get(2), topTracks.get(3), topTracks.get(4));
     }
 

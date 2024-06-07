@@ -72,4 +72,30 @@ public class DBManager {
         }
 
     }
+
+    public void insertTopTrackStatistics(String user_guid, String first_track_id, String second_track_id, String third_track_id, String fourth_track_id, String fifth_track_id, Date generate_date) {
+        try {
+            String sql = "INSERT INTO top_tracks (guid, user_guid, first_track_id, second_track_id, third_track_id, fourth_track_id, fifth_track_id, generate_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            Connection con = this.establishConnection();
+
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            String guid = UUID.randomUUID().toString();
+            statement.setString(1, guid);
+            statement.setString(2, user_guid);
+            statement.setString(3, first_track_id);
+            statement.setString(4, second_track_id);
+            statement.setString(5, third_track_id);
+            statement.setString(6, fourth_track_id);
+            statement.setString(7, fifth_track_id);
+            statement.setDate(8, generate_date);
+
+            statement.executeUpdate();
+
+            System.out.println("Top track statistics created.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
