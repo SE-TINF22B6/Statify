@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.List;
 import java.util.Properties;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,15 +62,6 @@ public class DatabaseManager {
         }
     }*/
 
-    public void init() {
-        try {
-            Connection connection = DriverManager.getConnection(url, username, password);
-            System.out.println("The connection was established successfully.");
-        } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
-
     // Prototyp zum Einfügen eines Users in die Datenbank (Parameter & weiteres kann beliebig erweitert werden)
     public void addUser(UserProfile user, String accesstoken) {
         String sql = "INSERT INTO Users (UserID, UserEmail, UserName, APIKey) VALUES (?,?,?,?)";
@@ -114,24 +106,5 @@ public class DatabaseManager {
     }
 
     public void updateUser(UserProfile user, String accesstoken) {
-    }
-
-    public static void main(String[] args) throws IOException {
-        Properties properties = new Properties();
-        String basePath = System.getProperty("user.dir");
-        String filePath = basePath + "\\backend_service\\src\\main\\resources\\application.properties";
-        try {
-            properties.load(new FileInputStream(filePath));
-
-            String url = properties.getProperty("db.url");
-            String username = properties.getProperty("db.username");
-            String password = properties.getProperty("db.password");
-
-            DatabaseManager databaseManager = new DatabaseManager(url, username, password);
-
-            databaseManager.init();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

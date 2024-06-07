@@ -2,6 +2,8 @@ package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.auth.SpotifyOAuth;
 import fm.statify.backend_service.entities.*;
+import fm.statify.backend_service.util.DBManager;
+import fm.statify.backend_service.util.DatabaseManager;
 import fm.statify.backend_service.util.HTTPHelper;
 import fm.statify.backend_service.util.Parser;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,8 @@ public class SpotifyController {
 
     private final Parser parser = new Parser();
     private final HTTPHelper http = new HTTPHelper();
+
+    private final DBManager db = new DBManager();
 
 
     SpotifyController(SpotifyOAuth spotifyOAuth) {
@@ -74,7 +78,9 @@ public class SpotifyController {
                 new Date(System.currentTimeMillis() + 1000 * expires_in),
                 refresh_token
         ));
-        // TODO: add the data into the user table in the database
+
+        db.insertUser(access_token, refresh_token, profile.getId());
+
         System.out.println("Token Data: " + tokenData);
 
         return profile.getId();
