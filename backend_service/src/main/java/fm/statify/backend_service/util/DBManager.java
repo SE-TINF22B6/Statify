@@ -20,9 +20,6 @@ public class DBManager {
             String username = properties.getProperty("db.username");
             String password = properties.getProperty("db.password");
 
-            /*DatabaseManager databaseManager = new DatabaseManager(url, username, password);
-
-            databaseManager.init();*/
             return DriverManager.getConnection(url, username, password);
         } catch (Exception e) {
             System.out.print(e.getMessage());
