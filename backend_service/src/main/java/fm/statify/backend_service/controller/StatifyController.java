@@ -6,6 +6,7 @@ import fm.statify.backend_service.entities.User;
 import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
+import fm.statify.backend_service.util.DBManager;
 import fm.statify.backend_service.util.HTTPHelper;
 import fm.statify.backend_service.util.Parser;
 import fm.statify.backend_service.util.PlaylistStatisticsGenerator;
@@ -25,6 +26,7 @@ public class StatifyController {
     private final HTTPHelper http = new HTTPHelper();
     private final Parser parser = new Parser();
     private final SpotifyController spotifyController;
+    private final DBManager db = new DBManager();
 
     @Autowired
     public StatifyController(SpotifyController spotifyController) {
@@ -36,6 +38,8 @@ public class StatifyController {
     public TopTrackStatistics generateSongStatistics(@RequestParam String userId, @RequestParam String time_range) throws IOException {
         String accessToken = getAccessTokenByUserID(userId);
         List<SimpleTrack> topTracks = parser.parseTopTracks(http.performRequest("https://api.spotify.com/v1/me/top/tracks/?limit=5&time_range=" + time_range, accessToken));
+        // TODO: add guid user_guid fist_track_id ... generate_data
+        String user_guid = db.getUserGuid(userId);
         return new TopTrackStatistics(userId, topTracks.get(0), topTracks.get(1), topTracks.get(2), topTracks.get(3), topTracks.get(4));
     }
 

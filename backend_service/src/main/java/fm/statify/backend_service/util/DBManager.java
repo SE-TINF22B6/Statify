@@ -1,10 +1,7 @@
 package fm.statify.backend_service.util;
 
 import java.io.FileInputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -46,6 +43,32 @@ public class DBManager {
             System.out.println("User created.");
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+
+    }
+
+    public String getUserGuid(String userID) {
+        try {
+            String guid = new String();
+
+            String sql = "SELECT guid FROM user WHERE user_id = ?";
+
+            Connection con = this.establishConnection();
+
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            statement.setString(1, userID);
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                guid = result.getString("guid");
+            }
+
+            return guid;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
 
     }
