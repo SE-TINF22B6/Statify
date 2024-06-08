@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import PlaylistItem from '../components/PlaylistItem';
+import PlaylistItem from '../components/playlistItem';
 
 describe('PlaylistItem Component', () => {
     const title = "Test Title";
