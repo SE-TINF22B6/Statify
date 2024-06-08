@@ -372,4 +372,13 @@ public class DBManager {
             e.printStackTrace();
         }
     }
+
+    public void removeAll(String userID) {
+        try {
+            removeAllStatisticsForUser(userID);
+            remove("user", userID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

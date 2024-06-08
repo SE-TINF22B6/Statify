@@ -140,7 +140,7 @@ public class StatifyController {
 
     @DeleteMapping("delete")
     public void deleteData(@RequestParam String userId) {
-        // TODO: remove all statistics and user data for user from database
+        db.removeAll(userId);
     }
 
     private String getAccessTokenByUserID(String userID) {
