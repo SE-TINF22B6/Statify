@@ -11,24 +11,12 @@
     background-image: radial-gradient(50% 100% at 0 100px, rgba(237, 107, 37, 0.15) 8%, rgba(237, 107, 37, 0) 100%),
         radial-gradient(80% 130% at 100% 0, rgb(21, 21, 21) 0%, rgb(5, 20, 10) 100%);
     background-attachment: fixed;
-    display: grid;
-    grid-template-columns: 1fr 1px 3fr;
+    justify-content: space-evenly;
 }
 
 .track-page .track,
 .audio-features {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    padding: 20px 0;
 }
 
-.track-page .divider {
-    background-color: white;
-    width: 1px;
-    height: 100%;
-}
-
-.track-page .audio-features {
-    justify-content: space-around;
-}

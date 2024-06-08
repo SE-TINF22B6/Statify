@@ -1,0 +1,8 @@
+.track-row-info{
+    column-gap: 30px;
+    justify-content: center;
+}
+
+.track-row-info .number-item .title{
+    margin-bottom: 0;
+}

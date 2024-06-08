@@ -59,7 +59,7 @@ export default function Chart({ data }) {
     };
 
     return (
-        <div className="chart-container">
+        <div className="chart-container" data-testid="chart-container">
             <Bar data={chartData} options={options} width={771} height={248} />
         </div>
     );
