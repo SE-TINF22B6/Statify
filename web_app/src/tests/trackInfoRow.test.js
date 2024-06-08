@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import TrackInfoRow from '../components/TrackInfoRow';
+import TrackInfoRow from '../components/trackInfoRow';
 
 describe('TrackInfoRow Component', () => {
     const data = [

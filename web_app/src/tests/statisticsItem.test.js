@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import StatisticItem from '../components/StatisticItem';
+import StatisticItem from '../components/statisticItem';
 
 describe('StatisticItem Component', () => {
     const number = 1;

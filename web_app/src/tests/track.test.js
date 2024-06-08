@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Track from '../components/Track';
+import Track from '../components/track';
 
 describe('Track Component', () => {
     const imageUrl = "http://example.com/image.jpg";

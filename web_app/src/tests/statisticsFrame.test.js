@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import StatisticsFrame from '../components/StatisticsFrame';
+import StatisticsFrame from '../components/statisticsFrame';
 
 describe('StatisticsFrame Component', () => {
     const header = "Test Header";
