@@ -99,26 +99,13 @@ public class StatifyController {
     @GetMapping("statistics/tracks")
     @ResponseBody
     public List<TopTrackStatistics> getTopTracksStatistics(@RequestParam String userId) {
-        //todo: get top tracks statistics for user from database
-
-        List<TopTrackStatistics> list = new ArrayList<>();
-        list.add(new TopTrackStatistics(userId,
-                new SimpleTrack("trackId1", "Track 1", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
-                new SimpleTrack("trackId2", "Track 2", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
-                new SimpleTrack("trackId3", "Track 3", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
-                new SimpleTrack("trackId4", "Track 4", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2")),
-                new SimpleTrack("trackId5", "Track 5", "https://i.scdn.co/image/ab67616d0000b2737359994525d219f64872d3b1", List.of("Artist 1, Artist 2"))
-        ));
-
-        list.add(new TopTrackStatistics(userId,
-                new SimpleTrack("trackId1", "Track 11", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2")),
-                new SimpleTrack("trackId2", "Track 22", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2")),
-                new SimpleTrack("trackId3", "Track 33", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2")),
-                new SimpleTrack("trackId4", "Track 44", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2")),
-                new SimpleTrack("trackId5", "Track 55", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3", List.of("Artist 1, Artist 2"))
-        ));
-
-        return list;
+        try {
+            List<TopTrackStatistics> topTrackStatistics = db.getUsersTopTracksStats(userId);
+            return topTrackStatistics;
+        } catch (Exception e) {
+            // if there are no stats for user
+            return null;
+        }
     }
 
     @GetMapping("statistics/artists")

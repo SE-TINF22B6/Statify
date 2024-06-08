@@ -5,7 +5,7 @@ import fm.statify.backend_service.entities.Track;
 
 import java.util.Date;
 
-public class TopTrackStatistics extends Statistics{
+public class TopTrackStatistics extends Statistics {
 
     private SimpleTrack firstTrack;
     private SimpleTrack secondTrack;
@@ -30,6 +30,7 @@ public class TopTrackStatistics extends Statistics{
         this.fourthTrack = fourthTrack;
         this.fifthTrack = fifthTrack;
     }
+
 
     public SimpleTrack getFirstTrack() {
         return firstTrack;

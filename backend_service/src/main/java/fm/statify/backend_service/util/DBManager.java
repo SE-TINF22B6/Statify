@@ -1,11 +1,21 @@
 package fm.statify.backend_service.util;
 
+import fm.statify.backend_service.entities.SimpleTrack;
+import fm.statify.backend_service.stats.TopTrackStatistics;
+import org.json.JSONObject;
+
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
 public class DBManager {
+    HTTPHelper http = new HTTPHelper();
+    Parser parser = new Parser();
+
     public Connection establishConnection() {
         Properties properties = new Properties();
         String basePath = System.getProperty("user.dir");
@@ -75,6 +85,32 @@ public class DBManager {
             }
 
             return guid;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public String getAccessToken(String userID) {
+        try {
+            String accessToken = new String();
+
+            String sql = "SELECT access_token FROM user WHERE user_id = ?";
+
+            Connection con = this.establishConnection();
+
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            statement.setString(1, userID);
+
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                accessToken = result.getString("access_token");
+            }
+
+            return accessToken;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
@@ -162,5 +198,56 @@ public class DBManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<TopTrackStatistics> getUsersTopTracksStats(String userID) {
+        try {
+            List<String> trackIDs = new ArrayList<>();
+
+            String sql = "SELECT * FROM top_tracks WHERE user_guid = ?";
+
+            Connection con = this.establishConnection();
+
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            statement.setString(1, getUserGuid(userID));
+
+            ResultSet result = statement.executeQuery();
+
+            List<TopTrackStatistics> topTrackStatisticsList = new ArrayList<>();
+
+            if (result.next()) {
+                while (!result.isAfterLast()) {
+                    trackIDs.add(result.getString("first_track_id"));
+                    trackIDs.add(result.getString("second_track_id"));
+                    trackIDs.add(result.getString("third_track_id"));
+                    trackIDs.add(result.getString("fourth_track_id"));
+                    trackIDs.add(result.getString("fifth_track_id"));
+
+                    List<SimpleTrack> simpleTracks = new ArrayList<>();
+
+                    for (String id : trackIDs) {
+                        String responseTrack = http.performRequest("https://api.spotify.com/v1/tracks/" + id, getAccessToken(userID));
+                        JSONObject trackJSON = new JSONObject(responseTrack);
+                        simpleTracks.add(parser.parseSimpleTrack(trackJSON));
+                    }
+
+                    // TODO: add generate_date
+                    Date generateDate = result.getDate("generate_date");
+                    TopTrackStatistics topTrackStatistics = new TopTrackStatistics(generateDate, userID, simpleTracks.get(0), simpleTracks.get(1), simpleTracks.get(2), simpleTracks.get(3), simpleTracks.get(4));
+
+                    topTrackStatisticsList.add(topTrackStatistics);
+
+                    trackIDs.clear();
+                    result.next();
+                }
+            }
+
+            return topTrackStatisticsList;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 }
