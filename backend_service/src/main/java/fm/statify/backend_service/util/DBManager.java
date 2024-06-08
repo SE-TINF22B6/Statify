@@ -2,6 +2,7 @@ package fm.statify.backend_service.util;
 
 import fm.statify.backend_service.entities.Artist;
 import fm.statify.backend_service.entities.SimpleTrack;
+import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
 import org.json.JSONObject;
@@ -299,5 +300,53 @@ public class DBManager {
             return null;
         }
 
+    }
+
+    public List<PlaylistStatistics> getUsersPlaylistStats(String userID) {
+        try {
+            String sql = "SELECT * FROM playlist WHERE user_guid = ?";
+
+            Connection con = this.establishConnection();
+
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            statement.setString(1, getUserGuid(userID));
+
+            ResultSet result = statement.executeQuery();
+
+            List<PlaylistStatistics> playlistStatistics = new ArrayList<>();
+
+            if (result.next()) {
+                while (!result.isAfterLast()) {
+                    String playlistId = result.getString("playlist_id");
+                    String name = result.getString("name");
+                    int tracksNumber = result.getInt("tracks_number");
+                    int duration = result.getInt("duration");
+                    String topGenre = result.getString("top_genre");
+                    int topGenreTracksNumber = result.getInt("top_genre_tracks_number");
+                    String topArtist = result.getString("top_artist");
+                    int topArtistTracksNumber = result.getInt("top_artist_tracks_number");
+                    Date generateDate = result.getDate("generate_date");
+
+                    playlistStatistics.add(new PlaylistStatistics(generateDate,
+                            userID,
+                            playlistId,
+                            name,
+                            tracksNumber,
+                            duration,
+                            topGenre,
+                            topGenreTracksNumber,
+                            topArtist,
+                            topArtistTracksNumber));
+
+                    result.next();
+                }
+            }
+
+            return playlistStatistics;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

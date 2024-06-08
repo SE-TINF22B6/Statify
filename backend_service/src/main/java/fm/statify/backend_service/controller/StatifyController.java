@@ -100,10 +100,8 @@ public class StatifyController {
     @ResponseBody
     public List<TopTrackStatistics> getTopTracksStatistics(@RequestParam String userId) {
         try {
-            List<TopTrackStatistics> topTrackStatistics = db.getUsersTopTracksStats(userId);
-            return topTrackStatistics;
+            return db.getUsersTopTracksStats(userId);
         } catch (Exception e) {
-            // if there are no stats for user
             return null;
         }
     }
@@ -112,8 +110,7 @@ public class StatifyController {
     @ResponseBody
     public List<TopArtistStatistics> getTopArtistsStatistics(@RequestParam String userId) {
         try {
-            List<TopArtistStatistics> topArtistStatistics = db.getUsersTopArtistsStats(userId);
-            return topArtistStatistics;
+            return db.getUsersTopArtistsStats(userId);
         } catch (Exception e) {
             return null;
         }
@@ -122,13 +119,11 @@ public class StatifyController {
     @GetMapping("statistics/playlists")
     @ResponseBody
     public List<PlaylistStatistics> getPlaylistStatistics(@RequestParam String userId) {
-        //todo: get playlist statistics for user from database
-
-        List<PlaylistStatistics> list = new ArrayList<>();
-        list.add(new PlaylistStatistics(userId, "playlist1Id", "Playlist 1", 123, 40, "Pop", 22, "Giant Rooks", 12));
-        list.add(new PlaylistStatistics(userId, "playlist2Id", "Playlist 2", 109, 120, "Rock", 31, "Imagine Dragons", 20));
-
-        return list;
+        try {
+            return db.getUsersPlaylistStats(userId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @DeleteMapping("statistics/delete")
