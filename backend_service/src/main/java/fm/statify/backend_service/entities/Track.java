@@ -39,7 +39,12 @@ public class Track extends SimpleTrack {
         long rest = (long) duration_ms - TimeUnit.MINUTES.toMillis(minutes);
         long seconds = TimeUnit.MILLISECONDS.toSeconds(rest);
 
-        return minutes + ":" + seconds;
+        // add 0 if it is one digit
+        String secondsString = Long.toString(seconds);
+        if (secondsString.length() == 1) {
+            secondsString = "0" + secondsString;
+        }
+        return minutes + ":" + secondsString;
     }
 
 }
