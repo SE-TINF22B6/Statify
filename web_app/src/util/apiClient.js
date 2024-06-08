@@ -63,7 +63,7 @@ export default class ApiClient {
     }
 
     isLoggedIn() {
-        // return getthis.userId() !== null; // TODO: auskommentiert zu Testzwecken
+        // return getUserId() !== null; // TODO: auskommentiert zu Testzwecken
         return false;
     }
 

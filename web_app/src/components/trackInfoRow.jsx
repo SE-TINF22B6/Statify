@@ -6,12 +6,13 @@ export default function TrackInfoRow({data, color, scale}){
     return (
         <div className={"track-row-info row"}>
             {
-                data.map(data =>
+                data.map((data, i) =>
                     <NumberItem
                         title={data.key}
                         number={data.value}
                         color={color}
                         scale={scale}
+                        key={i}
                     />
                 )
             }
