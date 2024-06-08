@@ -102,6 +102,7 @@ public class StatifyController {
         try {
             return db.getUsersTopTracksStats(userId);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -112,6 +113,7 @@ public class StatifyController {
         try {
             return db.getUsersTopArtistsStats(userId);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -122,13 +124,18 @@ public class StatifyController {
         try {
             return db.getUsersPlaylistStats(userId);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
 
     @DeleteMapping("statistics/delete")
     public void deleteStatistics(@RequestParam String userId) {
-        // TODO: remove all statistics for user from database
+        try {
+            db.removeAllStatisticsForUser(userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @DeleteMapping("delete")

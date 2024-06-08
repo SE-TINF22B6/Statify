@@ -349,4 +349,27 @@ public class DBManager {
             return null;
         }
     }
+
+    public void removeAllStatisticsForUser(String userID) {
+        try {
+            remove("top_tracks", userID);
+            remove("top_artists", userID);
+            remove("playlist", userID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void remove(String table_name, String userID) {
+        try {
+            String sql = "DELETE FROM" + table_name + "WHERE user_guid = ?";
+            Connection con = this.establishConnection();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, getUserGuid(userID));
+            statement.executeUpdate();
+            System.out.println("Record deleted.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
