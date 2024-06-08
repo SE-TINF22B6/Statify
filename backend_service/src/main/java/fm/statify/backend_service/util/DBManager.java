@@ -1,6 +1,8 @@
 package fm.statify.backend_service.util;
 
+import fm.statify.backend_service.entities.Artist;
 import fm.statify.backend_service.entities.SimpleTrack;
+import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
 import org.json.JSONObject;
 
@@ -232,7 +234,6 @@ public class DBManager {
                         simpleTracks.add(parser.parseSimpleTrack(trackJSON));
                     }
 
-                    // TODO: add generate_date
                     Date generateDate = result.getDate("generate_date");
                     TopTrackStatistics topTrackStatistics = new TopTrackStatistics(generateDate, userID, simpleTracks.get(0), simpleTracks.get(1), simpleTracks.get(2), simpleTracks.get(3), simpleTracks.get(4));
 
@@ -244,6 +245,55 @@ public class DBManager {
             }
 
             return topTrackStatisticsList;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public List<TopArtistStatistics> getUsersTopArtistsStats(String userID) {
+        try {
+            List<String> artistIDs = new ArrayList<>();
+
+            String sql = "SELECT * FROM top_artists WHERE user_guid = ?";
+
+            Connection con = this.establishConnection();
+
+            PreparedStatement statement = con.prepareStatement(sql);
+
+            statement.setString(1, getUserGuid(userID));
+
+            ResultSet result = statement.executeQuery();
+
+            List<TopArtistStatistics> topArtistsStatisticsList = new ArrayList<>();
+
+            if (result.next()) {
+                while (!result.isAfterLast()) {
+                    artistIDs.add(result.getString("first_artist_id"));
+                    artistIDs.add(result.getString("second_artist_id"));
+                    artistIDs.add(result.getString("third_artist_id"));
+                    artistIDs.add(result.getString("fourth_artist_id"));
+                    artistIDs.add(result.getString("fifth_artist_id"));
+
+                    List<Artist> artists = new ArrayList<>();
+
+                    for (String id : artistIDs) {
+                        String responseArtist = http.performRequest("https://api.spotify.com/v1/artists/" + id, getAccessToken(userID));
+                        artists.add(parser.parseArtist(responseArtist));
+                    }
+
+                    Date generateDate = result.getDate("generate_date");
+                    TopArtistStatistics topArtistStatistics = new TopArtistStatistics(generateDate, userID, artists.get(0), artists.get(1), artists.get(2), artists.get(3), artists.get(4));
+
+                    topArtistsStatisticsList.add(topArtistStatistics);
+
+                    artistIDs.clear();
+                    result.next();
+                }
+            }
+
+            return topArtistsStatisticsList;
         } catch (SQLException | IOException e) {
             e.printStackTrace();
             return null;

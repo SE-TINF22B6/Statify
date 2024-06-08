@@ -247,5 +247,27 @@ public class Parser {
         }
     }
 
+    public Artist parseArtist(String response) {
+        try {
+            JSONObject artistJSON = new JSONObject(response);
+
+            String id = artistJSON.getString("id");
+            String name = artistJSON.getString("name");
+
+            String imageURL = null;
+
+            JSONArray images = artistJSON.getJSONArray("images");
+            if (!images.isEmpty()) {
+                imageURL = images.getJSONObject(0).getString("url");
+            }
+
+            return new Artist(id, name, imageURL);
+
+        } catch (JSONException e) {
+            return null;
+        }
+
+    }
+
 
 }

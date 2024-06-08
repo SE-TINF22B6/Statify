@@ -111,25 +111,12 @@ public class StatifyController {
     @GetMapping("statistics/artists")
     @ResponseBody
     public List<TopArtistStatistics> getTopArtistsStatistics(@RequestParam String userId) {
-        //todo: get top artist statistics for user from database
-
-        List<TopArtistStatistics> list = new ArrayList<>();
-        list.add(new TopArtistStatistics(userId,
-                new Artist("artist1Id", "Artist 1", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33"),
-                new Artist("artist2Id", "Artist 2", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33"),
-                new Artist("artist3Id", "Artist 3", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33"),
-                new Artist("artist4Id", "Artist 4", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33"),
-                new Artist("artist5Id", "Artist 5", "https://i.scdn.co/image/ab67616d0000b2735076e4160d018e378f488c33")
-        ));
-        list.add(new TopArtistStatistics(userId,
-                new Artist("artist1Id", "Artist 11", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3"),
-                new Artist("artist2Id", "Artist 22", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3"),
-                new Artist("artist3Id", "Artist 33", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3"),
-                new Artist("artist4Id", "Artist 44", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3"),
-                new Artist("artist5Id", "Artist 55", "https://i.scdn.co/image/ab67616d0000b2734d53259fd1703f4d345d2ac3")
-        ));
-
-        return list;
+        try {
+            List<TopArtistStatistics> topArtistStatistics = db.getUsersTopArtistsStats(userId);
+            return topArtistStatistics;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @GetMapping("statistics/playlists")
