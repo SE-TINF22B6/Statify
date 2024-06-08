@@ -26,6 +26,13 @@ hr{
   width: 100%;
 }
 
+.vr
+{
+  border-right: 1px inset rgba(255,255,255, 0.2);
+  height: inherit;
+  margin: 20px;
+}
+
 .row{
   display: flex;
   flex-direction: row;

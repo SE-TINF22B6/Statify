@@ -1,13 +1,12 @@
 import "../css/track-page.css"
 import Actionbar from "../components/actionbar";
 import Track from "../components/track";
-import DurationTempoLoudness from "../components/durationTempoLoudness";
-import PopularityKeyMode from "../components/popularityKeyMode";
 import Chart from "../components/chart";
 import {useContext, useEffect, useState} from "react";
 import {keyDict, modeDict} from "../util/decodeAudioFeatures";
 import {ApiClientContext} from "../App";
 import {useLocation} from "react-router-dom";
+import TrackInfoRow from "../components/trackInfoRow";
 
 export default function TrackPage() {
 
@@ -70,24 +69,41 @@ export default function TrackPage() {
     return (
         <div>
             <Actionbar className={"actionbar-track-page"}></Actionbar>
-            <div className={"track-page page"}>
+            <div className={"track-page page row"}>
                 <div className="track">
                     <Track imageUrl={track.imageUrl}
                            trackTitle={track.name}
                            artistName={track.artists}
                     ></Track>
                 </div>
-                <div className="divider"></div>
-                <div className="audio-features">
+                <div className={"vr"}/>
+                <div className="audio-features column">
                     <Chart data={track.audioFeatures}/>
-                    <DurationTempoLoudness duration={track.duration}
-                                           tempo={track.tempo}
-                                           loudness={track.loudness}
-                    ></DurationTempoLoudness>
-                    <PopularityKeyMode popularity={track.popularity}
-                                       trackKey={track.key}
-                                       mode={track.mode}
-                    ></PopularityKeyMode>
+                    <TrackInfoRow
+                    data={[
+                        {key: "Duration",
+                        value: track.duration},
+                        {key: "Tempo",
+                        value: track.tempo},
+                        {key: "Loudness",
+                        value: track.loudness}
+                    ]}
+                    color={"orange"}
+                    scale={1.4}/>
+                    <TrackInfoRow
+                        data={
+                        [
+                            {key: "Popularity",
+                            value: track.popularity},
+                            {key: "Key",
+                            value: track.key},
+                            {key: "Mode",
+                            value: track.mode}
+                        ]
+                        }
+                        scale={1.4}
+                        color={"green"}
+                    />
                 </div>
             </div>
         </div>
