@@ -29,7 +29,7 @@ public class StatifyController {
     private final HTTPHelper http = new HTTPHelper();
     private final Parser parser = new Parser();
     private final SpotifyController spotifyController;
-    private final DBManager db = new DBManager();
+    private final DBManager db = new DBManager(http, parser);
 
     @Autowired
     public StatifyController(SpotifyController spotifyController) {

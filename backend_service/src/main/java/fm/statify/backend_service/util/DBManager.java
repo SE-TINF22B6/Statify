@@ -16,13 +16,20 @@ import java.util.Properties;
 import java.util.UUID;
 
 public class DBManager {
-    HTTPHelper http = new HTTPHelper();
-    Parser parser = new Parser();
+    String APPLICATION_PROPERTIES_PATH = "\\backend_service\\src\\main\\resources\\application.properties";
+    private Connection con = this.establishConnection();
+    private final HTTPHelper http;
+    private final Parser parser;
+
+    public DBManager(HTTPHelper http, Parser parser) {
+        this.http = http;
+        this.parser = parser;
+    }
 
     public Connection establishConnection() {
         Properties properties = new Properties();
         String basePath = System.getProperty("user.dir");
-        String filePath = basePath + "\\backend_service\\src\\main\\resources\\application.properties";
+        String filePath = basePath + APPLICATION_PROPERTIES_PATH;
         try {
             properties.load(new FileInputStream(filePath));
 
@@ -40,8 +47,6 @@ public class DBManager {
     public void insertUser(String accessToken, String refreshToken, String userID) {
         try {
             String sql = "INSERT INTO user (guid, access_token, refresh_token, user_id) VALUES (?, ?, ?, ?)";
-
-            Connection con = this.establishConnection();
 
             PreparedStatement statement = con.prepareStatement(sql);
 
@@ -75,8 +80,6 @@ public class DBManager {
 
             String sql = "SELECT guid FROM user WHERE user_id = ?";
 
-            Connection con = this.establishConnection();
-
             PreparedStatement statement = con.prepareStatement(sql);
 
             statement.setString(1, userID);
@@ -101,8 +104,6 @@ public class DBManager {
 
             String sql = "SELECT access_token FROM user WHERE user_id = ?";
 
-            Connection con = this.establishConnection();
-
             PreparedStatement statement = con.prepareStatement(sql);
 
             statement.setString(1, userID);
@@ -124,8 +125,6 @@ public class DBManager {
     public void insertTopTrackStatistics(String user_guid, String first_track_id, String second_track_id, String third_track_id, String fourth_track_id, String fifth_track_id, Date generate_date) {
         try {
             String sql = "INSERT INTO top_tracks (guid, user_guid, first_track_id, second_track_id, third_track_id, fourth_track_id, fifth_track_id, generate_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-            Connection con = this.establishConnection();
 
             PreparedStatement statement = con.prepareStatement(sql);
 
@@ -151,8 +150,6 @@ public class DBManager {
         try {
             String sql = "INSERT INTO top_artists (guid, user_guid, first_artist_id, second_artist_id, third_artist_id, fourth_artist_id, fifth_artist_id, generate_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-            Connection con = this.establishConnection();
-
             PreparedStatement statement = con.prepareStatement(sql);
 
             String guid = UUID.randomUUID().toString();
@@ -176,8 +173,6 @@ public class DBManager {
     public void insertPlaylist(String user_guid, String playlist_id, String name, int tracks_number, int duration, String top_genre, int top_genre_tracks_number, String top_artist, int top_artist_tracks_number, Date generate_date) {
         try {
             String sql = "INSERT INTO playlist (guid, user_guid, playlist_id, name, tracks_number, duration, top_genre, top_genre_tracks_number, top_artist, top_artist_tracks_number, generate_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-            Connection con = this.establishConnection();
 
             PreparedStatement statement = con.prepareStatement(sql);
 
@@ -208,8 +203,6 @@ public class DBManager {
             List<String> trackIDs = new ArrayList<>();
 
             String sql = "SELECT * FROM top_tracks WHERE user_guid = ?";
-
-            Connection con = this.establishConnection();
 
             PreparedStatement statement = con.prepareStatement(sql);
 
@@ -259,8 +252,6 @@ public class DBManager {
 
             String sql = "SELECT * FROM top_artists WHERE user_guid = ?";
 
-            Connection con = this.establishConnection();
-
             PreparedStatement statement = con.prepareStatement(sql);
 
             statement.setString(1, getUserGuid(userID));
@@ -305,8 +296,6 @@ public class DBManager {
     public List<PlaylistStatistics> getUsersPlaylistStats(String userID) {
         try {
             String sql = "SELECT * FROM playlist WHERE user_guid = ?";
-
-            Connection con = this.establishConnection();
 
             PreparedStatement statement = con.prepareStatement(sql);
 
@@ -363,7 +352,6 @@ public class DBManager {
     private void remove(String table_name, String userID) {
         try {
             String sql = "DELETE FROM" + table_name + "WHERE user_guid = ?";
-            Connection con = this.establishConnection();
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, getUserGuid(userID));
             statement.executeUpdate();

@@ -30,7 +30,6 @@ public class UserTopTracksTask implements Runnable {
     String code;
 
     //This will be updated when the event is updated and the necessary parameters are implemented
-    String trackID;
     String albumID;
     private static final Logger LOGGER = Logger.getLogger(DatabaseManager.class.getName());
 

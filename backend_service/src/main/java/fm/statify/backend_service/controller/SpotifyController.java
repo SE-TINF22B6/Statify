@@ -31,7 +31,7 @@ public class SpotifyController {
     private final Parser parser = new Parser();
     private final HTTPHelper http = new HTTPHelper();
 
-    private final DBManager db = new DBManager();
+    private final DBManager db = new DBManager(http, parser);
 
 
     SpotifyController(SpotifyOAuth spotifyOAuth) {
