@@ -6,6 +6,7 @@ import fm.statify.backend_service.util.DBManager;
 import fm.statify.backend_service.util.DatabaseManager;
 import fm.statify.backend_service.util.HTTPHelper;
 import fm.statify.backend_service.util.Parser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,6 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/")
-@Component
 public class SpotifyController {
 
     // This Class is responsible for handling the Spotify OAuth flow
@@ -31,11 +31,13 @@ public class SpotifyController {
     private final Parser parser = new Parser();
     private final HTTPHelper http = new HTTPHelper();
 
-    private final DBManager db = new DBManager(http, parser);
+    private final DBManager db;
 
 
-    SpotifyController(SpotifyOAuth spotifyOAuth) {
+    @Autowired
+    SpotifyController(SpotifyOAuth spotifyOAuth, DBManager dbManager) {
         this.spotifyOAuth = spotifyOAuth;
+        this.db = dbManager;
     }
 
     public Map<String, String> tokenData;

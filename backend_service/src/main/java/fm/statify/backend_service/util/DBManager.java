@@ -5,42 +5,48 @@ import fm.statify.backend_service.entities.SimpleTrack;
 import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
-import org.json.JSONObject;
 
-import java.io.FileInputStream;
+import jakarta.annotation.PostConstruct;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.UUID;
 
+@Component
 public class DBManager {
-    String APPLICATION_PROPERTIES_PATH = "\\backend_service\\src\\main\\resources\\application.properties";
-    private Connection con = this.establishConnection();
+
+    private Connection con;
     private final HTTPHelper http;
     private final Parser parser;
+
+    @Value("${db.url}")
+    private String url;
+
+    @Value("${db.username}")
+    private String userName;
+
+    @Value("${db.password}")
+    private String password;
+
 
     public DBManager(HTTPHelper http, Parser parser) {
         this.http = http;
         this.parser = parser;
     }
 
-    public Connection establishConnection() {
-        Properties properties = new Properties();
-        String basePath = System.getProperty("user.dir");
-        String filePath = basePath + APPLICATION_PROPERTIES_PATH;
+
+    @PostConstruct
+    public void establishConnection() {
         try {
-            properties.load(new FileInputStream(filePath));
-
-            String url = properties.getProperty("db.url");
-            String username = properties.getProperty("db.username");
-            String password = properties.getProperty("db.password");
-
-            return DriverManager.getConnection(url, username, password);
-        } catch (Exception e) {
+            con = DriverManager.getConnection(url, userName, password);
+        }
+        catch (Exception e) {
             System.out.print(e.getMessage());
-            return null;
         }
     }
 

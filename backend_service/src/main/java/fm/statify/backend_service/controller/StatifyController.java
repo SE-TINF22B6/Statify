@@ -29,11 +29,12 @@ public class StatifyController {
     private final HTTPHelper http = new HTTPHelper();
     private final Parser parser = new Parser();
     private final SpotifyController spotifyController;
-    private final DBManager db = new DBManager(http, parser);
+    private final DBManager db;
 
     @Autowired
-    public StatifyController(SpotifyController spotifyController) {
+    public StatifyController(SpotifyController spotifyController, DBManager dbManager) {
         this.spotifyController = spotifyController;
+        this.db = dbManager;
     }
 
     @GetMapping("generate/tracks")
