@@ -46,7 +46,8 @@ describe('StatisticItem Component', () => {
         expect(screen.getByText(`${number}.`)).toHaveClass(color);
         expect(screen.getByText(title)).toBeInTheDocument();
         expect(screen.queryByText(subtitle)).not.toBeInTheDocument();
-        expect(screen.queryByRole('img')).not.toBeInTheDocument();
+        expect(screen.queryByRole('img')).toBeInTheDocument();
+        expect(screen.queryByRole('img')).toHaveAttribute("src", "")
     });
 
     it('applies default color class if color is not provided', () => {
