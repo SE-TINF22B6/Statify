@@ -114,7 +114,7 @@ public class DBManager {
 
     }
 
-    private User getUser(String userID){
+    public User getUser(String userID){
         try {
             String accessToken = new String();
             String refreshToken = new String();
@@ -140,6 +140,8 @@ public class DBManager {
                     expires,
                     refreshToken
             );
+
+            userManager.addUser(user);
 
             return user;
         } catch (SQLException e) {
@@ -271,7 +273,6 @@ public class DBManager {
 
                     if(accessToken == null) {
                         User user = getUser(userID);
-                        userManager.addUser(user);
                         accessToken = userManager.getAccessTokenByUserID(userID);
                     }
 
@@ -327,7 +328,6 @@ public class DBManager {
 
                     if(accessToken == null) {
                         User user = getUser(userID);
-                        userManager.addUser(user);
                         accessToken = userManager.getAccessTokenByUserID(userID);
                     }
 

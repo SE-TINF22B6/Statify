@@ -33,7 +33,7 @@ public class UserManager {
         if (userData.containsKey(userId)) {
             return userData.get(userId);
         } else {
-            throw new Exception("User ID not found");
+            return db.getUser(userId);
         }
     }
 
