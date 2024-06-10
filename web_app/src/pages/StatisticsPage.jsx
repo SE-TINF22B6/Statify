@@ -37,6 +37,7 @@ export default function StatisticsPage() {
         apiClient.getTopArtistsStatistics()
             .then(res => {
                 setArtistsStats(res)
+                console.log(res)
             })
             .catch(err => {
                 console.log(err)
@@ -58,82 +59,80 @@ export default function StatisticsPage() {
             <div className={"statistics-page page"}>
                 <div className={"content column"}>
                     <div className={"row"}>
-                        <StatisticsFrame header={"Top Tracks"} subheader={tracksStats[tracksIndex] != null ? new Date((tracksStats[tracksIndex].generateDate)).toString().substring(4, 15) : ""} scrollable={tracksStats.length > 1} onScroll={scrollTracks}>
-                            <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].firstTrack.imageUrl : ""}
-                                           title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].firstTrack.name : ""}
-                                           subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].firstTrack.artists.join(", "): ""}
+                        <StatisticsFrame header={"Top Tracks"} subheader={tracksStats[tracksIndex] != null ? new Date((tracksStats[tracksIndex]?.generateDate)).toString().substring(4, 15) : ""} scrollable={tracksStats.length > 1} onScroll={scrollTracks}>
+                            <StatisticItem image={tracksStats[tracksIndex]?.firstTrack.imageUrl}
+                                           title={tracksStats[tracksIndex]?.firstTrack.name}
+                                           subtitle={tracksStats[tracksIndex]?.firstTrack.artists.join(", ")}
                                            number={1}
                                            color={"green"}
                                            className={"clickable"}
-                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].firstTrack.id)}/>
-                            <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].secondTrack.imageUrl: ""}
-                                           title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].secondTrack.name : ""}
-                                           subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].secondTrack.artists.join(", ") : ""}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex]?.firstTrack.id)}/>
+                            <StatisticItem image={tracksStats[tracksIndex]?.secondTrack.imageUrl}
+                                           title={tracksStats[tracksIndex]?.secondTrack.name}
+                                           subtitle={tracksStats[tracksIndex]?.secondTrack.artists.join(", ")}
                                            number={2}
                                            color={"orange"}
                                            className={"clickable"}
-                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].secondTrack.id)}/>
-                            <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].thirdTrack.imageUrl : ""}
-                                           title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].thirdTrack.name : ""}
-                                           subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].thirdTrack.artists.join(", ") : ""}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex]?.secondTrack.id)}/>
+                            <StatisticItem image={tracksStats[tracksIndex]?.thirdTrack.imageUrl}
+                                           title={tracksStats[tracksIndex]?.thirdTrack.name}
+                                           subtitle={tracksStats[tracksIndex]?.thirdTrack.artists.join(", ")}
                                            number={3}
                                            color={"orange"}
                                            className={"clickable"}
-                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].thirdTrack.id)}/>
-                            <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fourthTrack.imageUrl : ""}
-                                           title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fourthTrack.name : ""}
-                                           subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fourthTrack.artists.join(", ") : ""}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex]?.thirdTrack.id)}/>
+                            <StatisticItem image={tracksStats[tracksIndex]?.fourthTrack.imageUrl}
+                                           title={tracksStats[tracksIndex]?.fourthTrack.name}
+                                           subtitle={tracksStats[tracksIndex]?.fourthTrack.artists.join(", ")}
                                            number={4}
                                            color={"purple"}
                                            className={"clickable"}
-                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].fourthTrack.id)}/>
-                            <StatisticItem image={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fifthTrack.imageUrl : ""}
-                                           title={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fifthTrack.name : ""}
-                                           subtitle={tracksStats[tracksIndex] != null ? tracksStats[tracksIndex].fifthTrack.artists.join(", ") : ""}
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex]?.fourthTrack.id)}/>
+                            <StatisticItem image={tracksStats[tracksIndex]?.fifthTrack.imageUrl}
+                                           title={tracksStats[tracksIndex]?.fifthTrack.name}
+                                           subtitle={tracksStats[tracksIndex]?.fifthTrack.artists.join(", ")}
                                            number={5}
                                            color={"purple"}
                                            className={"clickable"}
-                                           onClick={() => navigateToTrack(tracksStats[tracksIndex].fifthTrack.id)}/>
+                                           onClick={() => navigateToTrack(tracksStats[tracksIndex]?.fifthTrack.id)}/>
                         </StatisticsFrame>
-                        <StatisticsFrame header={"Top Artists"} subheader={artistsStats[artistsIndex] != null ? new Date((artistsStats[artistsIndex].generateDate)).toString().substring(4, 15) : ""} scrollable={artistsStats.length > 1} onScroll={scrollArtists}>
-                            <StatisticItem image={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].firstArtist.imageUrl : ""}
-                                           title={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].firstArtist.name : ""}
+                        <StatisticsFrame header={"Top Artists"} subheader={artistsStats[artistsIndex] != null ? new Date((artistsStats[artistsIndex]?.generateDate)).toString().substring(4, 15) : ""} scrollable={artistsStats.length > 1} onScroll={scrollArtists}>
+                            <StatisticItem image={artistsStats[artistsIndex]?.firstArtist.imageUrl}
+                                           title={artistsStats[artistsIndex]?.firstArtist.name}
                                            number={1}
                                            color={"green"}/>
-                            <StatisticItem image={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].secondArtist.imageUrl : ""}
-                                           title={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].secondArtist.name : ""}
+                            <StatisticItem image={artistsStats[artistsIndex]?.secondArtist.imageUrl}
+                                           title={artistsStats[artistsIndex]?.secondArtist.name}
                                            number={2}
                                            color={"orange"}/>
-                            <StatisticItem image={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].thirdArtist.imageUrl : ""}
-                                           title={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].thirdArtist.name : ""}
+                            <StatisticItem image={artistsStats[artistsIndex]?.thirdArtist.imageUrl}
+                                           title={artistsStats[artistsIndex]?.thirdArtist.name}
                                            number={3}
                                            color={"orange"}/>
-                            <StatisticItem image={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].fourthArtist.imageUrl : ""}
-                                           title={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].fourthArtist.name : ""}
+                            <StatisticItem image={artistsStats[artistsIndex]?.fourthArtist.imageUrl}
+                                           title={artistsStats[artistsIndex]?.fourthArtist.name}
                                            number={4}
                                            color={"purple"}/>
-                            <StatisticItem image={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].fifthArtist.imageUrl : ""}
-                                           title={artistsStats[artistsIndex] != null ? artistsStats[artistsIndex].fifthArtist.name : ""}
+                            <StatisticItem image={artistsStats[artistsIndex]?.fifthArtist.imageUrl}
+                                           title={artistsStats[artistsIndex]?.fifthArtist.name}
                                            number={5}
                                            color={"purple"}/>
                         </StatisticsFrame>
                     </div>
                     <div className={"row"}>
-                        <StatisticsFrame header={"Playlist Statistics"} subheader={playlistStats[playlistIndex] != null ? new Date((playlistStats[playlistIndex].generateDate)).toString().substring(4, 15) : ""} scrollable={playlistStats.length > 1} onScroll={scrollPlaylist}>
-                            <PlaylistStatisticsItem name={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].name : ""}
-                                                    duration={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].duration : 0}
-                                                    songs={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].tracksNumber : 0}
-                                                    top_artist={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].topArtist : ""}
-                                                    top_genre={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].topGenre : ""}
-                                                    top_artist_count={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].topArtistTracksNumber : 0}
-                                                    top_genre_count={playlistStats[playlistIndex] != null ? playlistStats[playlistIndex].topGenreTracksNumber : 0}/>
+                        <StatisticsFrame header={"Playlist Statistics"} subheader={new Date((playlistStats[playlistIndex]?.generateDate)).toString().substring(4, 15)} scrollable={playlistStats.length > 1} onScroll={scrollPlaylist}>
+                            <PlaylistStatisticsItem name={playlistStats[playlistIndex]?.name}
+                                                    duration={playlistStats[playlistIndex]?.duration}
+                                                    songs={playlistStats[playlistIndex]?.tracksNumber}
+                                                    top_artist={playlistStats[playlistIndex]?.topArtist}
+                                                    top_genre={playlistStats[playlistIndex]?.topGenre}
+                                                    top_artist_count={playlistStats[playlistIndex]?.topArtistTracksNumber}
+                                                    top_genre_count={playlistStats[playlistIndex]?.topGenreTracksNumber}/>
                         </StatisticsFrame>
                     </div>
                     <Button color={"orange"} scale={0.6} onClick={() => setOpen(true)}>Generate</Button>
                     <GenerateStatisticsDialog setOpen={setOpen} open={open}
-                                              addPlaylistStats={(stat) => console.log("test")}
-                                              addTracksStats={(stat) => console.log("test")}
-                                              addArtistStats={(stat) => console.log("test")}
+                                                onGenerate={onGenerate}
                     />
                 </div>
             </div>
@@ -141,7 +140,9 @@ export default function StatisticsPage() {
     )
 
     function navigateToTrack(trackId){
-        navigate("/track", { state: { trackId: trackId } })
+        if(trackId) {
+            navigate("/track", {state: {trackId: trackId}})
+        }
     }
 
     function scrollPlaylist(direction){
@@ -200,6 +201,39 @@ export default function StatisticsPage() {
             }
         }
     }
+
+    function onGenerate(type, parameters){
+        switch (type){
+            case "playlist":
+                apiClient.generatePlaylistStatistics(parameters.playlistId)
+                    .then(res => {
+                        let arr = [...playlistStats, res]
+                        setPlaylistIndex(arr.length - 1)
+                        setPlaylistStats(arr)
+                    })
+                break
+            case "tracks":
+                apiClient.generateTopTracksStatistics(parameters.timeRange)
+                    .then(res => {
+                        let arr = [...tracksStats, res]
+                        setTracksIndex(arr.length - 1)
+                        setTracksStats(arr)
+                    })
+                break
+            case "artists":
+                apiClient.generateTopArtistsStatistics(parameters.timeRange)
+                    .then(res => {
+                        let arr = [...artistsStats, res]
+                        setArtistsIndex(arr.length - 1)
+                        setArtistsStats(arr)
+                    })
+                break
+            default:
+                break;
+        }
+    }
+
+
 }
 
 

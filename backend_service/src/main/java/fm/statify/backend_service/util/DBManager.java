@@ -1,15 +1,20 @@
 package fm.statify.backend_service.util;
 
+import fm.statify.backend_service.auth.SpotifyOAuth;
+import fm.statify.backend_service.controller.SpotifyController;
 import fm.statify.backend_service.entities.Artist;
 import fm.statify.backend_service.entities.SimpleTrack;
+import fm.statify.backend_service.entities.User;
 import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
 
 import jakarta.annotation.PostConstruct;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
 import java.sql.*;
@@ -17,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Component
+@Repository
 public class DBManager {
 
     private Connection con;
@@ -33,10 +38,14 @@ public class DBManager {
     @Value("${db.password}")
     private String password;
 
+    private final UserManager userManager;
 
-    public DBManager(HTTPHelper http, Parser parser) {
+
+    @Autowired
+    public DBManager(HTTPHelper http, Parser parser, UserManager userManager) {
         this.http = http;
         this.parser = parser;
+        this.userManager = userManager;
     }
 
 
@@ -50,9 +59,9 @@ public class DBManager {
         }
     }
 
-    public void insertUser(String accessToken, String refreshToken, String userID) {
+    public void insertUser(String accessToken, String refreshToken, String userID, java.util.Date expireDate) {
         try {
-            String sql = "INSERT INTO user (guid, access_token, refresh_token, user_id) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO user (guid, access_token, refresh_token, user_id, expires) VALUES (?, ?, ?, ?, ?)";
 
             PreparedStatement statement = con.prepareStatement(sql);
 
@@ -61,6 +70,7 @@ public class DBManager {
             statement.setString(2, accessToken);
             statement.setString(3, refreshToken);
             statement.setString(4, userID);
+            statement.setTimestamp(5, new Timestamp(expireDate.getTime()));
 
             statement.executeUpdate();
 
@@ -104,11 +114,13 @@ public class DBManager {
 
     }
 
-    public String getAccessToken(String userID) {
+    private User getUser(String userID){
         try {
             String accessToken = new String();
+            String refreshToken = new String();
+            java.util.Date expires = new java.util.Date();
 
-            String sql = "SELECT access_token FROM user WHERE user_id = ?";
+            String sql = "SELECT * FROM user WHERE user_id = ?";
 
             PreparedStatement statement = con.prepareStatement(sql);
 
@@ -118,12 +130,39 @@ public class DBManager {
 
             if (result.next()) {
                 accessToken = result.getString("access_token");
+                refreshToken = result.getString("refresh_token");
+                expires = new java.util.Date(result.getTimestamp("expires").getTime());
             }
 
-            return accessToken;
+            User user = new User(
+                    userID,
+                    accessToken,
+                    expires,
+                    refreshToken
+            );
+
+            return user;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public void updateTokens(String userId, String accessToken, java.util.Date expires){
+        String sql = "UPDATE user SET access_token = ?, expires = ? WHERE user_id = ?";
+
+        try {
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, accessToken);
+            statement.setTimestamp(2, new Timestamp(expires.getTime()));
+            statement.setString(3, userId);
+
+            statement.executeUpdate();
+
+            System.out.println("Access Token updated successfully.");
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -228,8 +267,16 @@ public class DBManager {
 
                     List<SimpleTrack> simpleTracks = new ArrayList<>();
 
+                    String accessToken = userManager.getAccessTokenByUserID(userID);
+
+                    if(accessToken == null) {
+                        User user = getUser(userID);
+                        userManager.addUser(user);
+                        accessToken = userManager.getAccessTokenByUserID(userID);
+                    }
+
                     for (String id : trackIDs) {
-                        String responseTrack = http.performRequest("https://api.spotify.com/v1/tracks/" + id, getAccessToken(userID));
+                        String responseTrack = http.performRequest("https://api.spotify.com/v1/tracks/" + id, accessToken);
                         JSONObject trackJSON = new JSONObject(responseTrack);
                         simpleTracks.add(parser.parseSimpleTrack(trackJSON));
                     }
@@ -276,8 +323,17 @@ public class DBManager {
 
                     List<Artist> artists = new ArrayList<>();
 
+                    String accessToken = userManager.getAccessTokenByUserID(userID);
+
+                    if(accessToken == null) {
+                        User user = getUser(userID);
+                        userManager.addUser(user);
+                        accessToken = userManager.getAccessTokenByUserID(userID);
+                    }
+
+
                     for (String id : artistIDs) {
-                        String responseArtist = http.performRequest("https://api.spotify.com/v1/artists/" + id, getAccessToken(userID));
+                        String responseArtist = http.performRequest("https://api.spotify.com/v1/artists/" + id, accessToken);
                         artists.add(parser.parseArtist(responseArtist));
                     }
 

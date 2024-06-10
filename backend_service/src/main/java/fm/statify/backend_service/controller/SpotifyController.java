@@ -3,11 +3,10 @@ package fm.statify.backend_service.controller;
 import fm.statify.backend_service.auth.SpotifyOAuth;
 import fm.statify.backend_service.entities.*;
 import fm.statify.backend_service.util.DBManager;
-import fm.statify.backend_service.util.DatabaseManager;
 import fm.statify.backend_service.util.HTTPHelper;
 import fm.statify.backend_service.util.Parser;
+import fm.statify.backend_service.util.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
@@ -15,9 +14,6 @@ import org.springframework.ui.Model;
 import org.json.*;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.*;
 
 @Controller
@@ -33,11 +29,14 @@ public class SpotifyController {
 
     private final DBManager db;
 
+    private final UserManager userManager;
+
 
     @Autowired
-    SpotifyController(SpotifyOAuth spotifyOAuth, DBManager dbManager) {
+    SpotifyController(SpotifyOAuth spotifyOAuth, DBManager dbManager, UserManager userManager) {
         this.spotifyOAuth = spotifyOAuth;
         this.db = dbManager;
+        this.userManager = userManager;
     }
 
     public Map<String, String> tokenData;
@@ -74,15 +73,17 @@ public class SpotifyController {
 
         UserProfile profile = getProfile(access_token);
 
+        Date expireDate = new Date(System.currentTimeMillis() + 1000 * expires_in);
+
         userData.put(profile.getId(), new User(
                 profile.getId(),
                 access_token,
-                new Date(System.currentTimeMillis() + 1000 * expires_in),
+                expireDate,
                 refresh_token
         ));
 
         if (!(db.userExists(profile.getId()))) {
-            db.insertUser(access_token, refresh_token, profile.getId());
+            db.insertUser(access_token, refresh_token, profile.getId(), expireDate);
         }
 
         System.out.println("Token Data: " + tokenData);
@@ -93,12 +94,12 @@ public class SpotifyController {
     @GetMapping("/profile")
     @ResponseBody
     public UserProfile getProfileInfo(String userId) throws Exception {
-        UserProfile profile = getProfile(getUser(userId).getValidAccessToken(spotifyOAuth));
+        UserProfile profile = getProfile(userManager.getAccessTokenByUserID(userId));
 
         return profile;
     }
 
-    public UserProfile getProfile(String access_token) throws IOException, InterruptedException {
+    public UserProfile getProfile(String access_token) throws IOException {
         String response = http.performRequest("https://api.spotify.com/v1/me", access_token);
         return parser.parseUserProfile(response);
 
@@ -107,14 +108,14 @@ public class SpotifyController {
     @GetMapping("/playlists")
     @ResponseBody
     public List<Playlist> getUsersPlaylists(@RequestParam String userId) throws Exception {
-        String response = http.performRequest("https://api.spotify.com/v1/me/playlists", getUser(userId).getValidAccessToken(spotifyOAuth));
+        String response = http.performRequest("https://api.spotify.com/v1/me/playlists", userManager.getAccessTokenByUserID(userId));
         return parser.parsePlaylists(response);
     }
 
     @GetMapping("/track")
     @ResponseBody
     public Track getTrackWithAudioFeatures(@RequestParam String userID, @RequestParam String trackId) throws Exception {
-        String accessToken = getUser(userID).getValidAccessToken(spotifyOAuth);
+        String accessToken = userManager.getAccessTokenByUserID(userID);
         String responseTrack = http.performRequest("https://api.spotify.com/v1/tracks/" + trackId, accessToken);
         String responseAudioFeatures = http.performRequest("https://api.spotify.com/v1/audio-features/" + trackId, accessToken);
         AudioFeatures audioFeatures = parser.parseAudioFeatures(responseAudioFeatures);
@@ -130,12 +131,5 @@ public class SpotifyController {
         return "error";
     }
 
-    private User getUser(String userId) throws Exception {
-        if (userData.containsKey(userId)) {
-            return userData.get(userId);
-        } else {
-            throw new Exception("User ID not found");
-        }
-    }
 }
 

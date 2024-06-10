@@ -7,7 +7,7 @@ import ToggleButton from "../components/toggleButton";
 import PlaylistItem from "../components/playlistItem";
 import {ApiClientContext} from "../App";
 
-export default function GenerateStatisticsDialog({open, setOpen}) {
+export default function GenerateStatisticsDialog({open, setOpen, onGenerate}) {
 
     const TOGGLE_TRACKS_ARTISTS = 0
     const TOGGLE_PLAYLISTS = 1
@@ -104,15 +104,18 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
         setVariable(e.currentTarget.value);
     }
 
-    function onGenerate() {
+    function generate() {
         if (toggle === TOGGLE_TRACKS_ARTISTS) {
             if (selection === "artists") {
-                apiClient.generateTopArtistsStatistics(timeRange)
+                //apiClient.generateTopArtistsStatistics(timeRange)
+                onGenerate("artists", {timeRange: timeRange})
             } else if (selection === "tracks") {
-                apiClient.generateTopTracksStatistics(timeRange)
+                //apiClient.generateTopTracksStatistics(timeRange)
+                onGenerate("tracks", {timeRange: timeRange})
             }
         } else if (toggle === TOGGLE_PLAYLISTS) {
-            apiClient.generatePlaylistStatistics(playlists[selectedPlaylist].id)
+            //apiClient.generatePlaylistStatistics(playlists[selectedPlaylist].id)
+            onGenerate("playlist", {playlistId: playlists[selectedPlaylist].id})
         }
         setOpen(false)
     }
@@ -131,7 +134,7 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
             </DialogContent>
             <DialogActions className={"row"}>
                 <Button className={"button"} color={"green"} scale={0.45} widthOffset={-20}
-                        onClick={onGenerate}>Generate</Button>
+                        onClick={generate}>Generate</Button>
                 <Button className={"button"} color={"purple"} scale={0.45} widthOffset={-20}
                         onClick={() => setOpen(false)}>Cancel</Button>
             </DialogActions>
@@ -142,4 +145,5 @@ export default function GenerateStatisticsDialog({open, setOpen}) {
 GenerateStatisticsDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     setOpen: PropTypes.func.isRequired,
+    onGenerate: PropTypes.func.isRequired,
 }

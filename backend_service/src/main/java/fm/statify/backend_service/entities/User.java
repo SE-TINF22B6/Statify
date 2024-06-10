@@ -36,16 +36,16 @@ public class User {
         return refreshToken;
     }
 
-    public String getValidAccessToken(SpotifyOAuth spotifyOAuth) throws IOException, InterruptedException {
-        if (expires.before(new Date())){
-                String response = spotifyOAuth.refreshAccessToken(refreshToken);
-                Map<String, String> tokenData = spotifyOAuth.parseResponse(response);
-                JSONObject tokenDataJson = new JSONObject(tokenData);
-                accessToken = tokenDataJson.getString("access_token");
-                refreshToken = tokenDataJson.getString("refresh_token");
-
-                //TODO: save new tokens in DB
-        }
-        return accessToken;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
+
+    public void setExpires(Date expires) {
+        this.expires = expires;
+    }
+
+    public boolean isAccessTokenExpired(){
+        return expires.before(new Date());
+    }
+
 }

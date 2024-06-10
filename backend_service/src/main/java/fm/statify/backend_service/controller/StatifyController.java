@@ -2,14 +2,10 @@ package fm.statify.backend_service.controller;
 
 import fm.statify.backend_service.entities.Artist;
 import fm.statify.backend_service.entities.SimpleTrack;
-import fm.statify.backend_service.entities.User;
 import fm.statify.backend_service.stats.PlaylistStatistics;
 import fm.statify.backend_service.stats.TopArtistStatistics;
 import fm.statify.backend_service.stats.TopTrackStatistics;
-import fm.statify.backend_service.util.DBManager;
-import fm.statify.backend_service.util.HTTPHelper;
-import fm.statify.backend_service.util.Parser;
-import fm.statify.backend_service.util.PlaylistStatisticsGenerator;
+import fm.statify.backend_service.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/")
@@ -28,19 +21,20 @@ public class StatifyController {
 
     private final HTTPHelper http = new HTTPHelper();
     private final Parser parser = new Parser();
-    private final SpotifyController spotifyController;
     private final DBManager db;
 
+    private final UserManager userManager;
+
     @Autowired
-    public StatifyController(SpotifyController spotifyController, DBManager dbManager) {
-        this.spotifyController = spotifyController;
+    public StatifyController(DBManager dbManager, UserManager userManager) {
         this.db = dbManager;
+        this.userManager = userManager;
     }
 
     @GetMapping("generate/tracks")
     @ResponseBody
     public TopTrackStatistics generateSongStatistics(@RequestParam String userId, @RequestParam String time_range) throws IOException {
-        String accessToken = getAccessTokenByUserID(userId);
+        String accessToken = userManager.getAccessTokenByUserID(userId);
         List<SimpleTrack> topTracks = parser.parseTopTracks(http.performRequest("https://api.spotify.com/v1/me/top/tracks/?limit=5&time_range=" + time_range, accessToken));
         String user_guid = db.getUserGuid(userId);
         Date date = java.sql.Date.valueOf(LocalDate.now());
@@ -58,7 +52,7 @@ public class StatifyController {
     @GetMapping("generate/artists")
     @ResponseBody
     public TopArtistStatistics generateArtistStatistics(@RequestParam String userId, @RequestParam String time_range) throws IOException {
-        String accessToken = getAccessTokenByUserID(userId);
+        String accessToken = userManager.getAccessTokenByUserID(userId);
         List<Artist> topArtists = parser.parseTopArtists(http.performRequest("https://api.spotify.com/v1/me/top/artists/?limit=5&time_range=" + time_range, accessToken));
         String user_guid = db.getUserGuid(userId);
         Date date = java.sql.Date.valueOf(LocalDate.now());
@@ -76,7 +70,7 @@ public class StatifyController {
     @GetMapping("generate/playlists")
     @ResponseBody
     public PlaylistStatistics generatePlaylistStatistics(@RequestParam String userId, @RequestParam String playlistId) {
-        String accessToken = getAccessTokenByUserID(userId);
+        String accessToken = userManager.getAccessTokenByUserID(userId);
         PlaylistStatistics playlistStatistics = PlaylistStatisticsGenerator.generatePlaylistStatistics(userId, playlistId, accessToken);
 
         java.sql.Date generate_date = new java.sql.Date(playlistStatistics.getGenerateDate().getTime());
@@ -144,10 +138,5 @@ public class StatifyController {
         db.removeAll(userId);
     }
 
-    private String getAccessTokenByUserID(String userID) {
-        Map<String, User> userData = this.spotifyController.getUserData();
-        User user = userData.get(userID);
-        return user.getAccessToken();
-    }
 }
 

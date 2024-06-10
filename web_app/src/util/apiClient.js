@@ -164,38 +164,85 @@ export default class ApiClient {
     }
 
     generatePlaylistStatistics(playlistId) {
-        fetch("http://localhost:8081/generate/playlists?userId=" + this.getUserId() + "&playlistId=" + playlistId)
-            .then(result => result.json())
-            .then(res => {
-                if(!(res.status >= 300)){
-                    this.playlistStatistics.push(res)
-                }
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        return new Promise((resolve, reject) =>{
+            fetch("http://localhost:8081/generate/playlists?userId=" + this.getUserId() + "&playlistId=" + playlistId)
+                .then(result => result.json())
+                .then(res => {
+                    if(!(res.status >= 300)){
+                        this.playlistStatistics = [...this.playlistStatistics, res]
+                        resolve(res)
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+
     }
 
     generateTopArtistsStatistics(timeRange) {
-        fetch("http://localhost:8081/generate/artists?userId=" + this.getUserId() + "&time_range=" + timeRange)
-            .then(result => result.json())
-            .then(res => {
-                if(!(res.status >= 300)) {
-                    this.topArtistStatistics.push(res)
-                }
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:8081/generate/artists?userId=" + this.getUserId() + "&time_range=" + timeRange)
+                .then(result => result.json())
+                .then(res => {
+                    if(!(res.status >= 300)) {
+                        this.topArtistStatistics = [...this.topArtistStatistics, res]
+                        resolve(res)
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+
+    }
+
+    generateTopTracksStatistics(timeRange) {
+        return new Promise((resolve, reject) => {
+            fetch("http://localhost:8081/generate/tracks?userId=" + this.getUserId() + "&time_range=" + timeRange)
+                .then(result => result.json())
+                .then(res => {
+                    if(!(res.status >= 300)) {
+                        this.topTrackStatistics = [...this.topTrackStatistics, res]
+                        resolve(res)
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    reject(err)
+                })
+        })
+    }
+
+    requestDeleteProfile(navigate){
+        fetch("http://localhost:8081/delete?userId=" + this.getUserId(), {
+            method: 'DELETE',
+        })
+            .then(() => {
+                this.playlistStatistics = null
+                this.topArtistStatistics = null
+                this.topTrackStatistics = null
+                this.userId = null
+                this.playlists = null
+                this.profile = null
+                this.deleteCookie("userId")
+                navigate("/")
             })
             .catch(err => {
                 console.log(err)
             })
     }
 
-    generateTopTracksStatistics(timeRange) {
-        fetch("http://localhost:8081/generate/tracks?userId=" + this.getUserId() + "&time_range=" + timeRange)
-            .then(result => result.json())
-            .then(res => {
-                if(!(res.status >= 300)) {
-                    this.topTrackStatistics.push(res)
-                }
+    requestDeleteData(){
+        fetch("http://localhost:8081/statistics/delete?userId=" + this.getUserId(), {
+            method: 'DELETE',
+        })
+            .then(() => {
+                this.playlistStatistics = []
+                this.topArtistStatistics = []
+                this.topTrackStatistics = []
             })
             .catch(err => {
                 console.log(err)
@@ -221,6 +268,11 @@ export default class ApiClient {
             .find((row) => row.startsWith(`${name}=`));
 
         return cookies ? cookies.split("=")[1] : null;
+    }
+
+    deleteCookie(name){
+        let value = this.getCookie(name)
+        this.setCookie(name, value, 0)
     }
 
 }

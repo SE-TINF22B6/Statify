@@ -4,7 +4,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/*TODO: Implement a daemon that streams the user's top tracks and saves them to the database.
+/*      Implement a daemon that streams the user's top tracks and saves them to the database.
         Multithreading is recommended to avoid blocking the main thread and to allow for multiple users to stream their top tracks simultaneously.
         The initial idea is that the daemon checks the Spotify API every 20 seconds if a user is really listening to a track if there is no way to get it via the offical Spotify API.
         Otherwise it would also be a good idea to use the Spotify API to get the user's top tracks every few minutes and add the delta to the database (actually the better idea).

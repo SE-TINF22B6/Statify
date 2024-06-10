@@ -145,15 +145,6 @@ public class Parser {
             JSONObject artist = artistsArr.getJSONObject(i);
             artists.add(artist.getString("id"));
 
-            // Never returns genres // TODO: add genres & artist names later -> artists endpoint
-
-            /*if(artist.has("genres")){
-                JSONArray genresArr = artist.getJSONArray("genres");
-                for (int ii = 0; ii < genresArr.length(); ii++) {
-                    String genre = genresArr.getString(ii);
-                    genres.add(genre);
-                }
-            }*/
         }
         SimplePlaylistTrack t = new SimplePlaylistTrack(id, name, null, artists, genres, duration);
         return t;
@@ -268,6 +259,5 @@ public class Parser {
         }
 
     }
-
 
 }

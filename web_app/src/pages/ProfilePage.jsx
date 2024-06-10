@@ -30,11 +30,11 @@ export default function ProfilePage(){
                 <div className="content row">
                     <div className="actions column">
                         <div className="action">
-                            <p className="header red">Delete Data</p>
+                            <p className="header red"  onClick={() => apiClient.requestDeleteData(navigate)}>Delete Data</p>
                             <p>Delete all saved statistics</p>
                         </div>
                         <div className="action">
-                            <p className="header red">Delete All</p>
+                            <p className="header red" onClick={() => apiClient.requestDeleteProfile(navigate)}>Delete All</p>
                             <p>Delete all saved data and revoke access to your Spotify account</p>
                         </div>
                     </div>

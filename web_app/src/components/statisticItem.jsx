@@ -28,8 +28,9 @@ StatisticItem.propTypes={
 
 StatisticItem.defaultProps={
     color: "orange",
-    title: "Name",
+    title: "",
     number: 0,
     onClick: () => {},
     className: "",
+    image: "",
 }
