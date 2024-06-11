@@ -53,7 +53,7 @@ export default function ProfilePage(){
                             <p>{user == null ? "none" : user.product}</p>
                         </div>
                         <div className={"item"}>
-                            <Button color={"green"} onClick={() => window.location = user == null ? window.location : user.userUrl} scale={0.6} widthOffset={50}>Open on Spotify</Button>
+                            <Button color={"green"} onClick={() => window.location = user == null ? window.location : user.userURL} scale={0.6} widthOffset={50}>Open on Spotify</Button>
                         </div>
                     </div>
                 </div>
