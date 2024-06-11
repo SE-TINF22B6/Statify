@@ -41,21 +41,19 @@ export default function ToggleButton({className, color, selected, setSelected, b
     )
 }
 
-const arrayOfLength = (expectedLength, props, propName, componentName) => {
-    const arrayPropLength = props[propName].length
-
-    if (arrayPropLength !== expectedLength) {
-        return new Error(
-            `Invalid array length ${arrayPropLength} (expected ${expectedLength}) for prop ${propName} supplied to ${componentName}. Validation failed.`
-        )
+const TWO_ELEMENTS = function(props, propName, componentName) {
+    if (!Array.isArray(props.choices) || props.choices.length !== 2) {
+        return new Error(`Invalid array length ${props.choices.length} (expected 2) for prop ${propName} supplied to ${componentName}. Validation failed.`);
     }
+
+    return null
 }
 
 ToggleButton.propTypes={
     color: PropTypes.oneOf(["orange", "green", "purple"]),
     className: PropTypes.string,
     selected: PropTypes.oneOf([0, 1]),
-    choices: arrayOfLength.bind(null, 2),
+    choices: TWO_ELEMENTS,
     onToggle: PropTypes.func
 }
 

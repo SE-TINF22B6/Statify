@@ -16,16 +16,14 @@ describe("Toggle Button Tests", () => {
         opacity: "40%"
     }
 
-    let toggleButton
-    let toggle
 
-    beforeEach(() => {
-        toggle = 0
+    test("toggles button selection to second button", () => {
+        let toggle = 0
         const setToggle = ((value) => {
             toggle = value
         })
 
-        toggleButton = render(
+        let toggleButton = render(
             <ToggleButton choices={["First", "Second"]}
                           selected={toggle}
                           setSelected={setToggle}
@@ -33,10 +31,7 @@ describe("Toggle Button Tests", () => {
                           buttonWidth={300}
                           textSize={14}/>
         )
-    })
 
-
-    test("toggles button selection", () => {
         let firstButton = toggleButton.getByText("First")
         let secondButton = toggleButton.getByText("Second")
 
@@ -44,6 +39,30 @@ describe("Toggle Button Tests", () => {
 
         expect(secondButton.style === selectedStyle)
         expect(firstButton.style === unselectedStyle)
+    })
+
+    test("toggles button selection to first button", () => {
+        let toggle = 1
+        const setToggle = ((value) => {
+            toggle = value
+        })
+
+        let toggleButton = render(
+            <ToggleButton choices={["First", "Second"]}
+                          selected={toggle}
+                          setSelected={setToggle}
+                          color={"purple"}
+                          buttonWidth={300}
+                          textSize={14}/>
+        )
+
+        let firstButton = toggleButton.getByText("First")
+        let secondButton = toggleButton.getByText("Second")
+
+        fireEvent.click(firstButton)
+
+        expect(firstButton.style === selectedStyle)
+        expect(secondButton.style === unselectedStyle)
     })
 
     it('renders with default props', () => {
@@ -68,6 +87,17 @@ describe("Toggle Button Tests", () => {
         expect(secondButton).toHaveStyle('opacity: 100%');
     });
 
+    it("error if choices prop has wrong size", () => {
 
+        const spy = jest.spyOn(console, 'error').mockImplementation(() => {});
+        let expectedErrorMessage = "Invalid array length 3 (expected 2) for prop choices supplied to ToggleButton. Validation failed."
+
+        render(<ToggleButton choices={[1, 2, 3]}/>)
+
+        const errorCalls = spy.mock.calls;
+        const found = errorCalls.some(call => call.join(" ").includes(expectedErrorMessage));
+        expect(found).toBe(true);
+
+    });
 
 })

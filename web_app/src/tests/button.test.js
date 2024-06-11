@@ -12,6 +12,16 @@ describe("Button Tests", () => {
     expect(button).toHaveStyle('width: 340px');
     expect(button).toHaveStyle('height: 80px');
     expect(button).toHaveStyle('font-size: 32px');
+
+    expect(button.onclick).toEqual(expect.any(Function));
+
+    const onClickMock = jest.fn();
+    button.onclick = onClickMock
+
+    expect(fireEvent.click(button))
+
+    expect(onClickMock).toHaveBeenCalled();
+
   });
 
   it('renders with custom props', () => {
