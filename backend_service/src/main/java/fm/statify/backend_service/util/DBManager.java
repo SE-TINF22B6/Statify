@@ -403,17 +403,16 @@ public class DBManager {
 
     public void removeAllStatisticsForUser(String userID) {
         try {
-            remove("top_tracks", userID);
-            remove("top_artists", userID);
-            remove("playlist", userID);
+            remove("DELETE FROM top_tracks WHERE user_guid = ?", userID);
+            remove("DELETE FROM top_artists WHERE user_guid = ?", userID);
+            remove("DELETE FROM playlist WHERE user_guid = ?", userID);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void remove(String table_name, String userID) {
+    private void remove(String sql, String userID) {
         try {
-            String sql = "DELETE FROM" + table_name + "WHERE user_guid = ?";
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, getUserGuid(userID));
             statement.executeUpdate();
@@ -426,7 +425,7 @@ public class DBManager {
     public void removeAll(String userID) {
         try {
             removeAllStatisticsForUser(userID);
-            remove("user", userID);
+            remove("DELETE FROM user WHERE guid = ?", userID);
         } catch (Exception e) {
             e.printStackTrace();
         }
