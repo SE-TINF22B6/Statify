@@ -1,5 +1,5 @@
 import React from "react";
-import '../css/track.css';
+import '../css/components/track.css';
 
 export default function Track({ imageUrl, trackTitle, artistName }) {
     return (

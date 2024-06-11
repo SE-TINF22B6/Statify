@@ -1,4 +1,4 @@
-import "../css/track-page.css"
+import "../css/pages/track-page.css"
 import Actionbar from "../components/actionbar";
 import Track from "../components/track";
 import Chart from "../components/chart";

@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../images/StatifyLogo.png"
-import '../css/actionbar.css'
+import '../css/components/actionbar.css'
 import {useNavigate} from "react-router-dom";
 
 export default function Actionbar({ className, children }) {

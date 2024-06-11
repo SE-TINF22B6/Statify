@@ -1,7 +1,7 @@
 import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import PropTypes from "prop-types";
 import Button from "../components/button";
-import "../css/generate-statistics-dialog.css"
+import "../css/pages/generate-statistics-dialog.css"
 import {useContext, useEffect, useState} from "react";
 import ToggleButton from "../components/toggleButton";
 import PlaylistItem from "../components/playlistItem";

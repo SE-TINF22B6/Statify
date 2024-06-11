@@ -1,4 +1,4 @@
-import "../css/statistics-page.css"
+import "../css/pages/statistics-page.css"
 import StatisticsFrame from "../components/statisticsFrame";
 import Actionbar from "../components/actionbar";
 import StatisticItem from "../components/statisticItem";

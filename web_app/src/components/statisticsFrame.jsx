@@ -1,4 +1,4 @@
-import "../css/statistics-frame.css"
+import "../css/components/statistics-frame.css"
 import arrow from "../images/arrow.png"
 import PropTypes from "prop-types";
 

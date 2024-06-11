@@ -1,4 +1,4 @@
-import "../css/playlist-item.css"
+import "../css/components/playlist-item.css"
 import PropTypes, {bool} from "prop-types";
 
 export default function PlaylistItem({title, image, selected, onClick}){

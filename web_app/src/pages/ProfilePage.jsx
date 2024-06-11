@@ -1,5 +1,5 @@
 import Actionbar from "../components/actionbar";
-import "../css/profile-page.css"
+import "../css/pages/profile-page.css"
 import profile from "../images/profile-icon.png"
 import Button from "../components/button";
 import {useContext, useEffect, useState} from "react";

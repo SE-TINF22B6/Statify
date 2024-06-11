@@ -1,4 +1,4 @@
-import "../css/statistic-item.css"
+import "../css/components/statistic-item.css"
 import PropTypes from "prop-types";
 
 export default function StatisticItem({number, title, subtitle, image, color, onClick, className}){

@@ -1,4 +1,4 @@
-import "../css/toggle-button.css";
+import "../css/components/toggle-button.css";
 import {decodeColors} from "../util/decodeColors";
 import PropTypes from "prop-types";
 

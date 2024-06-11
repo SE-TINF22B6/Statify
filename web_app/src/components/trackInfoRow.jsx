@@ -1,5 +1,5 @@
 import NumberItem from "./numberItem";
-import "../css/track-row-info.css"
+import "../css/components/track-row-info.css"
 import PropTypes from "prop-types";
 
 export default function TrackInfoRow({data, color, scale}){

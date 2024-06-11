@@ -1,4 +1,4 @@
-import "../css/playlist-statistics-item.css"
+import "../css/components/playlist-statistics-item.css"
 
 import NumberItem from "./numberItem";
 import PropTypes from "prop-types";

@@ -1,4 +1,4 @@
-@import "styleguide.css";
+@import "../styleguide.css";
 
 .action-bar.landing{
     background: linear-gradient(180deg, rgba(104, 36, 229, 0.2)  0%, rgba(104, 36, 229, 0.07) var(--collection-1-actionbar-height)),

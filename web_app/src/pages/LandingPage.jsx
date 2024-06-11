@@ -1,5 +1,5 @@
 import Actionbar from "../components/actionbar";
-import "../css/landing-page.css"
+import "../css/pages/landing-page.css"
 import Button from "../components/button";
 import GitHubLogo from "../images/GitHub_Logo_White.png"
 import GitHubMark from "../images/github-mark-white.svg"

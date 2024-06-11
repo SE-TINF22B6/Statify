@@ -1,4 +1,4 @@
-@import "styleguide.css";
+@import "../styleguide.css";
 
 .MuiDialog-paper{
     background: #0d1f14 !important;

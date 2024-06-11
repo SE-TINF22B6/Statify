@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/button.css";
+import "../css/components/button.css";
 import PropTypes from "prop-types";
 import {decodeColors04} from "../util/decodeColors";
 

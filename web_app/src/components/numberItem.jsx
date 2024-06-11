@@ -1,4 +1,4 @@
-import "../css/number-item.css"
+import "../css/components/number-item.css"
 import PropTypes from "prop-types";
 import { string, number } from 'prop-types';
 
