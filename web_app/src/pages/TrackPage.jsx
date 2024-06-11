@@ -5,8 +5,9 @@ import Chart from "../components/chart";
 import {useContext, useEffect, useState} from "react";
 import {keyDict, modeDict} from "../util/decodeAudioFeatures";
 import {ApiClientContext} from "../App";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import TrackInfoRow from "../components/trackInfoRow";
+import profile from "../images/profile-icon.png";
 
 export default function TrackPage() {
 
@@ -15,6 +16,7 @@ export default function TrackPage() {
     const location = useLocation();
     const {trackId} = location.state || {};
 
+    const navigate = useNavigate()
 
     const [track, setTrack] = useState({
         name: "Track Name",
@@ -68,7 +70,9 @@ export default function TrackPage() {
 
     return (
         <div>
-            <Actionbar className={"actionbar-track-page"}></Actionbar>
+            <Actionbar className={"actionbar-track-page"}>
+                <img className="icon" src={profile} alt="Profile Icon" onClick={() => navigate("/profile")}/>
+            </Actionbar>
             <div className={"track-page page row"}>
                 <div className="track">
                     <Track imageUrl={track.imageUrl}
