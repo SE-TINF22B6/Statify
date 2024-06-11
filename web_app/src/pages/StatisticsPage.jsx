@@ -37,7 +37,6 @@ export default function StatisticsPage() {
         apiClient.getTopArtistsStatistics()
             .then(res => {
                 setArtistsStats(res)
-                console.log(res)
             })
             .catch(err => {
                 console.log(err)

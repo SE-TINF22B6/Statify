@@ -5,11 +5,14 @@ import fm.statify.backend_service.stats.PlaylistStatistics;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlaylistStatisticsGenerator {
     private static final HTTPHelper httpHelper = new HTTPHelper();
 
     private static final Parser parser = new Parser();
+
+    private static final int MAX_IDS = 50;
 
     public static PlaylistStatistics generatePlaylistStatistics(String userId, String playlistId, String userAccessToken){
         PlaylistWithSimplePlaylistTracks playlistWithSimpleTracks = getPlaylist(playlistId, userAccessToken);
@@ -32,28 +35,37 @@ public class PlaylistStatisticsGenerator {
     }
 
     private static void addGenresAndArtistNames(PlaylistWithSimplePlaylistTracks playlist, String userAccessToken){
-        for(SimplePlaylistTrack t: playlist.getTracks()){
-            try{
-                String endpoint = "https://api.spotify.com/v1/artists?ids=" + String.join(",", t.getArtists());
+        Set<String> artists = playlist.getTracks().stream().flatMap((track) -> track.getArtists().stream()).collect(Collectors.toSet());
+        try {
+            List<ArtistWithGenre> collectArtist = new ArrayList<>();
+            for(int i = 0; i < artists.size(); i+=MAX_IDS){
+                int toIndex = i * MAX_IDS + MAX_IDS;
+                toIndex = toIndex <= artists.size() ? toIndex : artists.size();
+                List<String> subList = artists.stream().toList().subList(i, toIndex);
+                String endpoint = "https://api.spotify.com/v1/artists?ids=" + String.join(",", subList);
                 String artistsResult = httpHelper.performRequest(endpoint, userAccessToken);
-                List<ArtistWithGenre> artists = parser.parseArtists(artistsResult);
+                collectArtist.addAll(parser.parseArtists(artistsResult));
+                System.out.println();
+            }
+            Map<String, ArtistWithGenre> artistsMap = collectArtist.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
 
-                List<String> artistNames = artists.stream().map(Artist::getName).toList();
-
+            for(SimplePlaylistTrack t: playlist.getTracks()){
+                List<String> artistNames = new ArrayList<>();
                 Set<String> genres = new HashSet<>();
-                for(ArtistWithGenre a: artists){
-                    genres.addAll(a.getGenres());
+                for (String a: t.getArtists()){
+                    ArtistWithGenre artist = artistsMap.get(a);
+                    artistNames.add(artist.getName());
+                    genres.addAll(artist.getGenres());
                 }
 
                 t.setArtists(artistNames);
-
                 t.setGenres(genres);
-
-            }
-            catch (IOException e) {
-               continue;
             }
         }
+        catch (IOException e) {
+            return;
+        }
+
     }
 
     private static PlaylistStatistics calculatePlaylistStatistics(String userId, String playlistId, PlaylistWithSimplePlaylistTracks playlist, String userAccessToken){
