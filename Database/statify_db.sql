@@ -14,6 +14,7 @@ CREATE TABLE `user` (
  access_token TEXT NOT NULL,
  refresh_token TEXT NOT NULL,
  user_id TEXT,
+ expires DATE NOT NULL,
  PRIMARY KEY (`guid`)
  );
 
