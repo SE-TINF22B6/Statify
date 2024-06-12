@@ -32,17 +32,17 @@ export default function GenerateStatisticsDialog({open, setOpen, onGenerate}) {
                         <div className={"radio-group column"}>
                             <div className={"row"}>
                                 <input type="radio" name="timespan" value="long_term" id="long" defaultChecked
-                                       onChange={(e) => setTimeRange(e.currentTarget.value)}/>
+                                       onChange={(e) => handleChange(e, setTimeRange)}/>
                                 <label htmlFor="long">Long Term (1 Year)</label>
                             </div>
                             <div className={"row"}>
                                 <input type="radio" name="timespan" value="medium_term" id="medium"
-                                       onChange={(e) => setTimeRange(e.currentTarget.value)}/>
+                                       onChange={(e) => handleChange(e, setTimeRange)}/>
                                 <label htmlFor="medium">Medium Term (6 Months)</label>
                             </div>
                             <div className={"row"}>
                                 <input type="radio" name="timespan" value="short_term" id="short"
-                                       onChange={(e) => setTimeRange(e.currentTarget.value)}/>
+                                       onChange={(e) => handleChange(e, setTimeRange)}/>
                                 <label htmlFor="short">Short Term (4 Weeks)</label>
                             </div>
                         </div>
@@ -107,14 +107,11 @@ export default function GenerateStatisticsDialog({open, setOpen, onGenerate}) {
     function generate() {
         if (toggle === TOGGLE_TRACKS_ARTISTS) {
             if (selection === "artists") {
-                //apiClient.generateTopArtistsStatistics(timeRange)
                 onGenerate("artists", {timeRange: timeRange})
             } else if (selection === "tracks") {
-                //apiClient.generateTopTracksStatistics(timeRange)
                 onGenerate("tracks", {timeRange: timeRange})
             }
         } else if (toggle === TOGGLE_PLAYLISTS) {
-            //apiClient.generatePlaylistStatistics(playlists[selectedPlaylist].id)
             onGenerate("playlist", {playlistId: playlists[selectedPlaylist].id})
         }
         setOpen(false)
