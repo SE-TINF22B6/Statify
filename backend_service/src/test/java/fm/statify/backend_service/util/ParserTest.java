@@ -13,16 +13,12 @@ public class ParserTest {
 
     @Test
     public void testParseUserProfile() {
-        // Готовим тестовые данные
         String userProfileJsonString = "{\"id\":\"user123\",\"display_name\":\"John Doe\",\"email\":\"john.doe@example.com\",\"external_urls\":{\"spotify\":\"https://open.spotify.com/user/user123\"},\"images\":[{\"url\":\"https://example.com/profile.jpg\"}, {\"url\":\"https://example.com/profile.jpg\"}],\"product\":\"premium\"}";
 
-        // Создаем экземпляр Parser
         Parser parser = new Parser();
 
-        // Вызываем метод для парсинга
         UserProfile userProfile = parser.parseUserProfile(userProfileJsonString);
 
-        // Проверяем результаты парсинга
         assertNotNull(userProfile);
         assertEquals("user123", userProfile.getId());
         assertEquals("John Doe", userProfile.getUserName());
@@ -34,16 +30,12 @@ public class ParserTest {
 
     @Test
     public void testParsePlaylists() {
-        // Готовим тестовые данные
         String playlistsJsonString = "{\"items\":[{\"id\":\"playlist1\",\"name\":\"My Playlist\",\"images\":[{\"url\":\"https://example.com/playlist.jpg\"}]}]}";
 
-        // Создаем экземпляр Parser
         Parser parser = new Parser();
 
-        // Вызываем метод для парсинга
         List<Playlist> playlists = parser.parsePlaylists(playlistsJsonString);
 
-        // Проверяем результаты парсинга
         assertNotNull(playlists);
         assertEquals(1, playlists.size());
 
