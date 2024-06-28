@@ -5,7 +5,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Parser {
     public UserProfile parseUserProfile(String response) {
@@ -20,13 +23,13 @@ public class Parser {
 
             String profilePictureURL = null;
             JSONArray images = userProfileJson.getJSONArray("images");
-            if (!images.isEmpty()) {
+            if (images.length() > 0) {
                 profilePictureURL = images.getJSONObject(1).getString("url");
             }
 
             String product = userProfileJson.getString("product");
             return new UserProfile(id, userName, email, userURL, profilePictureURL, product);
-        } catch (Exception e) {
+        } catch (JSONException e) {
             return null;
         }
     }
@@ -36,7 +39,6 @@ public class Parser {
 
         try {
             JSONObject responseJson = new JSONObject(response);
-
             JSONArray playlistsJson = responseJson.getJSONArray("items");
 
             for (int i = 0; i < playlistsJson.length(); i++) {
@@ -46,7 +48,7 @@ public class Parser {
 
                 String imageURL = null;
                 JSONArray images = playlistJson.getJSONArray("images");
-                if (!images.isEmpty()) {
+                if (images.length() > 0) {
                     imageURL = images.getJSONObject(0).getString("url");
                 }
 
@@ -55,10 +57,9 @@ public class Parser {
             }
 
             return playlists;
-        } catch (Exception e) {
+        } catch (JSONException e) {
             return playlists;
         }
-
     }
 
     public List<SimpleTrack> parseTopTracks(String response) {
@@ -92,7 +93,7 @@ public class Parser {
 
                 String imageURL = null;
                 JSONArray images = artistJson.getJSONArray("images");
-                if (!images.isEmpty()) {
+                if (images.length() > 0) {
                     imageURL = images.getJSONObject(0).getString("url");
                 }
                 topArtists.add(new Artist(id, name, imageURL));
@@ -113,7 +114,7 @@ public class Parser {
             String imageURL = null;
 
             JSONArray images = responseJson.getJSONArray("images");
-            if (!images.isEmpty()) {
+            if (images.length() > 0) {
                 imageURL = images.getJSONObject(0).getString("url");
             }
 
@@ -222,7 +223,7 @@ public class Parser {
             String imageURL = null;
             JSONObject album = trackJson.getJSONObject("album");
             JSONArray images = album.getJSONArray("images");
-            if (!images.isEmpty()) {
+            if (images.length() > 0) {
                 imageURL = images.getJSONObject(0).getString("url");
             }
 
@@ -248,7 +249,7 @@ public class Parser {
             String imageURL = null;
 
             JSONArray images = artistJSON.getJSONArray("images");
-            if (!images.isEmpty()) {
+            if (images.length() > 0) {
                 imageURL = images.getJSONObject(0).getString("url");
             }
 
