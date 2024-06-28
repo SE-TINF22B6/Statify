@@ -411,7 +411,7 @@ public class DBManager {
         }
     }
 
-    private void remove(String sql, String userID) {
+    public void remove(String sql, String userID) {
         try {
             PreparedStatement statement = con.prepareStatement(sql);
             statement.setString(1, getUserGuid(userID));
