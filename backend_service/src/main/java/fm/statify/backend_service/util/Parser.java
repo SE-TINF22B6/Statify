@@ -127,14 +127,14 @@ public class Parser {
                 simpleTracks.add(t);
             }
 
-            return new PlaylistWithSimplePlaylistTracks(id, name, imageURL, simpleTracks); //hier duration 0
+            return new PlaylistWithSimplePlaylistTracks(id, name, imageURL, simpleTracks);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private SimplePlaylistTrack parsePlaylistTrack(JSONObject track) {
+    public SimplePlaylistTrack parsePlaylistTrack(JSONObject track) {
         String id = track.getString("id");
         String name = track.getString("name");
         int duration = track.getInt("duration_ms");
