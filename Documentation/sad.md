@@ -1,8 +1,5 @@
 # Statify
 ## Software Architecture Documentation
-> This template is a simplified version based on the documentation templates from IBM Rational Unified Process (RUP) and arc42.org (https://docs.arc42.org/home/)
-> If necessary, you can add more topics related to the architecture design of your application.
-
 ### 1. Introduction
 #### 1.1 Overview 
 For our project, we use a layered architecture.   
@@ -49,12 +46,39 @@ For accessing a user's streams, the Backend communicates with Spotify via the Sp
 
 ![Component Diagram](diagrams/UML_Component_Diagram.svg)
 
-#### 3.1 Overview 
-> A summary of the architecture design -- highlights.  
+#### 3.2 Runtime view
+The Runtime View illustrates the dynamic behavior of the system as various components interact over time. This is  how the components collaborate to fulfill the application's use cases: 
 
-#### 3.2 Runtime view (Tips: https://docs.arc42.org/section-6/)
+##### User Login Sequence:
+   - User: Initiates a login request via the Frontend.
+   - Frontend: Sends login credentials to the Backend through the SpotifyController.
+   - Backend: Validates credentials and requests user data from the Spotify Web API.
+   - Spotify Web API: Verifies credentials and returns user authentication token and user data.
+   - Backend: Stores user session information in the Database and responds to the Frontend with the session token.
+   - Frontend: Stores the session token and transitions the user to the statistics view.
 
-#### 3.3 Deployment view (Tips: https://docs.arc42.org/section-7/)
+##### Statistics Retrieval Sequence
+   - User: Requests to view their statistics.
+   - Frontend: Sends a request to the Backend via the StatisticsController.
+   - Backend: Checks if the statistics are already available in the Database.
+     - If available, retrieves statistics from the Database.
+     - If not, fetches user streams from the Spotify Web API, processes the data, and stores the generated statistics in the Database.
+   - Backend: Sends the statistics data to the Frontend.
+   - Frontend: Displays the statistics to the user.
 
-#### 3.4 ... ...
+#### 3.3 Deployment view 
+This is how the various components are deployed across different servers and network boundaries:
+
+##### Client Machine
+   - Web Browser: Hosts the Frontend application built with React. The browser communicates with the Backend server via HTTPS.
+
+##### Application Server
+   - Backend (Spring Boot Application): Deployed on an application server. It handles REST API requests, processes business logic, and communicates with the Database and external services like the Spotify Web API.
+
+##### Database Server
+   - Relational Database (MySQL Server): Stores user data, session information, and generated statistics. The database server is accessed by the Backend for read and write operations.
+
+##### External Services
+   - Spotify Web API: An external service used by the Backend to fetch user stream data for generating statistics.
+
 
