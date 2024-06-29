@@ -1,4 +1,4 @@
-# Project Name
+# Statify
 ## Test Report
 
 ### 1. Introduction
