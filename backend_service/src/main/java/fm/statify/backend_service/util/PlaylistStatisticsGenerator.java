@@ -8,9 +8,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class PlaylistStatisticsGenerator {
-    private static final HTTPHelper httpHelper = new HTTPHelper();
+    private static HTTPHelper httpHelper = new HTTPHelper();
 
-    private static final Parser parser = new Parser();
+    private static Parser parser = new Parser();
 
     private static final int MAX_IDS = 50;
 
@@ -45,7 +45,6 @@ public class PlaylistStatisticsGenerator {
                 String endpoint = "https://api.spotify.com/v1/artists?ids=" + String.join(",", subList);
                 String artistsResult = httpHelper.performRequest(endpoint, userAccessToken);
                 collectArtist.addAll(parser.parseArtists(artistsResult));
-                System.out.println();
             }
             Map<String, ArtistWithGenre> artistsMap = collectArtist.stream().collect(Collectors.toMap(item -> item.getId(), item -> item));
 
