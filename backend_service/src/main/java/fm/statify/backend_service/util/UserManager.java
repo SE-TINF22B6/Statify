@@ -29,7 +29,7 @@ public class UserManager {
         this.db = db;
     }
 
-    private User getUser(String userId) throws Exception {
+    private User getUser(String userId) {
         if (userData.containsKey(userId)) {
             return userData.get(userId);
         } else {
