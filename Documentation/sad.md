@@ -1,4 +1,4 @@
-# Project Name
+# Statify
 ## Software Architecture Documentation
 > This template is a simplified version based on the documentation templates from IBM Rational Unified Process (RUP) and arc42.org (https://docs.arc42.org/home/)
 > If necessary, you can add more topics related to the architecture design of your application.
