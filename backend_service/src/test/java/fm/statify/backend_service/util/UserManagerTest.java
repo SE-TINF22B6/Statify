@@ -69,8 +69,8 @@ public class UserManagerTest {
         } catch (IOException | InterruptedException ignored) {  }
 
         Date date = new Date(System.currentTimeMillis() + 1000 * 100);
-        User user1 = new User("id1", "accessToken1", new Date(), "refreshToken1");
-        User user2 = new User("id2", "accessToken2", new Date(), "refreshToken2");
+        User user1 = new User("id1", "accessToken1", new Date(System.currentTimeMillis() - 1000 * 100), "refreshToken1");
+        User user2 = new User("id2", "accessToken2", new Date(System.currentTimeMillis() - 1000 * 100), "refreshToken2");
 
         userData.put("id1", user1);
         userData.put("id2", user2);
