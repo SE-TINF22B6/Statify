@@ -15,6 +15,10 @@
     <description>backend_service</description>
     <properties>
         <java.version>21</java.version>
+        <sonar.host.url>http://localhost:9000</sonar.host.url>
+        <sonar.login>sqp_aaf2ea3dd225425a1abc0d38053c1ad20556b726</sonar.login>
+        <sonar.projectKey>Statify</sonar.projectKey>
+        <sonar.projectName>'Statify'</sonar.projectName>
     </properties>
     <dependencies>
 
@@ -74,6 +78,17 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-Xlint:deprecation</arg>
+                        <arg>-Xlint:unchecked</arg>
+                    </compilerArgs>
+                </configuration>
             </plugin>
         </plugins>
     </build>
