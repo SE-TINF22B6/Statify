@@ -61,7 +61,7 @@ The main purpose of our application is to display the user's statistics about th
 - **Postconditions:** the user can now generate and see detailed analytics about his or her listening behaviour, such as: top 5 most listened to songs and artists, playlists statistics including the amount of tracks of each represented genre and the top genre of the playlist. The user can also see the features of a track.  
 - **Estimated efforts:** high.  
 
-![Generate Statistics](diagrams/Top_Tracks_Activity_Diagram.svg) 
+![Generate Statistics](diagrams/Generate_Activity_Diagram.svg) 
 
 #### 2.3 User Stories
 ##### 2.3.1 User Accounts
@@ -80,7 +80,7 @@ As a user I want to be able to authenticate with my own Spotify-account so that 
 As a user I want the website to be responsive so that I can use it on my laptop as well as on my smartphone.
 
 #### 2.4 Class Diagram
-This class diagram shows how our backend is structured. We are using the Open-Closed Principle, where we have an Statistics interface that won't be modified. To add new types of statistics, you can instead create a new class that extends the statistics class.
+This class diagram shows how our backend is structured. We are using the Open-Closed Principle, where we have an Statistics class that won't be modified. To add new types of statistics, you can instead create a new class that extends the statistics class.
 
 ![UML Class Diagram](diagrams/UML_Class_Diagram.svg)
 

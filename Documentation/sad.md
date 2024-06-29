@@ -24,7 +24,9 @@ Due to the requirements of our stakholders, the following architectural decision
 #### 1.3 Definitions, Acronyms and Abbreviations
 > Definitions of all terms, acronyms, and abbreviations required to properly interpret this document.
 #### 1.4 References
-> A complete list of all documents referenced -- hyperlinks to those documents.
+> A complete list of all documents referenced -- hyperlinks to those documents. 
+
+[Component Diagram](diagrams/UML_Component_Diagram.svg)
 
 ### 2. Architecture tactics
 > Reference your architecturally significant requirements from Semester 3.
